@@ -1,0 +1,71 @@
+# === PROJECT-WIDE IGNORES ===
+
+# Environment variables (contains API keys!)
+.env
+.env.*
+
+
+# === PYTHON / FLASK BACKEND ===
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+venv/
+ENV/
+env/
+.venv/
+langenv/
+.python-version
+
+# Flask instance folder
+instance/
+flask_session/
+
+# Logs
+*.log
+*.out
+
+# Database files
+*.db
+*.sqlite3
+users.json
+
+# === NEO4J (Future) ===
+*.dump
+*.graph.db
+*.db-journal
+
+# === IDE / EDITORS ===
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+.DS_Store
+Thumbs.db
+
+# === OS SPECIFIC ===
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
