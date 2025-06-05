@@ -1,0 +1,126 @@
+{
+  "user_id": "f55dd822-8999-44dc-97df-027eadc2fe80",
+  "conversations": [
+    {
+      "id": "196b5442-c845-44b1-b2e6-7af2ed932b69",
+      "user_id": "f55dd822-8999-44dc-97df-027eadc2fe80",
+      "created_at": "2025-06-05T02:25:52.458505",
+      "messages": [
+        {
+          "id": "user-1-1749090357",
+          "content": "la musica",
+          "sender": "user",
+          "timestamp": "2025-06-05T02:25:57.263966",
+          "intent": "chat",
+          "audio_language": "Spanish"
+        },
+        {
+          "id": "bot-1-1749090359",
+          "content": "¡La música es un tema genial! ¿Cuál es tu tipo de música favorito, Mateoias?",
+          "sender": "bot",
+          "timestamp": "2025-06-05T02:25:59.477675",
+          "intent": "chat",
+          "audio_language": "Spanish"
+        },
+        {
+          "id": "user-1-1749090365",
+          "content": "el jazz",
+          "sender": "user",
+          "timestamp": "2025-06-05T02:26:05.261058",
+          "intent": "chat",
+          "audio_language": "Spanish"
+        },
+        {
+          "id": "bot-1-1749090367",
+          "content": "¡El jazz es un género maravilloso! ¿Tienes algún músico de jazz favorito, Mateoias?",
+          "sender": "bot",
+          "timestamp": "2025-06-05T02:26:07.090095",
+          "intent": "chat",
+          "audio_language": "Spanish"
+        },
+        {
+          "id": "user-1-1749090381",
+          "content": "Maynard Ferguson",
+          "sender": "user",
+          "timestamp": "2025-06-05T02:26:21.699352",
+          "intent": "chat",
+          "audio_language": "Spanish"
+        },
+        {
+          "id": "bot-1-1749090383",
+          "content": "¡Maynard Ferguson es un gran trompetista! ¿Cuál es tu canción favorita de él, Mateoias?",
+          "sender": "bot",
+          "timestamp": "2025-06-05T02:26:23.218189",
+          "intent": "chat",
+          "audio_language": "Spanish"
+        },
+        {
+          "id": "user-1-1749090389",
+          "content": "Birdland",
+          "sender": "user",
+          "timestamp": "2025-06-05T02:26:29.020600",
+          "intent": "chat",
+          "audio_language": "Spanish"
+        },
+        {
+          "id": "bot-1-1749090391",
+          "content": "¡Birdland es una canción increíble! ¿Qué te gusta de esa canción, Mateoias?",
+          "sender": "bot",
+          "timestamp": "2025-06-05T02:26:31.350817",
+          "intent": "chat",
+          "audio_language": "Spanish"
+        },
+        {
+          "id": "user-1-1749090402",
+          "content": "do you like him?",
+          "sender": "user",
+          "timestamp": "2025-06-05T02:26:42.879752",
+          "intent": "chat",
+          "audio_language": "Spanish"
+        },
+        {
+          "id": "bot-1-1749090405",
+          "content": "Como un asistente de inteligencia artificial, no tengo preferencias personales. Pero, ¿qué te atrajo de la música de Maynard Ferguson, Mateoias?",
+          "sender": "bot",
+          "timestamp": "2025-06-05T02:26:45.032338",
+          "intent": "chat",
+          "audio_language": "Spanish"
+        },
+        {
+          "id": "user-1-1749090521",
+          "content": "what kind of music do I like?",
+          "sender": "user",
+          "timestamp": "2025-06-05T02:28:41.264398",
+          "intent": "chat",
+          "audio_language": "Spanish"
+        },
+        {
+          "id": "bot-1-1749090523",
+          "content": "Dijiste que te gusta el jazz, especialmente Maynard Ferguson. ¿Hay algún otro género musical que te guste, Mateoias?",
+          "sender": "bot",
+          "timestamp": "2025-06-05T02:28:43.087588",
+          "intent": "chat",
+          "audio_language": "Spanish"
+        },
+        {
+          "id": "user-1-1749090531",
+          "content": "claro que si!",
+          "sender": "user",
+          "timestamp": "2025-06-05T02:28:51.333493",
+          "intent": "chat",
+          "audio_language": "Spanish"
+        },
+        {
+          "id": "bot-1-1749090533",
+          "content": "¡Genial! ¿Podrías decirme qué otros géneros musicales te gustan, Mateoias?",
+          "sender": "bot",
+          "timestamp": "2025-06-05T02:28:53.209865",
+          "intent": "chat",
+          "audio_language": "Spanish"
+        }
+      ],
+      "summary": "- User's name is Mateoias.\n- The conversation was about music, specifically jazz.\n- Mateoias' favorite jazz musician is Maynard Ferguson.\n- His favorite song by Maynard Ferguson is \"Birdland\".\n- The AI tutor does not have personal preferences as it is an artificial intelligence.\n- The AI tutor asked Mateoias what attracted him to Maynard Ferguson's music."
+    }
+  ],
+  "current_conversation_id": "196b5442-c845-44b1-b2e6-7af2ed932b69"
+}

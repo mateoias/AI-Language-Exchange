@@ -1,6 +1,7 @@
 import openai
 from models.conversation import Conversation, Message
 from utils.file_utils import find_user_by_id
+from services.conversation_service import ConversationService
 from flask import current_app
 import json
 import os
@@ -8,7 +9,7 @@ import os
 class ChatService:
     def __init__(self):
         self._openai_client = None
-        self.conversations = {}  # In-memory storage for current session
+        self.conversation_service = ConversationService()  # NEW: Use conversation service
     
     @property
     def openai_client(self):
@@ -45,61 +46,62 @@ class ChatService:
         # Default to chat mode
         return 'chat'
     
-    def get_or_create_conversation(self, user_id):
-        """Get existing conversation or create new one for this session"""
-        if user_id not in self.conversations:
-            self.conversations[user_id] = Conversation(user_id)
-        return self.conversations[user_id]
-    
-    def build_chat_prompt(self, user, conversation, current_message):
-        """Build optimized prompt for chatbot"""
+    def build_chat_prompt(self, user, conversation_context, current_message):
+        """Build optimized prompt for chatbot with enhanced memory"""
         
         # Base system prompt
         system_prompt = f"""You are a friendly language exchange partner helping {user['username']} practice {user['learningLanguage']}. 
-        
+
 You are having a natural conversation to help them improve their language skills through practice.
 
 User Details:
 - Native Language: {user['nativeLanguage']}
 - Learning: {user['learningLanguage']}
-- Name: {user['username']}
+- Name: {user['username']}"""
+
+        # Add personalization if available
+        if user.get('personalization'):
+            p = user['personalization']
+            if p.get('currentLocation'):
+                system_prompt += f"\n- Location: {p['currentLocation']}"
+            if p.get('workStudy'):
+                system_prompt += f"\n- Work/Study: {p['workStudy']}"
+
+        system_prompt += f"""
 
 Guidelines:
 - Always respond in {user['learningLanguage']}
-- Keep responses brief and conversational
-- Ask a question at the end of each response to continue the conversation
+- Keep responses brief and conversational (2-3 sentences max)
+- ALWAYS ask a follow-up question at the end of each response to continue the conversation
 - Be encouraging and patient
 - Correct major errors gently by using the correct form in your response
-"""
-        
-        # Add conversation context
-        recent_messages = conversation.get_recent_messages(6)
-        context = "\n".join([
-            f"{msg.sender}: {msg.content}" for msg in recent_messages
-        ])
-        
-        if context:
-            system_prompt += f"\n\nRecent conversation:\n{context}"
-        
-        # Add current topic if available
-        if conversation.current_topic:
-            system_prompt += f"\n\nCurrent topic: {conversation.current_topic}"
-        
+- Show genuine interest in the user's responses
+- Vary your questions to keep the conversation engaging"""
+
+        # Add conversation summaries for long-term memory
+        if conversation_context['conversation_summaries']:
+            system_prompt += "\n\nPrevious conversation highlights:"
+            for summary in conversation_context['conversation_summaries']:
+                system_prompt += f"\n{summary}"
+
+        # Add recent conversation context
+        if conversation_context['recent_messages']:
+            system_prompt += "\n\nRecent conversation:"
+            for msg in conversation_context['recent_messages']:
+                system_prompt += f"\n{msg['sender']}: {msg['content']}"
+
         # Add behavior instructions
         system_prompt += f"\n\nRemember to always use {user['learningLanguage']} and keep your response brief. Ask a question at the end of each response."
         
         return system_prompt
     
     def generate_response(self, user_id, message_content):
-        """Main method to generate chat response"""
+        """Main method to generate chat response with persistent memory"""
         try:
             # Get user data
             user_data = find_user_by_id(user_id)
             if not user_data:
                 raise ValueError("User not found")
-            
-            # Get or create conversation
-            conversation = self.get_or_create_conversation(user_id)
             
             # Detect intent
             intent = self.detect_intent(
@@ -117,17 +119,16 @@ Guidelines:
                     'audio_language': user_data['learningLanguage']
                 }
             
-            # Create user message
-            user_message = Message(
-                content=message_content,
-                sender='user',
-                intent=intent,
-                audio_language=user_data['learningLanguage']
+            # Add user message to persistent conversation
+            self.conversation_service.add_message(
+                user_id, message_content, 'user', intent, user_data['learningLanguage']
             )
-            conversation.add_message(user_message)
             
-            # Build prompt
-            prompt = self.build_chat_prompt(user_data, conversation, message_content)
+            # Get conversation context for prompt
+            conversation_context = self.conversation_service.get_conversation_context(user_id)
+            
+            # Build prompt with enhanced context
+            prompt = self.build_chat_prompt(user_data, conversation_context, message_content)
             
             # Call OpenAI
             response = self.openai_client.chat.completions.create(
@@ -142,20 +143,15 @@ Guidelines:
             
             bot_response_content = response.choices[0].message.content.strip()
             
-            # Create bot message
-            bot_message = Message(
-                content=bot_response_content,
-                sender='bot',
-                intent='chat',
-                audio_language=user_data['learningLanguage']
+            # Add bot response to persistent conversation
+            self.conversation_service.add_message(
+                user_id, bot_response_content, 'bot', 'chat', user_data['learningLanguage']
             )
-            conversation.add_message(bot_message)
             
             return {
                 'response': bot_response_content,
                 'intent': 'chat',
-                'audio_language': user_data['learningLanguage'],
-                'conversation_id': conversation.id
+                'audio_language': user_data['learningLanguage']
             }
             
         except Exception as e:
@@ -168,12 +164,10 @@ Guidelines:
             }
     
     def get_conversation_history(self, user_id):
-        """Get conversation history for current session"""
-        if user_id in self.conversations:
-            conversation = self.conversations[user_id]
-            return {
-                'conversation_id': conversation.id,
-                'messages': [msg.to_dict() for msg in conversation.messages],
-                'message_count': conversation.get_message_count()
-            }
-        return {'messages': [], 'message_count': 0}
+        """Get conversation history using persistent storage"""
+        return self.conversation_service.get_conversation_history(user_id)
+    
+    def start_new_session(self, user_id):
+        """Start new conversation session"""
+        self.conversation_service.start_new_session(user_id)
+        return {"message": "New session started"}

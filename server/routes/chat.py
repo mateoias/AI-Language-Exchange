@@ -4,9 +4,8 @@ from services.chat_service import ChatService
 
 chat_bp = Blueprint('chat', __name__)
 
-def get_chat_service():
-    """Factory function to get chat service instance"""
-    return ChatService()
+# CHANGED: Create single service instance instead of factory function
+chat_service = ChatService()
 
 @chat_bp.route('/message', methods=['POST'])
 @token_required
@@ -22,10 +21,7 @@ def send_message(user_id):
         if not message_content:
             return jsonify({'error': 'Message cannot be empty'}), 400
         
-        # Get chat service instance
-        chat_service = get_chat_service()
-        
-        # Generate response
+        # Generate response using persistent service
         result = chat_service.generate_response(user_id, message_content)
         
         if 'error' in result:
@@ -38,8 +34,7 @@ def send_message(user_id):
         return jsonify({
             'response': result['response'],
             'intent': result['intent'],
-            'audio_language': result['audio_language'],
-            'conversation_id': result['conversation_id']
+            'audio_language': result['audio_language']
         }), 200
         
     except Exception as e:
@@ -50,7 +45,6 @@ def send_message(user_id):
 def get_history(user_id):
     """Get conversation history for current session"""
     try:
-        chat_service = get_chat_service()
         history = chat_service.get_conversation_history(user_id)
         return jsonify(history), 200
         
@@ -62,12 +56,8 @@ def get_history(user_id):
 def new_session(user_id):
     """Start a new conversation session"""
     try:
-        chat_service = get_chat_service()
-        # Clear current conversation
-        if hasattr(chat_service, 'conversations') and user_id in chat_service.conversations:
-            del chat_service.conversations[user_id]
-        
-        return jsonify({'message': 'New session started'}), 200
+        result = chat_service.start_new_session(user_id)
+        return jsonify(result), 200
         
     except Exception as e:
         return jsonify({'error': f'Server error: {str(e)}'}), 500
