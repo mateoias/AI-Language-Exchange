@@ -117,10 +117,178 @@
           "timestamp": "2025-06-05T02:28:53.209865",
           "intent": "chat",
           "audio_language": "Spanish"
+        },
+        {
+          "id": "user-1-1749168787",
+          "content": "la classica",
+          "sender": "user",
+          "timestamp": "2025-06-06T00:13:07.974786",
+          "intent": "chat",
+          "audio_language": "Spanish"
+        },
+        {
+          "id": "bot-1-1749168790",
+          "content": "¡La música clásica es maravillosa! ¿Tienes algún compositor clásico favorito, Mateoias?",
+          "sender": "bot",
+          "timestamp": "2025-06-06T00:13:10.265305",
+          "intent": "chat",
+          "audio_language": "Spanish"
+        },
+        {
+          "id": "user-1-1749168797",
+          "content": "Mozart",
+          "sender": "user",
+          "timestamp": "2025-06-06T00:13:17.048002",
+          "intent": "chat",
+          "audio_language": "Spanish"
+        },
+        {
+          "id": "bot-1-1749168798",
+          "content": "Mozart es un genio, sin duda. ¿Cuál es tu obra favorita de él, Mateoias?",
+          "sender": "bot",
+          "timestamp": "2025-06-06T00:13:18.454148",
+          "intent": "chat",
+          "audio_language": "Spanish"
         }
       ],
       "summary": "- User's name is Mateoias.\n- The conversation was about music, specifically jazz.\n- Mateoias' favorite jazz musician is Maynard Ferguson.\n- His favorite song by Maynard Ferguson is \"Birdland\".\n- The AI tutor does not have personal preferences as it is an artificial intelligence.\n- The AI tutor asked Mateoias what attracted him to Maynard Ferguson's music."
+    },
+    {
+      "id": "588ba710-7533-426b-ab61-7a5a4b03ed81",
+      "user_id": "f55dd822-8999-44dc-97df-027eadc2fe80",
+      "created_at": "2025-06-06T01:06:07.942096",
+      "messages": [
+        {
+          "id": "user-2-1749172835",
+          "content": "de la musica",
+          "sender": "user",
+          "timestamp": "2025-06-06T01:20:35.746389",
+          "intent": "chat",
+          "audio_language": "Spanish"
+        },
+        {
+          "id": "bot-2-1749172840",
+          "content": "Sí, estabamos hablando de música, específicamente de jazz. ¿Escuchas algún otro tipo de música además del jazz, Mateoias?",
+          "sender": "bot",
+          "timestamp": "2025-06-06T01:20:40.121863",
+          "intent": "chat",
+          "audio_language": "Spanish"
+        },
+        {
+          "id": "user-2-1749172874",
+          "content": "claro a mi me gustan muchos typos de musica",
+          "sender": "user",
+          "timestamp": "2025-06-06T01:21:14.732504",
+          "intent": "chat",
+          "audio_language": "Spanish"
+        },
+        {
+          "id": "bot-2-1749172878",
+          "content": "¡Eso es genial, Mateoias! La música es una forma maravillosa de expresión. ¿Podrías decirme cuáles son algunos de tus géneros musicales favoritos aparte del jazz?",
+          "sender": "bot",
+          "timestamp": "2025-06-06T01:21:18.391049",
+          "intent": "chat",
+          "audio_language": "Spanish"
+        },
+        {
+          "id": "user-2-1749172914",
+          "content": "Ich habe die Klassic sehr gern",
+          "sender": "user",
+          "timestamp": "2025-06-06T01:21:54.199923",
+          "intent": "chat",
+          "audio_language": "Spanish"
+        },
+        {
+          "id": "bot-2-1749172916",
+          "content": "¡Oh, te gusta la música clásica! Eso es maravilloso. ¿Tienes algún compositor clásico favorito?",
+          "sender": "bot",
+          "timestamp": "2025-06-06T01:21:56.769604",
+          "intent": "chat",
+          "audio_language": "Spanish"
+        },
+        {
+          "id": "user-2-1749172937",
+          "content": "Mozart",
+          "sender": "user",
+          "timestamp": "2025-06-06T01:22:17.637167",
+          "intent": "chat",
+          "audio_language": "Spanish"
+        },
+        {
+          "id": "bot-2-1749172939",
+          "content": "¡Mozart es un gran compositor! ¿Cuál es tu obra favorita de Mozart, Mateoias?",
+          "sender": "bot",
+          "timestamp": "2025-06-06T01:22:19.641954",
+          "intent": "chat",
+          "audio_language": "Spanish"
+        }
+      ],
+      "summary": ""
+    },
+    {
+      "id": "ef002263-794c-4a7d-a9cd-58e083a22db6",
+      "user_id": "f55dd822-8999-44dc-97df-027eadc2fe80",
+      "created_at": "2025-06-06T04:21:05.227682",
+      "messages": [
+        {
+          "id": "user-3-1749183677",
+          "content": "de mi mama",
+          "sender": "user",
+          "timestamp": "2025-06-06T04:21:17.356100",
+          "intent": "chat",
+          "audio_language": "Spanish"
+        },
+        {
+          "id": "bot-3-1749183679",
+          "content": "Entiendo, ¿podrías decirme más sobre tu mamá? ¿Ella también disfruta del jazz?",
+          "sender": "bot",
+          "timestamp": "2025-06-06T04:21:19.647092",
+          "intent": "chat",
+          "audio_language": "Spanish"
+        },
+        {
+          "id": "user-3-1749187392",
+          "content": "no",
+          "sender": "user",
+          "timestamp": "2025-06-06T05:23:12.624246",
+          "intent": "chat",
+          "audio_language": "Spanish"
+        },
+        {
+          "id": "bot-3-1749187395",
+          "content": "Entiendo. ¿Hay algún otro género de música que le guste a tu mamá?",
+          "sender": "bot",
+          "timestamp": "2025-06-06T05:23:15.103007",
+          "intent": "chat",
+          "audio_language": "Spanish"
+        }
+      ],
+      "summary": ""
+    },
+    {
+      "id": "5b1ca2fb-4d2b-4790-a3a6-a761549de73a",
+      "user_id": "f55dd822-8999-44dc-97df-027eadc2fe80",
+      "created_at": "2025-06-06T05:23:30.322116",
+      "messages": [
+        {
+          "id": "user-4-1749187571",
+          "content": "de el futbol",
+          "sender": "user",
+          "timestamp": "2025-06-06T05:26:11.094493",
+          "intent": "chat",
+          "audio_language": "Spanish"
+        },
+        {
+          "id": "bot-4-1749187573",
+          "content": "¿Te gusta el fútbol, Mateoias? ¿Cuál es tu equipo favorito?",
+          "sender": "bot",
+          "timestamp": "2025-06-06T05:26:13.179183",
+          "intent": "chat",
+          "audio_language": "Spanish"
+        }
+      ],
+      "summary": ""
     }
   ],
-  "current_conversation_id": "196b5442-c845-44b1-b2e6-7af2ed932b69"
+  "current_conversation_id": "5b1ca2fb-4d2b-4790-a3a6-a761549de73a"
 }

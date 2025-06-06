@@ -1,15 +1,21 @@
 import openai
+import azure.cognitiveservices.speech as speechsdk
 from models.conversation import Conversation, Message
 from utils.file_utils import find_user_by_id
 from services.conversation_service import ConversationService
 from flask import current_app
 import json
 import os
+import base64
+import io
 
 class ChatService:
     def __init__(self):
         self._openai_client = None
-        self.conversation_service = ConversationService()  # NEW: Use conversation service
+        self._speech_config = None
+        self.conversation_service = ConversationService()
+        # Cache for audio data during session
+        self._audio_cache = {}
     
     @property
     def openai_client(self):
@@ -20,6 +26,115 @@ class ChatService:
                 raise ValueError("OPENAI_API_KEY not configured")
             self._openai_client = openai.OpenAI(api_key=api_key)
         return self._openai_client
+    
+    @property
+    def speech_config(self):
+        """Lazy initialization of Azure Speech config"""
+        if self._speech_config is None:
+            speech_key = current_app.config.get('AZURE_SPEECH_KEY')
+            speech_region = current_app.config.get('AZURE_SPEECH_REGION')
+            if not speech_key or not speech_region:
+                raise ValueError("Azure Speech credentials not configured")
+            self._speech_config = speechsdk.SpeechConfig(
+                subscription=speech_key, 
+                region=speech_region
+            )
+            # Set to MP3 format for smaller size and faster transmission
+            self._speech_config.set_speech_synthesis_output_format(
+                speechsdk.SpeechSynthesisOutputFormat.Audio16Khz32KBitRateMonoMp3
+            )
+        return self._speech_config
+    
+    def _get_voice_name(self, language):
+        """Map language to Azure voice name"""
+        # Using neural voices for better quality
+        voice_map = {
+            'Spanish': 'es-ES-AlvaroNeural',      # Male Spanish voice
+            'English': 'en-US-GuyNeural',         # Male English voice
+            'French': 'fr-FR-HenriNeural',        # Male French voice
+            'German': 'de-DE-ConradNeural',       # Male German voice
+            'Italian': 'it-IT-DiegoNeural',       # Male Italian voice
+            'Portuguese': 'pt-BR-AntonioNeural',  # Male Brazilian Portuguese
+            'Russian': 'ru-RU-DmitryNeural',      # Male Russian voice
+            'Chinese': 'zh-CN-YunxiNeural',       # Male Mandarin voice
+            'Japanese': 'ja-JP-KeitaNeural',      # Male Japanese voice
+            'Korean': 'ko-KR-InJoonNeural',       # Male Korean voice
+            'Arabic': 'ar-SA-HamedNeural',        # Male Arabic voice
+            'Hindi': 'hi-IN-MadhurNeural'         # Male Hindi voice
+        }
+        return voice_map.get(language, 'en-US-GuyNeural')  # Default to English
+    
+    def _add_speech_marks(self, text, speed_rate=1.0, voice_name="en-US-AriaNeural"):
+        """Add SSML markup for natural pauses, speed, and voice"""
+        prosody_rate = f"{speed_rate:.1f}"
+
+        text = text.replace('.', '.<break time="500ms"/>')
+        text = text.replace(',', ',<break time="300ms"/>')
+        text = text.replace('!', '!<break time="500ms"/>')
+        text = text.replace('?', '?<break time="500ms"/>')
+        text = text.replace(';', ';<break time="300ms"/>')
+
+        ssml = f'''<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xml:lang="en-US">
+            <voice name="{voice_name}">
+                <prosody rate="{prosody_rate}">
+                    {text}
+                </prosody>
+            </voice>
+        </speak>'''
+        
+        return ssml
+
+    
+    def generate_audio(self, text, language, speed_rate=0.8):
+        """Generate audio using Azure TTS"""
+        try:
+            # Check cache first
+            cache_key = f"{text}_{language}_{speed_rate}"
+            if cache_key in self._audio_cache:
+                return self._audio_cache[cache_key]
+            
+            # Set voice based on language
+            voice_name = self._get_voice_name(language)
+            self.speech_config.speech_synthesis_voice_name = voice_name
+            
+            # Create synthesizer without audio config to get audio data directly
+            synthesizer = speechsdk.SpeechSynthesizer(
+                speech_config=self.speech_config,
+                audio_config=None  # This will return audio data in result
+            )
+            
+            # Add SSML markup for pauses and speed
+            ssml_text = self._add_speech_marks(text, speed_rate, voice_name)
+            
+            # Synthesize speech
+            result = synthesizer.speak_ssml_async(ssml_text).get()
+            
+            if result.reason == speechsdk.ResultReason.SynthesizingAudioCompleted:
+                # Get audio data directly from result
+                audio_data = result.audio_data
+                
+                # Encode as base64
+                audio_base64 = base64.b64encode(audio_data).decode('utf-8')
+                
+                # Cache the result
+                self._audio_cache[cache_key] = audio_base64
+                
+                return audio_base64
+            elif result.reason == speechsdk.ResultReason.Canceled:
+                cancellation = result.cancellation_details
+                print(f"Speech synthesis canceled: {cancellation.reason}")
+                if cancellation.reason == speechsdk.CancellationReason.Error:
+                    print(f"Error details: {cancellation.error_details}")
+                return None
+            else:
+                print(f"Speech synthesis failed: {result.reason}")
+                return None
+                
+        except Exception as e:
+            print(f"Error generating audio: {str(e)}")
+            import traceback
+            traceback.print_exc()
+            return None
     
     def detect_intent(self, message, user_native_language, user_learning_language):
         """
@@ -95,8 +210,8 @@ Guidelines:
         
         return system_prompt
     
-    def generate_response(self, user_id, message_content):
-        """Main method to generate chat response with persistent memory"""
+    def generate_response(self, user_id, message_content, audio_speed=0.8):
+        """Main method to generate chat response with persistent memory and audio"""
         try:
             # Get user data
             user_data = find_user_by_id(user_id)
@@ -113,10 +228,14 @@ Guidelines:
             # For now, only handle chat mode
             if intent == 'teaching':
                 # TODO: Route to teaching service
+                response_text = f"I detected you need help! For now, I'll continue chatting in {user_data['learningLanguage']}. Teaching mode coming soon!"
+                audio_data = self.generate_audio(response_text, user_data['learningLanguage'], audio_speed)
+                
                 return {
-                    'response': f"I detected you need help! For now, I'll continue chatting in {user_data['learningLanguage']}. Teaching mode coming soon!",
+                    'response': response_text,
                     'intent': 'teaching',
-                    'audio_language': user_data['learningLanguage']
+                    'audio_language': user_data['learningLanguage'],
+                    'audio_data': audio_data
                 }
             
             # Add user message to persistent conversation
@@ -143,6 +262,13 @@ Guidelines:
             
             bot_response_content = response.choices[0].message.content.strip()
             
+            # Generate audio for the response
+            audio_data = self.generate_audio(
+                bot_response_content, 
+                user_data['learningLanguage'],
+                audio_speed
+            )
+            
             # Add bot response to persistent conversation
             self.conversation_service.add_message(
                 user_id, bot_response_content, 'bot', 'chat', user_data['learningLanguage']
@@ -151,15 +277,30 @@ Guidelines:
             return {
                 'response': bot_response_content,
                 'intent': 'chat',
-                'audio_language': user_data['learningLanguage']
+                'audio_language': user_data['learningLanguage'],
+                'audio_data': audio_data
             }
             
         except Exception as e:
             # Graceful error handling
+            error_message = "I'm sorry, I'm having trouble right now. Please try again in a moment."
+            audio_data = None
+            
+            if user_data:
+                try:
+                    audio_data = self.generate_audio(
+                        error_message, 
+                        user_data.get('learningLanguage', 'English'),
+                        audio_speed
+                    )
+                except:
+                    pass
+            
             return {
-                'response': "I'm sorry, I'm having trouble right now. Please try again in a moment.",
+                'response': error_message,
                 'intent': 'error',
-                'audio_language': user_data.get('learningLanguage', 'English'),
+                'audio_language': user_data.get('learningLanguage', 'English') if user_data else 'English',
+                'audio_data': audio_data,
                 'error': str(e)
             }
     
@@ -168,6 +309,9 @@ Guidelines:
         return self.conversation_service.get_conversation_history(user_id)
     
     def start_new_session(self, user_id):
-        """Start new conversation session"""
+        """Start new conversation session and clear audio cache"""
+        # Clear audio cache for this session
+        self._audio_cache.clear()
+        
         self.conversation_service.start_new_session(user_id)
         return {"message": "New session started"}

@@ -635,3 +635,107 @@ body {
   color: var(--text-muted);
   margin: 0;
 }
+
+/* Audio Button Styles */
+.audio-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  margin-left: 0.5rem;
+  font-size: 1.2rem;
+  transition: all 0.2s ease;
+  border-radius: 4px;
+  vertical-align: middle;
+}
+
+.audio-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.audio-btn.playing {
+  background: var(--primary);
+  animation: pulse 1.5s infinite;
+}
+
+.audio-btn.regenerate {
+  font-size: 1rem;
+  opacity: 0.7;
+}
+
+.audio-btn.regenerate:hover {
+  opacity: 1;
+  transform: rotate(180deg);
+}
+
+@keyframes pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.6; }
+  100% { opacity: 1; }
+}
+
+/* Speed Control Styles */
+.chat-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.speed-control {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.speed-control label {
+  color: var(--text-muted);
+}
+
+.speed-selector {
+  background: var(--bg-dark);
+  color: var(--text-light);
+  border: 1px solid var(--border);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.speed-selector:hover {
+  border-color: var(--primary);
+}
+
+.speed-selector:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+/* Enhanced message bubble for audio */
+.message-bubble {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.message.bot .message-bubble {
+  flex-direction: row;
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 768px) {
+  .chat-controls {
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.5rem;
+  }
+  
+  .speed-control {
+    font-size: 0.8rem;
+  }
+  
+  .audio-btn {
+    font-size: 1rem;
+    padding: 0.2rem 0.4rem;
+  }
+}

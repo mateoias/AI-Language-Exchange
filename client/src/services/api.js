@@ -47,15 +47,23 @@ export const api = {
     request('/user/personalization', {
       method: 'DELETE'
     }),
-    sendChatMessage: (message) =>
+
+  sendChatMessage: (message, audioSpeed = 0.8) =>
     request('/chat/message', {
       method: 'POST',
-      body: JSON.stringify({ message })
+      body: JSON.stringify({ message, audio_speed: audioSpeed })
     }),
-      getChatHistory: () => request('/chat/history'),
+
+  getChatHistory: () => request('/chat/history'),
 
   startNewChatSession: () =>
     request('/chat/new-session', {
       method: 'POST'
+    }),
+
+  regenerateAudio: (text, language, audioSpeed = 0.8) =>
+    request('/chat/regenerate-audio', {
+      method: 'POST',
+      body: JSON.stringify({ text, language, audio_speed: audioSpeed })
     })
 }

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useAuth } from '../context/AuthContext'
 import { api } from '../services/api'
 
@@ -7,71 +7,183 @@ function Chat() {
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
-  const [historyLoaded, setHistoryLoaded] = useState(false) // NEW: Track if history is loaded
+  const [historyLoaded, setHistoryLoaded] = useState(false)
+  const [audioSpeed, setAudioSpeed] = useState(0.8) // Default 80% speed
+  const [playingAudioId, setPlayingAudioId] = useState(null)
+  
   const { user } = useAuth()
+  const audioRefs = useRef({}) // Store audio elements by message ID
+  const currentAudioRef = useRef(null) // Track currently playing audio
 
-  // FIXED: Load chat history when component mounts
+  // Load chat history when component mounts
   useEffect(() => {
     loadChatHistory()
   }, [])
 
-  // FIXED: Send initial greeting only after history is loaded and if no messages exist
+  // Send initial greeting only after history is loaded and if no messages exist
   useEffect(() => {
-    // Only send greeting if we have user data, history is loaded, no existing messages, and not currently loading
     if (user && historyLoaded && messages.length === 0 && !loading) {
-      // Add a small delay to ensure component is fully mounted
       const timer = setTimeout(() => {
         sendInitialGreeting()
       }, 100)
       
       return () => clearTimeout(timer)
     }
-  }, [user, historyLoaded, messages.length, loading]) // CHANGED: Watch for historyLoaded instead of user
+  }, [user, historyLoaded, messages.length, loading])
 
-  // FIXED: Auto-scroll to bottom when messages change
+  // Auto-scroll to bottom when messages change
   useEffect(() => {
     const messagesContainer = document.querySelector('.chat-messages')
     if (messagesContainer) {
-      // CHANGED: Added timeout to ensure DOM is updated
       setTimeout(() => {
         messagesContainer.scrollTop = messagesContainer.scrollHeight
       }, 50)
     }
   }, [messages])
 
-  // FIXED: Updated to set historyLoaded flag
+  // Cleanup audio on unmount
+  useEffect(() => {
+    return () => {
+      if (currentAudioRef.current) {
+        currentAudioRef.current.pause()
+        currentAudioRef.current = null
+      }
+    }
+  }, [])
+
   const loadChatHistory = async () => {
     try {
       const history = await api.getChatHistory()
       if (history.messages && history.messages.length > 0) {
         setMessages(history.messages)
       }
-      // CHANGED: Always set historyLoaded to true, regardless of whether there are messages
       setHistoryLoaded(true)
     } catch (err) {
       console.error('Failed to load chat history:', err)
-      // CHANGED: Set historyLoaded to true even on error so greeting can be sent
       setHistoryLoaded(true)
     }
   }
 
-  // FIXED: Removed async and made function synchronous
-  const sendInitialGreeting = () => {
-    // CHANGED: Check if user exists before accessing properties
+  const sendInitialGreeting = async () => {
     if (!user) return
     
     const greetingMessage = `¡Hola ${user.username}! ¿De qué te gustaría hablar hoy?`
     
-    const botMessage = {
-      id: `greeting-${Date.now()}`, // CHANGED: Unique ID to prevent conflicts
-      content: greetingMessage,
-      sender: 'bot',
-      timestamp: new Date().toISOString(),
-      intent: 'chat',
-      audio_language: user.learningLanguage
+    // Generate audio for greeting
+    try {
+      const audioResponse = await api.regenerateAudio(
+        greetingMessage,
+        user.learningLanguage,
+        audioSpeed
+      )
+      
+      const botMessage = {
+        id: `greeting-${Date.now()}`,
+        content: greetingMessage,
+        sender: 'bot',
+        timestamp: new Date().toISOString(),
+        intent: 'chat',
+        audio_language: user.learningLanguage,
+        audio_data: audioResponse.audio_data
+      }
+      
+      setMessages([botMessage])
+      
+      // Play the greeting audio automatically
+      setTimeout(() => playAudio(botMessage.id, audioResponse.audio_data), 100)
+      
+    } catch (err) {
+      // If audio fails, still show the message
+      const botMessage = {
+        id: `greeting-${Date.now()}`,
+        content: greetingMessage,
+        sender: 'bot',
+        timestamp: new Date().toISOString(),
+        intent: 'chat',
+        audio_language: user.learningLanguage
+      }
+      setMessages([botMessage])
     }
-    
-    setMessages([botMessage])
+  }
+
+  const playAudio = (messageId, audioData) => {
+    // Stop any currently playing audio
+    if (currentAudioRef.current) {
+      currentAudioRef.current.pause()
+      setPlayingAudioId(null)
+    }
+
+    if (!audioData) return
+
+    try {
+      // Create audio element if it doesn't exist
+      if (!audioRefs.current[messageId]) {
+        const audio = new Audio(`data:audio/mp3;base64,${audioData}`)
+        audioRefs.current[messageId] = audio
+        
+        // Set up event listeners
+        audio.addEventListener('ended', () => {
+          setPlayingAudioId(null)
+          currentAudioRef.current = null
+        })
+        
+        audio.addEventListener('error', (e) => {
+          console.error('Audio playback error:', e)
+          setPlayingAudioId(null)
+          currentAudioRef.current = null
+        })
+      }
+
+      // Play the audio
+      const audio = audioRefs.current[messageId]
+      currentAudioRef.current = audio
+      setPlayingAudioId(messageId)
+      audio.play().catch(err => {
+        console.error('Failed to play audio:', err)
+        setPlayingAudioId(null)
+      })
+      
+    } catch (err) {
+      console.error('Audio setup error:', err)
+    }
+  }
+
+  const stopAudio = () => {
+    if (currentAudioRef.current) {
+      currentAudioRef.current.pause()
+      currentAudioRef.current.currentTime = 0
+      setPlayingAudioId(null)
+      currentAudioRef.current = null
+    }
+  }
+
+  const regenerateAudioWithNewSpeed = async (message) => {
+    try {
+      const response = await api.regenerateAudio(
+        message.content,
+        message.audio_language,
+        audioSpeed
+      )
+      
+      if (response.audio_data) {
+        // Update message with new audio
+        setMessages(prev => prev.map(msg => 
+          msg.id === message.id 
+            ? { ...msg, audio_data: response.audio_data }
+            : msg
+        ))
+        
+        // Clear old audio reference
+        if (audioRefs.current[message.id]) {
+          delete audioRefs.current[message.id]
+        }
+        
+        // Play new audio
+        playAudio(message.id, response.audio_data)
+      }
+    } catch (err) {
+      console.error('Failed to regenerate audio:', err)
+    }
   }
 
   const sendMessage = async (e) => {
@@ -93,8 +205,8 @@ function Chat() {
     setMessages(prev => [...prev, newUserMessage])
 
     try {
-      // Send message to backend
-      const response = await api.sendChatMessage(userMessage)
+      // Send message to backend with audio speed preference
+      const response = await api.sendChatMessage(userMessage, audioSpeed)
       
       // Add bot response to UI
       const botMessage = {
@@ -103,10 +215,16 @@ function Chat() {
         sender: 'bot',
         timestamp: new Date().toISOString(),
         intent: response.intent,
-        audio_language: response.audio_language
+        audio_language: response.audio_language,
+        audio_data: response.audio_data
       }
       
       setMessages(prev => [...prev, botMessage])
+      
+      // Auto-play audio for new bot message
+      if (response.audio_data) {
+        setTimeout(() => playAudio(botMessage.id, response.audio_data), 100)
+      }
       
     } catch (err) {
       setError('Failed to send message. Please try again.')
@@ -119,15 +237,19 @@ function Chat() {
     }
   }
 
-  // FIXED: Updated to reset historyLoaded flag and send new greeting
   const startNewSession = async () => {
     try {
+      // Stop any playing audio
+      stopAudio()
+      
+      // Clear audio references
+      audioRefs.current = {}
+      
       await api.startNewChatSession()
       setMessages([])
       setError('')
-      setHistoryLoaded(false) // CHANGED: Reset history loaded flag
+      setHistoryLoaded(false)
       
-      // CHANGED: Send new greeting after clearing messages
       setTimeout(() => {
         if (user) {
           sendInitialGreeting()
@@ -138,7 +260,6 @@ function Chat() {
     }
   }
 
-  // CHANGED: Added loading check and user check for better UX
   if (!user) {
     return <div className="page-content">Loading...</div>
   }
@@ -146,14 +267,29 @@ function Chat() {
   return (
     <div className="chat-container">
       <div className="chat-header">
-        {/* CHANGED: Improved header layout */}
         <div>
           <h2>Practice {user.learningLanguage}</h2>
           <p>Your AI language partner is ready to help!</p>
         </div>
-        <button onClick={startNewSession} className="new-session-btn">
-          New Conversation
-        </button>
+        <div className="chat-controls">
+          <div className="speed-control">
+            <label>Speed:</label>
+            <select 
+              value={audioSpeed} 
+              onChange={(e) => setAudioSpeed(parseFloat(e.target.value))}
+              className="speed-selector"
+            >
+              <option value={0.6}>60%</option>
+              <option value={0.7}>70%</option>
+              <option value={0.8}>80%</option>
+              <option value={0.9}>90%</option>
+              <option value={1.0}>100%</option>
+            </select>
+          </div>
+          <button onClick={startNewSession} className="new-session-btn">
+            New Conversation
+          </button>
+        </div>
       </div>
       
       {error && (
@@ -163,12 +299,34 @@ function Chat() {
       )}
       
       <div className="chat-messages">
-        {/* REMOVED: Welcome message section since we now auto-send greeting */}
-        
         {messages.map((message) => (
           <div key={message.id} className={`message ${message.sender}`}>
             <div className="message-bubble">
               {message.content}
+              {message.sender === 'bot' && message.audio_data && (
+                <button
+                  className={`audio-btn ${playingAudioId === message.id ? 'playing' : ''}`}
+                  onClick={() => {
+                    if (playingAudioId === message.id) {
+                      stopAudio()
+                    } else {
+                      playAudio(message.id, message.audio_data)
+                    }
+                  }}
+                  title={playingAudioId === message.id ? 'Stop' : 'Play audio'}
+                >
+                  {playingAudioId === message.id ? '⏸️' : '🔊'}
+                </button>
+              )}
+              {message.sender === 'bot' && !message.audio_data && (
+                <button
+                  className="audio-btn regenerate"
+                  onClick={() => regenerateAudioWithNewSpeed(message)}
+                  title="Generate audio"
+                >
+                  🔄
+                </button>
+              )}
             </div>
           </div>
         ))}
