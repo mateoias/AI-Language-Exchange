@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { useAuth } from '../context/AuthContext'
 import { api } from '../services/api'
+import { getGreeting, getPlaceholder, getErrorMessage } from '../config/LanguageConfig'
 
 function Chat() {
   const [messages, setMessages] = useState([])
@@ -66,8 +67,7 @@ function Chat() {
 
   const sendInitialGreeting = async () => {
     if (!user) return
-    
-    const greetingMessage = `¡Hola ${user.username}! ¿De qué te gustaría hablar hoy?`
+    const greetingMessage = getGreeting(user.learningLanguage, user.username)
     
     // Generate audio for greeting
     try {
@@ -396,7 +396,7 @@ function Chat() {
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          placeholder={`Type in ${user.learningLanguage} or ${user.nativeLanguage}...`}
+          placeholder={getPlaceholder(user.learningLanguage, user.nativeLanguage)}
           disabled={loading}
         />
         <button type="submit" disabled={loading || !input.trim()}>

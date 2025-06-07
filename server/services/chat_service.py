@@ -3,6 +3,8 @@ import azure.cognitiveservices.speech as speechsdk
 from models.conversation import Conversation, Message
 from utils.file_utils import find_user_by_id
 from services.conversation_service import ConversationService
+from language_config import get_voice_name, get_pause_durations, get_error_message
+
 from flask import current_app
 import json
 import os
@@ -45,25 +47,31 @@ class ChatService:
             )
         return self._speech_config
     
-    def _get_voice_name(self, language):
+    # def _get_voice_name(self, language):
+    #     """Map language to Azure voice name"""
+    #     # Using neural voices for better quality
+    #     voice_map = {
+    #         'Spanish': 'es-MX-DaliaNeural',      # Female Spanish voice
+    #         'English': 'en-US-GuyNeural',         # Male English voice
+    #         'French': 'fr-FR-HenriNeural',        # Male French voice
+    #         'German': 'de-DE-ConradNeural',       # Male German voice
+    #         'Italian': 'it-IT-DiegoNeural',       # Male Italian voice
+    #         'Portuguese': 'pt-BR-AntonioNeural',  # Male Brazilian Portuguese
+    #         'Russian': 'ru-RU-DmitryNeural',      # Male Russian voice
+    #         'Chinese': 'zh-CN-YunxiNeural',       # Male Mandarin voice
+    #         'Japanese': 'ja-JP-KeitaNeural',      # Male Japanese voice
+    #         'Korean': 'ko-KR-InJoonNeural',       # Male Korean voice
+    #         'Arabic': 'ar-SA-HamedNeural',        # Male Arabic voice
+    #         'Hindi': 'hi-IN-MadhurNeural'         # Male Hindi voice
+    #     }
+    #     return voice_map.get(language, 'en-US-GuyNeural')  # Default to English
+    def _get_voice_name(self, language, voice_type='male'):
         """Map language to Azure voice name"""
-        # Using neural voices for better quality
-        voice_map = {
-            'Spanish': 'es-MX-DaliaNeural',      # Female Spanish voice
-            'English': 'en-US-GuyNeural',         # Male English voice
-            'French': 'fr-FR-HenriNeural',        # Male French voice
-            'German': 'de-DE-ConradNeural',       # Male German voice
-            'Italian': 'it-IT-DiegoNeural',       # Male Italian voice
-            'Portuguese': 'pt-BR-AntonioNeural',  # Male Brazilian Portuguese
-            'Russian': 'ru-RU-DmitryNeural',      # Male Russian voice
-            'Chinese': 'zh-CN-YunxiNeural',       # Male Mandarin voice
-            'Japanese': 'ja-JP-KeitaNeural',      # Male Japanese voice
-            'Korean': 'ko-KR-InJoonNeural',       # Male Korean voice
-            'Arabic': 'ar-SA-HamedNeural',        # Male Arabic voice
-            'Hindi': 'hi-IN-MadhurNeural'         # Male Hindi voice
-        }
-        return voice_map.get(language, 'en-US-GuyNeural')  # Default to English
-    
+        return get_voice_name(language, voice_type)
+
+    # ... rest of the function
+
+
     # def _add_speech_marks(self, text, speed_rate=1.0, voice_name="en-US-AriaNeural"):
     #     """Add SSML markup for natural pauses, speed, and voice"""
     #     prosody_rate = f"{speed_rate:.1f}"
@@ -83,19 +91,19 @@ class ChatService:
     #     </speak>'''
         
     #     return ssml
-
     def _add_speech_marks(self, text, speed_rate=1.0, voice_name="en-US-AriaNeural"):
         """Add SSML markup for natural pauses, speed, and voice"""
         prosody_rate = f"{speed_rate:.1f}"
         
-        # Make pauses inversely proportional to speed
-        # Slower speech = longer pauses, faster speech = shorter pauses
+        # Get pause durations from config
+        pauses = get_pause_durations()
         pause_multiplier = 1.0 / speed_rate
         
         # Calculate pause durations
-        sentence_pause = int(300 * pause_multiplier)
-        comma_pause = int(150 * pause_multiplier)
-        semicolon_pause = int(200 * pause_multiplier)
+        sentence_pause = int(pauses['sentence'] * pause_multiplier)
+        comma_pause = int(pauses['comma'] * pause_multiplier)
+        semicolon_pause = int(pauses['semicolon'] * pause_multiplier)
+    
         
         # Apply pauses
         text = text.replace('.', f'.<break time="{sentence_pause}ms"/>')
@@ -313,7 +321,7 @@ Guidelines:
             
         except Exception as e:
             # Graceful error handling
-            error_message = "I'm sorry, I'm having trouble right now. Please try again in a moment."
+            error_message = get_error_message(user_data.get('learningLanguage', 'English'))
             audio_data = None
             
             if user_data:

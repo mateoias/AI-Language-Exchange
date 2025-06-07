@@ -120,7 +120,21 @@
         }
       ],
       "summary": "- The user enjoys music, specifically Mozart's \"Die Zauberflöte\".\n- The user plays the oboe and has been playing for approximately 30 years.\n- The user has experience playing in an orchestra, where they performed \"Die Zauberflöte\".\n- The AI tutor did not get the information about which orchestra the user played in. This can be a topic for future conversations. \n- The conversation mainly revolved around the user's musical interests and experiences."
+    },
+    {
+      "id": "7cd023ae-9e0a-47de-86fd-07cfc35de1de",
+      "user_id": "24bcfd2c-296c-48b3-9086-7dcc616d9fcb",
+      "created_at": "2025-06-07T02:04:59.481611",
+      "messages": [],
+      "summary": ""
+    },
+    {
+      "id": "acf69f76-cb12-4527-a7b9-aa27db6c8d6f",
+      "user_id": "24bcfd2c-296c-48b3-9086-7dcc616d9fcb",
+      "created_at": "2025-06-07T02:05:14.784646",
+      "messages": [],
+      "summary": ""
     }
   ],
-  "current_conversation_id": "142cc242-dba3-4044-bd39-d3b428d08059"
+  "current_conversation_id": "acf69f76-cb12-4527-a7b9-aa27db6c8d6f"
 }
