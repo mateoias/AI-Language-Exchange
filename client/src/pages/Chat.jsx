@@ -158,13 +158,14 @@ function Chat() {
   }
 
   const regenerateAudioWithNewSpeed = async (message) => {
+
     try {
       const response = await api.regenerateAudio(
         message.content,
         message.audio_language,
         audioSpeed
       )
-      
+
       if (response.audio_data) {
         // Update message with new audio
         setMessages(prev => prev.map(msg => 
@@ -183,6 +184,54 @@ function Chat() {
       }
     } catch (err) {
       console.error('Failed to regenerate audio:', err)
+    }
+  }
+
+  // New function to handle speed changes directly
+  const handleSpeedChange = async (e) => {
+    const newSpeed = parseFloat(e.target.value)
+    console.log('[DEBUG] Speed dropdown changed to', newSpeed)
+    setAudioSpeed(newSpeed)
+    
+    // Directly regenerate the last bot message audio
+    const lastBotMessage = messages
+      .filter(msg => msg.sender === 'bot' && msg.audio_data)
+      .pop()
+    
+    if (lastBotMessage) {
+      console.log('[DEBUG] Found message to regenerate:', lastBotMessage.id)
+      
+      try {
+        const response = await api.regenerateAudio(
+          lastBotMessage.content,
+          lastBotMessage.audio_language,
+          newSpeed  // Use newSpeed directly, not audioSpeed state
+        )
+        
+        console.log('[DEBUG] Got new audio response')
+        
+        if (response.audio_data) {
+          // Update the message with new audio
+          setMessages(prev => prev.map(msg => 
+            msg.id === lastBotMessage.id 
+              ? { ...msg, audio_data: response.audio_data }
+              : msg
+          ))
+          
+          // Clear old audio reference
+          if (audioRefs.current[lastBotMessage.id]) {
+            delete audioRefs.current[lastBotMessage.id]
+          }
+          
+          // Stop current playback and play new audio
+          stopAudio()
+          setTimeout(() => {
+            playAudio(lastBotMessage.id, response.audio_data)
+          }, 100)
+        }
+      } catch (err) {
+        console.error('[DEBUG] Failed to regenerate audio:', err)
+      }
     }
   }
 
@@ -276,14 +325,16 @@ function Chat() {
             <label>Speed:</label>
             <select 
               value={audioSpeed} 
-              onChange={(e) => setAudioSpeed(parseFloat(e.target.value))}
+              onChange={handleSpeedChange}
               className="speed-selector"
             >
+              <option value={0.5}>50%</option>
               <option value={0.6}>60%</option>
               <option value={0.7}>70%</option>
               <option value={0.8}>80%</option>
               <option value={0.9}>90%</option>
               <option value={1.0}>100%</option>
+              <option value={1.2}>120%</option>
             </select>
           </div>
           <button onClick={startNewSession} className="new-session-btn">

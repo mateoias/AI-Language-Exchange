@@ -49,7 +49,7 @@ class ChatService:
         """Map language to Azure voice name"""
         # Using neural voices for better quality
         voice_map = {
-            'Spanish': 'es-ES-AlvaroNeural',      # Male Spanish voice
+            'Spanish': 'es-MX-DaliaNeural',      # Female Spanish voice
             'English': 'en-US-GuyNeural',         # Male English voice
             'French': 'fr-FR-HenriNeural',        # Male French voice
             'German': 'de-DE-ConradNeural',       # Male German voice
@@ -64,15 +64,45 @@ class ChatService:
         }
         return voice_map.get(language, 'en-US-GuyNeural')  # Default to English
     
+    # def _add_speech_marks(self, text, speed_rate=1.0, voice_name="en-US-AriaNeural"):
+    #     """Add SSML markup for natural pauses, speed, and voice"""
+    #     prosody_rate = f"{speed_rate:.1f}"
+
+    #     text = text.replace('.', '.<break time="300ms"/>')
+    #     text = text.replace(',', ',<break time="150ms"/>')
+    #     text = text.replace('!', '!<break time="300ms"/>')
+    #     text = text.replace('?', '?<break time="300ms"/>')
+    #     text = text.replace(';', ';<break time="200ms"/>')
+
+    #     ssml = f'''<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xml:lang="en-US">
+    #         <voice name="{voice_name}">
+    #             <prosody rate="{prosody_rate}">
+    #                 {text}
+    #             </prosody>
+    #         </voice>
+    #     </speak>'''
+        
+    #     return ssml
+
     def _add_speech_marks(self, text, speed_rate=1.0, voice_name="en-US-AriaNeural"):
         """Add SSML markup for natural pauses, speed, and voice"""
         prosody_rate = f"{speed_rate:.1f}"
-
-        text = text.replace('.', '.<break time="500ms"/>')
-        text = text.replace(',', ',<break time="300ms"/>')
-        text = text.replace('!', '!<break time="500ms"/>')
-        text = text.replace('?', '?<break time="500ms"/>')
-        text = text.replace(';', ';<break time="300ms"/>')
+        
+        # Make pauses inversely proportional to speed
+        # Slower speech = longer pauses, faster speech = shorter pauses
+        pause_multiplier = 1.0 / speed_rate
+        
+        # Calculate pause durations
+        sentence_pause = int(300 * pause_multiplier)
+        comma_pause = int(150 * pause_multiplier)
+        semicolon_pause = int(200 * pause_multiplier)
+        
+        # Apply pauses
+        text = text.replace('.', f'.<break time="{sentence_pause}ms"/>')
+        text = text.replace(',', f',<break time="{comma_pause}ms"/>')
+        text = text.replace('!', f'!<break time="{sentence_pause}ms"/>')
+        text = text.replace('?', f'?<break time="{sentence_pause}ms"/>')
+        text = text.replace(';', f';<break time="{semicolon_pause}ms"/>')
 
         ssml = f'''<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xml:lang="en-US">
             <voice name="{voice_name}">
@@ -83,7 +113,6 @@ class ChatService:
         </speak>'''
         
         return ssml
-
     
     def generate_audio(self, text, language, speed_rate=0.8):
         """Generate audio using Azure TTS"""
@@ -118,7 +147,8 @@ class ChatService:
                 
                 # Cache the result
                 self._audio_cache[cache_key] = audio_base64
-                
+                print(f"Generating audio with speed: {speed_rate}")  # Add this debug line
+
                 return audio_base64
             elif result.reason == speechsdk.ResultReason.Canceled:
                 cancellation = result.cancellation_details

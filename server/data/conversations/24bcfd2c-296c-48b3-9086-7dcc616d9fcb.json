@@ -1,0 +1,126 @@
+{
+  "user_id": "24bcfd2c-296c-48b3-9086-7dcc616d9fcb",
+  "conversations": [
+    {
+      "id": "142cc242-dba3-4044-bd39-d3b428d08059",
+      "user_id": "24bcfd2c-296c-48b3-9086-7dcc616d9fcb",
+      "created_at": "2025-06-07T00:34:17.443970",
+      "messages": [
+        {
+          "id": "user-0-1749256457",
+          "content": "ich habe Musik gern",
+          "sender": "user",
+          "timestamp": "2025-06-07T00:34:17.443946",
+          "intent": "chat",
+          "audio_language": "German"
+        },
+        {
+          "id": "bot-1-1749256459",
+          "content": "Das ist toll! Was für Musik hörst du am liebsten?",
+          "sender": "bot",
+          "timestamp": "2025-06-07T00:34:19.173237",
+          "intent": "chat",
+          "audio_language": "German"
+        },
+        {
+          "id": "user-1-1749256514",
+          "content": "Mozart Die Zauberflaute",
+          "sender": "user",
+          "timestamp": "2025-06-07T00:35:14.773450",
+          "intent": "chat",
+          "audio_language": "German"
+        },
+        {
+          "id": "bot-1-1749256516",
+          "content": "Das ist eine wunderbare Wahl! Spielst du auch ein Instrument?",
+          "sender": "bot",
+          "timestamp": "2025-06-07T00:35:16.467920",
+          "intent": "chat",
+          "audio_language": "German"
+        },
+        {
+          "id": "user-1-1749256530",
+          "content": "naturlich. Di Oboe",
+          "sender": "user",
+          "timestamp": "2025-06-07T00:35:30.612233",
+          "intent": "chat",
+          "audio_language": "German"
+        },
+        {
+          "id": "bot-1-1749256532",
+          "content": "Das ist beeindruckend! Wie lange spielst du schon Oboe?",
+          "sender": "bot",
+          "timestamp": "2025-06-07T00:35:32.959940",
+          "intent": "chat",
+          "audio_language": "German"
+        },
+        {
+          "id": "user-1-1749256546",
+          "content": "vieleicht 30 Jahren",
+          "sender": "user",
+          "timestamp": "2025-06-07T00:35:46.114911",
+          "intent": "chat",
+          "audio_language": "German"
+        },
+        {
+          "id": "bot-1-1749256548",
+          "content": "Wow, das ist eine lange Zeit! Hast du jemals in einem Orchester gespielt?",
+          "sender": "bot",
+          "timestamp": "2025-06-07T00:35:48.567247",
+          "intent": "chat",
+          "audio_language": "German"
+        },
+        {
+          "id": "user-1-1749256565",
+          "content": "Ja, wir haben Die Zauberflaute gespielt",
+          "sender": "user",
+          "timestamp": "2025-06-07T00:36:05.531855",
+          "intent": "chat",
+          "audio_language": "German"
+        },
+        {
+          "id": "bot-1-1749256567",
+          "content": "Das muss eine tolle Erfahrung gewesen sein! In welchem Orchester hast du gespielt?",
+          "sender": "bot",
+          "timestamp": "2025-06-07T00:36:07.138032",
+          "intent": "chat",
+          "audio_language": "German"
+        },
+        {
+          "id": "user-1-1749256580",
+          "content": "im Uni",
+          "sender": "user",
+          "timestamp": "2025-06-07T00:36:20.456908",
+          "intent": "chat",
+          "audio_language": "German"
+        },
+        {
+          "id": "bot-1-1749256582",
+          "content": "Das ist toll! Welche war deine Lieblingsaufführung an der Uni?",
+          "sender": "bot",
+          "timestamp": "2025-06-07T00:36:22.059451",
+          "intent": "chat",
+          "audio_language": "German"
+        },
+        {
+          "id": "user-1-1749256595",
+          "content": "MusikGeshichte",
+          "sender": "user",
+          "timestamp": "2025-06-07T00:36:35.456717",
+          "intent": "chat",
+          "audio_language": "German"
+        },
+        {
+          "id": "bot-1-1749256596",
+          "content": "Interessant! Was hat dir an der Musikgeschichte am meisten gefallen?",
+          "sender": "bot",
+          "timestamp": "2025-06-07T00:36:36.974686",
+          "intent": "chat",
+          "audio_language": "German"
+        }
+      ],
+      "summary": "- The user enjoys music, specifically Mozart's \"Die Zauberflöte\".\n- The user plays the oboe and has been playing for approximately 30 years.\n- The user has experience playing in an orchestra, where they performed \"Die Zauberflöte\".\n- The AI tutor did not get the information about which orchestra the user played in. This can be a topic for future conversations. \n- The conversation mainly revolved around the user's musical interests and experiences."
+    }
+  ],
+  "current_conversation_id": "142cc242-dba3-4044-bd39-d3b428d08059"
+}
