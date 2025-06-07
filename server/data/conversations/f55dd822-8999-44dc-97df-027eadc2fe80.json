@@ -2,6 +2,13 @@
   "user_id": "f55dd822-8999-44dc-97df-027eadc2fe80",
   "conversations": [
     {
+      "id": "2ac7d8a0-a730-4587-a016-4134d0a4914f",
+      "user_id": "f55dd822-8999-44dc-97df-027eadc2fe80",
+      "created_at": "2025-06-07T02:14:39.264723",
+      "messages": [],
+      "summary": ""
+    },
+    {
       "id": "9d1e3c1f-a874-4b30-8d39-699d8c756ee5",
       "user_id": "f55dd822-8999-44dc-97df-027eadc2fe80",
       "created_at": "2025-06-07T00:31:20.150798",
@@ -111,47 +118,7 @@
         }
       ],
       "summary": ""
-    },
-    {
-      "id": "d84040fe-8b06-49e9-b536-bc1e9ea52f07",
-      "user_id": "f55dd822-8999-44dc-97df-027eadc2fe80",
-      "created_at": "2025-06-07T00:09:54.206567",
-      "messages": [
-        {
-          "id": "user-5-1749255020",
-          "content": "de mi casa",
-          "sender": "user",
-          "timestamp": "2025-06-07T00:10:20.845134",
-          "intent": "chat",
-          "audio_language": "Spanish"
-        },
-        {
-          "id": "bot-5-1749255022",
-          "content": "¿Qué te gustaría contarme sobre tu casa, Mateoias? ¿Es grande o pequeña?",
-          "sender": "bot",
-          "timestamp": "2025-06-07T00:10:22.418632",
-          "intent": "chat",
-          "audio_language": "Spanish"
-        },
-        {
-          "id": "user-5-1749255058",
-          "content": "es granda",
-          "sender": "user",
-          "timestamp": "2025-06-07T00:10:58.362229",
-          "intent": "chat",
-          "audio_language": "Spanish"
-        },
-        {
-          "id": "bot-5-1749255059",
-          "content": "Creo que quisiste decir \"es grande\". ¿Cuántas habitaciones tiene tu casa?",
-          "sender": "bot",
-          "timestamp": "2025-06-07T00:10:59.973370",
-          "intent": "chat",
-          "audio_language": "Spanish"
-        }
-      ],
-      "summary": ""
     }
   ],
-  "current_conversation_id": "9d1e3c1f-a874-4b30-8d39-699d8c756ee5"
+  "current_conversation_id": "2ac7d8a0-a730-4587-a016-4134d0a4914f"
 }
