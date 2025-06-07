@@ -2,125 +2,156 @@
   "user_id": "f55dd822-8999-44dc-97df-027eadc2fe80",
   "conversations": [
     {
-      "id": "196b5442-c845-44b1-b2e6-7af2ed932b69",
+      "id": "9d1e3c1f-a874-4b30-8d39-699d8c756ee5",
       "user_id": "f55dd822-8999-44dc-97df-027eadc2fe80",
-      "created_at": "2025-06-05T02:25:52.458505",
+      "created_at": "2025-06-07T00:31:20.150798",
+      "messages": [],
+      "summary": ""
+    },
+    {
+      "id": "646c597d-6ccd-4221-939a-03f1160015f6",
+      "user_id": "f55dd822-8999-44dc-97df-027eadc2fe80",
+      "created_at": "2025-06-07T00:23:21.286239",
       "messages": [
         {
-          "id": "user-1-1749090357",
-          "content": "la musica",
+          "id": "user-5-1749256233",
+          "content": "De mi familia",
           "sender": "user",
-          "timestamp": "2025-06-05T02:25:57.263966",
+          "timestamp": "2025-06-07T00:30:33.525668",
           "intent": "chat",
           "audio_language": "Spanish"
         },
         {
-          "id": "bot-1-1749090359",
-          "content": "¡La música es un tema genial! ¿Cuál es tu tipo de música favorito, Mateoias?",
+          "id": "bot-5-1749256235",
+          "content": "¡Claro, Mateoias! Me encantaría saber más sobre tu familia. ¿Cuántos hermanos tienes?",
           "sender": "bot",
-          "timestamp": "2025-06-05T02:25:59.477675",
-          "intent": "chat",
-          "audio_language": "Spanish"
-        },
-        {
-          "id": "user-1-1749090365",
-          "content": "el jazz",
-          "sender": "user",
-          "timestamp": "2025-06-05T02:26:05.261058",
-          "intent": "chat",
-          "audio_language": "Spanish"
-        },
-        {
-          "id": "bot-1-1749090367",
-          "content": "¡El jazz es un género maravilloso! ¿Tienes algún músico de jazz favorito, Mateoias?",
-          "sender": "bot",
-          "timestamp": "2025-06-05T02:26:07.090095",
-          "intent": "chat",
-          "audio_language": "Spanish"
-        },
-        {
-          "id": "user-1-1749090381",
-          "content": "Maynard Ferguson",
-          "sender": "user",
-          "timestamp": "2025-06-05T02:26:21.699352",
-          "intent": "chat",
-          "audio_language": "Spanish"
-        },
-        {
-          "id": "bot-1-1749090383",
-          "content": "¡Maynard Ferguson es un gran trompetista! ¿Cuál es tu canción favorita de él, Mateoias?",
-          "sender": "bot",
-          "timestamp": "2025-06-05T02:26:23.218189",
-          "intent": "chat",
-          "audio_language": "Spanish"
-        },
-        {
-          "id": "user-1-1749090389",
-          "content": "Birdland",
-          "sender": "user",
-          "timestamp": "2025-06-05T02:26:29.020600",
-          "intent": "chat",
-          "audio_language": "Spanish"
-        },
-        {
-          "id": "bot-1-1749090391",
-          "content": "¡Birdland es una canción increíble! ¿Qué te gusta de esa canción, Mateoias?",
-          "sender": "bot",
-          "timestamp": "2025-06-05T02:26:31.350817",
-          "intent": "chat",
-          "audio_language": "Spanish"
-        },
-        {
-          "id": "user-1-1749090402",
-          "content": "do you like him?",
-          "sender": "user",
-          "timestamp": "2025-06-05T02:26:42.879752",
-          "intent": "chat",
-          "audio_language": "Spanish"
-        },
-        {
-          "id": "bot-1-1749090405",
-          "content": "Como un asistente de inteligencia artificial, no tengo preferencias personales. Pero, ¿qué te atrajo de la música de Maynard Ferguson, Mateoias?",
-          "sender": "bot",
-          "timestamp": "2025-06-05T02:26:45.032338",
-          "intent": "chat",
-          "audio_language": "Spanish"
-        },
-        {
-          "id": "user-1-1749090521",
-          "content": "what kind of music do I like?",
-          "sender": "user",
-          "timestamp": "2025-06-05T02:28:41.264398",
-          "intent": "chat",
-          "audio_language": "Spanish"
-        },
-        {
-          "id": "bot-1-1749090523",
-          "content": "Dijiste que te gusta el jazz, especialmente Maynard Ferguson. ¿Hay algún otro género musical que te guste, Mateoias?",
-          "sender": "bot",
-          "timestamp": "2025-06-05T02:28:43.087588",
-          "intent": "chat",
-          "audio_language": "Spanish"
-        },
-        {
-          "id": "user-1-1749090531",
-          "content": "claro que si!",
-          "sender": "user",
-          "timestamp": "2025-06-05T02:28:51.333493",
-          "intent": "chat",
-          "audio_language": "Spanish"
-        },
-        {
-          "id": "bot-1-1749090533",
-          "content": "¡Genial! ¿Podrías decirme qué otros géneros musicales te gustan, Mateoias?",
-          "sender": "bot",
-          "timestamp": "2025-06-05T02:28:53.209865",
+          "timestamp": "2025-06-07T00:30:35.522970",
           "intent": "chat",
           "audio_language": "Spanish"
         }
       ],
-      "summary": "- User's name is Mateoias.\n- The conversation was about music, specifically jazz.\n- Mateoias' favorite jazz musician is Maynard Ferguson.\n- His favorite song by Maynard Ferguson is \"Birdland\".\n- The AI tutor does not have personal preferences as it is an artificial intelligence.\n- The AI tutor asked Mateoias what attracted him to Maynard Ferguson's music."
+      "summary": ""
+    },
+    {
+      "id": "6137d987-3827-46fb-9438-9d01f94b0b7c",
+      "user_id": "f55dd822-8999-44dc-97df-027eadc2fe80",
+      "created_at": "2025-06-07T00:17:38.994937",
+      "messages": [
+        {
+          "id": "user-5-1749255477",
+          "content": "de mi familia",
+          "sender": "user",
+          "timestamp": "2025-06-07T00:17:57.911734",
+          "intent": "chat",
+          "audio_language": "Spanish"
+        },
+        {
+          "id": "bot-5-1749255479",
+          "content": "¡Qué bien! Me encantaría saber más sobre tu familia. ¿Cuántos hermanos tienes?",
+          "sender": "bot",
+          "timestamp": "2025-06-07T00:17:59.598990",
+          "intent": "chat",
+          "audio_language": "Spanish"
+        },
+        {
+          "id": "user-5-1749255502",
+          "content": "uno",
+          "sender": "user",
+          "timestamp": "2025-06-07T00:18:22.257096",
+          "intent": "chat",
+          "audio_language": "Spanish"
+        },
+        {
+          "id": "bot-5-1749255504",
+          "content": "¡Genial! ¿Eres el mayor o el menor?",
+          "sender": "bot",
+          "timestamp": "2025-06-07T00:18:24.102206",
+          "intent": "chat",
+          "audio_language": "Spanish"
+        },
+        {
+          "id": "user-5-1749255542",
+          "content": "el mayor",
+          "sender": "user",
+          "timestamp": "2025-06-07T00:19:02.471671",
+          "intent": "chat",
+          "audio_language": "Spanish"
+        },
+        {
+          "id": "bot-5-1749255544",
+          "content": "¡Interesante! ¿Cómo es tu relación con tu hermano menor?",
+          "sender": "bot",
+          "timestamp": "2025-06-07T00:19:04.119197",
+          "intent": "chat",
+          "audio_language": "Spanish"
+        }
+      ],
+      "summary": ""
+    },
+    {
+      "id": "aed6f0be-ecc2-41fb-9f5c-0af200911c0e",
+      "user_id": "f55dd822-8999-44dc-97df-027eadc2fe80",
+      "created_at": "2025-06-07T00:16:10.583464",
+      "messages": [
+        {
+          "id": "user-5-1749255393",
+          "content": "de la musica",
+          "sender": "user",
+          "timestamp": "2025-06-07T00:16:33.526724",
+          "intent": "chat",
+          "audio_language": "Spanish"
+        },
+        {
+          "id": "bot-5-1749255394",
+          "content": "¿Qué tipo de música te gusta, Mateoias?",
+          "sender": "bot",
+          "timestamp": "2025-06-07T00:16:34.709477",
+          "intent": "chat",
+          "audio_language": "Spanish"
+        }
+      ],
+      "summary": ""
+    },
+    {
+      "id": "d84040fe-8b06-49e9-b536-bc1e9ea52f07",
+      "user_id": "f55dd822-8999-44dc-97df-027eadc2fe80",
+      "created_at": "2025-06-07T00:09:54.206567",
+      "messages": [
+        {
+          "id": "user-5-1749255020",
+          "content": "de mi casa",
+          "sender": "user",
+          "timestamp": "2025-06-07T00:10:20.845134",
+          "intent": "chat",
+          "audio_language": "Spanish"
+        },
+        {
+          "id": "bot-5-1749255022",
+          "content": "¿Qué te gustaría contarme sobre tu casa, Mateoias? ¿Es grande o pequeña?",
+          "sender": "bot",
+          "timestamp": "2025-06-07T00:10:22.418632",
+          "intent": "chat",
+          "audio_language": "Spanish"
+        },
+        {
+          "id": "user-5-1749255058",
+          "content": "es granda",
+          "sender": "user",
+          "timestamp": "2025-06-07T00:10:58.362229",
+          "intent": "chat",
+          "audio_language": "Spanish"
+        },
+        {
+          "id": "bot-5-1749255059",
+          "content": "Creo que quisiste decir \"es grande\". ¿Cuántas habitaciones tiene tu casa?",
+          "sender": "bot",
+          "timestamp": "2025-06-07T00:10:59.973370",
+          "intent": "chat",
+          "audio_language": "Spanish"
+        }
+      ],
+      "summary": ""
     }
   ],
-  "current_conversation_id": "196b5442-c845-44b1-b2e6-7af2ed932b69"
+  "current_conversation_id": "9d1e3c1f-a874-4b30-8d39-699d8c756ee5"
 }
