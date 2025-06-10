@@ -5,9 +5,13 @@ import ProtectedRoute from './components/ProtectedRoute'
 import Home from './pages/Home'
 import Chat from './pages/Chat'
 import About from './pages/About'
+import FAQs from './pages/FAQs'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
 import Personalization from './pages/Personalization'
+import Beginner from './pages/Beginner'
+import Intermediate from './pages/Intermediate'
+import Advanced from './pages/Advanced'
 
 function App() {
   return (
@@ -17,6 +21,10 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
+            <Route path="/faqs" element={<FAQs />} />
+            <Route path="/beginner" element={<Beginner />} />
+            <Route path="/intermediate" element={<Intermediate />} />
+            <Route path="/advanced" element={<Advanced />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route 

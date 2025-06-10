@@ -34,12 +34,26 @@ body {
 
 .main-content {
   flex: 1;
-  margin-left: var(--sidebar-width);
   padding-top: var(--header-height);
+  transition: margin-left 0.3s ease;
 }
 
-.main-content.no-sidebar {
-  margin-left: 0;
+/* Desktop behavior */
+@media (min-width: 769px) {
+  .main-content {
+    margin-left: 0;
+  }
+  
+  .main-content:not(.no-sidebar) {
+    margin-left: var(--sidebar-width);
+  }
+}
+
+/* Mobile behavior */
+@media (max-width: 768px) {
+  .main-content {
+    margin-left: 0;
+  }
 }
 
 /* Header */
@@ -120,6 +134,13 @@ body {
   border-right: 1px solid var(--border);
   padding: 1rem;
   overflow-y: auto;
+  z-index: 50;
+  transition: transform 0.3s ease;
+  transform: translateX(-100%);
+}
+
+.sidebar.open {
+  transform: translateX(0);
 }
 
 .sidebar-section {
@@ -363,10 +384,17 @@ body {
 }
 
 .chat-header {
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-align: left;
   margin-bottom: 2rem;
   padding-bottom: 1rem;
   border-bottom: 1px solid var(--border);
+}
+
+.chat-header div {
+  flex: 1;
 }
 
 .chat-header h2 {
@@ -376,6 +404,7 @@ body {
 
 .chat-header p {
   color: var(--text-muted);
+  margin: 0;
 }
 
 .chat-messages {
@@ -399,6 +428,9 @@ body {
   padding: 0.75rem 1rem;
   border-radius: 12px;
   word-wrap: break-word;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .message.user .message-bubble {
@@ -410,6 +442,7 @@ body {
   background: var(--bg-darker);
   color: var(--text-light);
   border: 1px solid var(--border);
+  flex-direction: row;
 }
 
 .chat-input {
@@ -441,122 +474,6 @@ body {
   background: var(--primary-hover);
 }
 
-/* Page Content */
-.page-content {
-  padding: 2rem;
-  max-width: 1000px;
-  margin: 0 auto;
-}
-
-/* CTA Buttons */
-.cta-buttons {
-  display: flex;
-  gap: 1rem;
-  margin-top: 2rem;
-  flex-wrap: wrap;
-}
-
-.cta-button {
-  display: inline-block;
-  padding: 0.75rem 2rem;
-  border-radius: 8px;
-  font-size: 1.1rem;
-  font-weight: 600;
-  text-decoration: none;
-  transition: all 0.3s ease;
-}
-
-.cta-button.primary {
-  background-color: var(--primary);
-  color: white;
-}
-
-.cta-button.primary:hover {
-  background-color: var(--primary-hover);
-  transform: translateY(-2px);
-}
-
-.cta-button.secondary {
-  background-color: transparent;
-  color: var(--primary);
-  border: 2px solid var(--primary);
-}
-
-.cta-button.secondary:hover {
-  background-color: var(--primary);
-  color: white;
-}
-
-/* Mobile Responsive */
-@media (max-width: 768px) {
-  .sidebar {
-    transform: translateX(-100%);
-    transition: transform 0.3s ease;
-  }
-  
-  .sidebar.open {
-    transform: translateX(0);
-  }
-  
-  .main-content {
-    margin-left: 0;
-  }
-  
-  .header {
-    padding: 0 1rem;
-  }
-  
-  .header-right {
-    gap: 0.5rem;
-  }
-  
-  .user-info {
-    display: none;
-  }
-  
-  .chat-container {
-    padding: 1rem;
-  }
-  
-  .message-bubble {
-    max-width: 85%;
-  }
-  
-  .auth-container,
-  .personalization-container {
-    margin: 1rem;
-    padding: 1.5rem;
-  }
-  
-  .form-actions {
-    flex-direction: column;
-  }
-  
-  .topic-grid {
-    grid-template-columns: 1fr 1fr;
-  }
-  
-  .cta-buttons {
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .cta-button {
-    width: 100%;
-    max-width: 300px;
-    text-align: center;
-  }
-}
-
-@media (max-width: 480px) {
-  .page-content {
-    padding: 1rem;
-  }
-  
-  .topic-grid {
-    grid-template-columns: 1fr;
-  }
-}
 .chat-error {
   background: var(--error);
   color: white;
@@ -609,31 +526,6 @@ body {
   opacity: 0.6;
   cursor: not-allowed;
   background: var(--text-muted);
-}
-
-/* Enhanced Chat Header */
-.chat-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  text-align: left;
-  margin-bottom: 2rem;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid var(--border);
-}
-
-.chat-header div {
-  flex: 1;
-}
-
-.chat-header h2 {
-  color: var(--primary);
-  margin-bottom: 0.5rem;
-}
-
-.chat-header p {
-  color: var(--text-muted);
-  margin: 0;
 }
 
 /* Audio Button Styles */
@@ -711,19 +603,351 @@ body {
   border-color: var(--primary);
 }
 
-/* Enhanced message bubble for audio */
-.message-bubble {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
+/* Page Content */
+/* .page-content {
+  padding: 2rem;
+  max-width: 1000px;
+  margin: 0 auto;
+} */
+
+.page-content {
+  padding: 2rem;
+  max-width: min(95vw, 1400px);
+  margin: 0 auto;
 }
 
-.message.bot .message-bubble {
-  flex-direction: row;
+/* CTA Buttons */
+.cta-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+  flex-wrap: wrap;
 }
 
-/* Mobile responsive adjustments */
+.cta-button {
+  display: inline-block;
+  padding: 0.75rem 2rem;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.cta-button.primary {
+  background-color: var(--primary);
+  color: white;
+}
+
+.cta-button.primary:hover {
+  background-color: var(--primary-hover);
+  transform: translateY(-2px);
+}
+
+.cta-button.secondary {
+  background-color: transparent;
+  color: var(--primary);
+  border: 2px solid var(--primary);
+}
+
+.cta-button.secondary:hover {
+  background-color: var(--primary);
+  color: white;
+}
+
+/* Methodology Pages Styles */
+.methodology-page {
+  min-height: calc(100vh - var(--header-height));
+  background: var(--bg-dark);
+}
+
+.methodology-hero {
+  background: linear-gradient(135deg, var(--bg-darker) 0%, var(--primary) 100%);
+  padding: 4rem 2rem 3rem;
+  text-align: center;
+  color: white;
+}
+
+.methodology-hero h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+.hero-subtitle {
+  font-size: 1.25rem;
+  opacity: 0.9;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.methodology-content {
+  max-width: min(95vw, 1400px);
+  margin: 0 auto;
+  padding: 3rem 2rem;
+}
+
+.methodology-section {
+  margin-bottom: 4rem;
+}
+
+.methodology-section h2 {
+  color: var(--primary);
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 2px solid var(--border);
+  padding-bottom: 0.5rem;
+}
+
+.methodology-section h3 {
+  color: var(--text-light);
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.methodology-section h4 {
+  color: var(--primary);
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+.methodology-section p {
+  color: var(--text-light);
+  line-height: 1.8;
+  margin-bottom: 1.5rem;
+  font-size: 1.1rem;
+}
+
+.methodology-principles {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin: 2rem 0;
+}
+
+.principle {
+  background: var(--bg-darker);
+  padding: 2rem;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  transition: transform 0.2s, border-color 0.2s;
+}
+
+.principle:hover {
+  transform: translateY(-4px);
+  border-color: var(--primary);
+}
+
+.principle h3 {
+  color: var(--primary);
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+}
+
+.principle p {
+  color: var(--text-light);
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.conversation-example {
+  background: var(--bg-darker);
+  border-radius: 12px;
+  padding: 2rem;
+  border: 1px solid var(--border);
+  margin: 2rem 0;
+}
+
+.conversation-intro {
+  margin-bottom: 1.5rem;
+}
+
+.conversation-intro p {
+  color: var(--text-muted);
+  font-style: italic;
+  margin: 0;
+}
+
+.conversation-flow {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.message.tutor {
+  background: var(--primary);
+  color: white;
+  align-self: flex-start;
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  max-width: 85%;
+}
+
+.message.student {
+  background: var(--success);
+  color: white;
+  align-self: flex-end;
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  max-width: 85%;
+}
+
+.message.tutor strong,
+.message.student strong {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+.message-note {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  border-left: 3px solid var(--primary);
+  margin: 0.5rem 0;
+  align-self: stretch;
+}
+
+.message-note em {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+.benefit {
+  background: var(--bg-darker);
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  text-align: center;
+  transition: transform 0.2s;
+}
+
+.benefit:hover {
+  transform: translateY(-2px);
+}
+
+.benefit h4 {
+  margin-bottom: 0.75rem;
+  font-size: 1rem;
+}
+
+.benefit p {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+
+.cta-section {
+  text-align: center;
+  padding: 2rem;
+  background: var(--bg-darker);
+  border-radius: 12px;
+  border: 1px solid var(--border);
+}
+
+.level-nav {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.references {
+  background: var(--bg-darker);
+  padding: 2rem;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  margin-top: 3rem;
+}
+
+.references h3 {
+  color: var(--primary);
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+}
+
+.references ul {
+  list-style: none;
+  padding: 0;
+}
+
+.references li {
+  color: var(--text-muted);
+  margin-bottom: 0.75rem;
+  padding-left: 1rem;
+  position: relative;
+  line-height: 1.5;
+  font-size: 0.95rem;
+}
+
+.references li::before {
+  content: "•";
+  color: var(--primary);
+  position: absolute;
+  left: 0;
+}
+
+.references em {
+  font-style: italic;
+}
+
+/* Mobile Responsive */
 @media (max-width: 768px) {
+  .header {
+    padding: 0 1rem;
+  }
+  
+  .header-right {
+    gap: 0.5rem;
+  }
+  
+  .user-info {
+    display: none;
+  }
+  
+  .chat-container {
+    padding: 1rem;
+  }
+  
+  .message-bubble {
+    max-width: 85%;
+  }
+  
+  .auth-container,
+  .personalization-container {
+    margin: 1rem;
+    padding: 1.5rem;
+  }
+  
+  .form-actions {
+    flex-direction: column;
+  }
+  
+  .topic-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  
+  .cta-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .cta-button {
+    width: 100%;
+    max-width: 300px;
+    text-align: center;
+  }
+  
   .chat-controls {
     flex-direction: column;
     align-items: flex-end;
@@ -737,5 +961,258 @@ body {
   .audio-btn {
     font-size: 1rem;
     padding: 0.2rem 0.4rem;
+  }
+  
+  /* Methodology Pages Mobile */
+  .methodology-hero {
+    padding: 3rem 1rem 2rem;
+  }
+  
+  .methodology-hero h1 {
+    font-size: 2.5rem;
+  }
+  
+  .hero-subtitle {
+    font-size: 1.1rem;
+  }
+  
+  .methodology-content {
+    padding: 2rem 1rem;
+  }
+  
+  .methodology-principles {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .principle {
+    padding: 1.5rem;
+  }
+  
+  .conversation-example {
+    padding: 1.5rem;
+  }
+  
+  .message.tutor,
+  .message.student {
+    max-width: 95%;
+    padding: 0.75rem 1rem;
+  }
+  
+  .benefits-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .level-nav {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .level-nav .cta-button {
+    width: 200px;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-content {
+    padding: 1rem;
+  }
+  
+  .topic-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .methodology-hero h1 {
+    font-size: 2rem;
+  }
+  
+  .methodology-section h2 {
+    font-size: 1.5rem;
+  }
+  
+  .conversation-flow {
+    gap: 0.75rem;
+  }
+  
+  .references {
+    padding: 1.5rem;
+  }
+}
+/* FAQs Page Styles */
+.faqs-page {
+  min-height: calc(100vh - var(--header-height));
+}
+
+.faqs-hero {
+  background: linear-gradient(135deg, var(--bg-darker) 0%, var(--primary) 100%);
+  padding: 4rem 2rem 3rem;
+  text-align: center;
+  color: white;
+}
+
+.faqs-hero h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+.faqs-intro {
+  font-size: 1.25rem;
+  opacity: 0.9;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.faqs-container {
+  max-width: min(95vw, 1200px);
+  margin: 3rem auto;
+  padding: 0 2rem;
+}
+
+.faq-item {
+  background: var(--bg-darker);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  margin-bottom: 1rem;
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+
+.faq-item:hover {
+  border-color: var(--primary);
+}
+
+.faq-question {
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 1.5rem;
+  color: var(--text-light);
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.2s;
+}
+
+.faq-question:hover {
+  background: rgba(76, 110, 245, 0.1);
+}
+
+.faq-question.active {
+  background: var(--primary);
+  color: white;
+}
+
+.faq-icon {
+  font-size: 1.5rem;
+  font-weight: 300;
+  min-width: 2rem;
+  text-align: center;
+  transition: transform 0.2s;
+}
+
+.faq-answer {
+  background: var(--bg-dark);
+  border-top: 1px solid var(--border);
+  animation: fadeIn 0.3s ease-in;
+}
+
+.faq-answer p {
+  padding: 1.5rem;
+  margin: 0;
+  color: var(--text-light);
+  line-height: 1.7;
+  font-size: 1rem;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.faqs-footer {
+  background: var(--bg-darker);
+  padding: 3rem 2rem;
+  text-align: center;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  margin: 3rem auto;
+  max-width: min(95vw, 1200px);
+}
+
+.faqs-footer h2 {
+  color: var(--primary);
+  margin-bottom: 1rem;
+}
+
+.faqs-footer p {
+  color: var(--text-light);
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.faqs-footer a {
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.faqs-footer a:hover {
+  text-decoration: underline;
+}
+
+/* Mobile Responsiveness for FAQs */
+@media (max-width: 768px) {
+  .faqs-hero {
+    padding: 3rem 1rem 2rem;
+  }
+  
+  .faqs-hero h1 {
+    font-size: 2.5rem;
+  }
+  
+  .faqs-container {
+    padding: 2rem 1rem;
+  }
+  
+  .faq-question {
+    padding: 1rem;
+    font-size: 1rem;
+  }
+  
+  .faq-answer p {
+    padding: 1rem;
+  }
+  
+  .faqs-footer {
+    padding: 2rem 1rem;
+    margin: 2rem 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .faqs-hero h1 {
+    font-size: 2rem;
+  }
+  
+  .faq-question {
+    padding: 1rem;
+    font-size: 0.95rem;
+  }
+  
+  .faq-icon {
+    font-size: 1.3rem;
+    min-width: 1.5rem;
   }
 }

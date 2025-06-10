@@ -7,14 +7,12 @@ function Header({ onToggleSidebar }) {
   return (
     <header className="header">
       <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-        {user && (
-          <button 
-            onClick={onToggleSidebar}
-            className="sidebar-toggle"
-          >
-            ☰
-          </button>
-        )}
+        <button 
+          onClick={onToggleSidebar}
+          className="sidebar-toggle"
+        >
+          ☰
+        </button>
         <h1>Language Exchange</h1>
       </div>
       
@@ -31,6 +29,7 @@ function Header({ onToggleSidebar }) {
           <nav>
             <Link to="/" className="header-link">Home</Link>
             <Link to="/about" className="header-link">About</Link>
+            <Link to="/faqs" className="header-link">FAQs</Link>
             <Link to="/login" className="header-link">Login</Link>
           </nav>
         )}

@@ -5,7 +5,24 @@
       "id": "2ac7d8a0-a730-4587-a016-4134d0a4914f",
       "user_id": "f55dd822-8999-44dc-97df-027eadc2fe80",
       "created_at": "2025-06-07T02:14:39.264723",
-      "messages": [],
+      "messages": [
+        {
+          "id": "user-5-1749526581",
+          "content": "de la musica",
+          "sender": "user",
+          "timestamp": "2025-06-10T03:36:21.149768",
+          "intent": "chat",
+          "audio_language": "Spanish"
+        },
+        {
+          "id": "bot-5-1749526584",
+          "content": "¡Claro, hablemos de música! ¿Cuál es tu género musical favorito, Mateoias?",
+          "sender": "bot",
+          "timestamp": "2025-06-10T03:36:24.063459",
+          "intent": "chat",
+          "audio_language": "Spanish"
+        }
+      ],
       "summary": ""
     },
     {
