@@ -6,7 +6,6 @@
 }
 
 :root {
-  /* Color tokens */
   --primary: #4c6ef5;
   --primary-hover: #364fc7;
   --success: #51cf66;
@@ -16,21 +15,8 @@
   --text-light: #ffffff;
   --text-muted: #999;
   --border: #333;
-  
-  /* Layout tokens */
   --header-height: 60px;
   --sidebar-width: 250px;
-  
-  /* Container width tokens */
-  --container-xs: min(95vw, 400px);     /* Forms, auth */
-  --container-sm: min(95vw, 600px);     /* Personalization, hero text */
-  --container-md: min(95vw, 800px);     /* Chat, narrow content */
-  --container-lg: min(95vw, 1200px);    /* FAQs, standard content */
-  --container-xl: min(95vw, 1400px);    /* Methodology, wide content */
-  
-  /* Spacing tokens */
-  --spacing-section: clamp(2rem, 5vw, 4rem);
-  --spacing-content: clamp(1rem, 3vw, 2rem);
 }
 
 body {
@@ -39,18 +25,6 @@ body {
   color: var(--text-light);
   line-height: 1.6;
 }
-
-/* Container Utility Classes */
-.container {
-  margin: 0 auto;
-  padding: 0 2rem;
-}
-
-.container--xs { max-width: var(--container-xs); }
-.container--sm { max-width: var(--container-sm); }
-.container--md { max-width: var(--container-md); }
-.container--lg { max-width: var(--container-lg); }
-.container--xl { max-width: var(--container-xl); }
 
 /* Layout */
 .app-layout {
@@ -203,7 +177,7 @@ body {
 
 /* Authentication Forms */
 .auth-container {
-  max-width: var(--container-xs);
+  max-width: 400px;
   margin: 2rem auto;
   padding: 2rem;
   background: var(--bg-darker);
@@ -292,7 +266,7 @@ body {
 
 /* Personalization */
 .personalization-container {
-  max-width: var(--container-sm);
+  max-width: 600px;
   margin: 2rem auto;
   padding: 2rem;
   background: var(--bg-darker);
@@ -401,7 +375,7 @@ body {
 
 /* Chat Styles */
 .chat-container {
-  max-width: var(--container-md);
+  max-width: 800px;
   margin: 0 auto;
   padding: 2rem;
   height: calc(100vh - var(--header-height));
@@ -630,9 +604,15 @@ body {
 }
 
 /* Page Content */
+/* .page-content {
+  padding: 2rem;
+  max-width: 1000px;
+  margin: 0 auto;
+} */
+
 .page-content {
-  padding: var(--spacing-content);
-  max-width: var(--container-xl);
+  padding: 2rem;
+  max-width: min(95vw, 1400px);
   margin: 0 auto;
 }
 
@@ -697,14 +677,14 @@ body {
 .hero-subtitle {
   font-size: 1.25rem;
   opacity: 0.9;
-  max-width: var(--container-sm);
+  max-width: 600px;
   margin: 0 auto;
 }
 
 .methodology-content {
-  max-width: var(--container-xl);
+  max-width: min(95vw, 1400px);
   margin: 0 auto;
-  padding: var(--spacing-section) var(--spacing-content);
+  padding: 3rem 2rem;
 }
 
 .methodology-section {
@@ -1032,13 +1012,13 @@ body {
   .level-nav .cta-button {
     width: 200px;
   }
-  
-  .page-content {
-    padding: 1rem;
-  }
 }
 
 @media (max-width: 480px) {
+  .page-content {
+    padding: 1rem;
+  }
+  
   .topic-grid {
     grid-template-columns: 1fr;
   }
@@ -1059,7 +1039,6 @@ body {
     padding: 1.5rem;
   }
 }
-
 /* FAQs Page Styles */
 .faqs-page {
   min-height: calc(100vh - var(--header-height));
@@ -1081,12 +1060,12 @@ body {
 .faqs-intro {
   font-size: 1.25rem;
   opacity: 0.9;
-  max-width: var(--container-sm);
+  max-width: 600px;
   margin: 0 auto;
 }
 
 .faqs-container {
-  max-width: var(--container-lg);
+  max-width: min(95vw, 1200px);
   margin: 3rem auto;
   padding: 0 2rem;
 }
@@ -1169,7 +1148,7 @@ body {
   border-radius: 12px;
   border: 1px solid var(--border);
   margin: 3rem auto;
-  max-width: var(--container-lg);
+  max-width: min(95vw, 1200px);
 }
 
 .faqs-footer h2 {
