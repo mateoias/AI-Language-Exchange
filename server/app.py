@@ -1,21 +1,34 @@
 from flask import Flask
 from flask_cors import CORS
 from .config import Config
-from .database import db_connection
+from .database import db_connection, initialize_graph  # Add initialize_graph
 import atexit
+import logging
+
 
 def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
     
+    logging.basicConfig(level=logging.DEBUG)
+
     # Enable CORS for all routes - ESSENTIAL for production!
     CORS(app, origins=["http://localhost:5173"])  # Vite default port
     
     # Initialize database connection
     try:
         db_connection.connect()
+            
+            # Initialize minimal graph (just super seven verbs)
+        result = initialize_graph()
+        if result["success"]:
+            app.logger.info(f"Graph initialized: {result['message']}")
+        else:
+            app.logger.error(f"Graph initialization failed: {result['error']}")
+            
     except Exception as e:
-        app.logger.error(f"Database connection failed: {e}")
+        app.logger.error(f"Database initialization failed: {e}")
+        
     
     # Register cleanup function
     atexit.register(lambda: db_connection.close())

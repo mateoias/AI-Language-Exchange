@@ -1,0 +1,69 @@
+{
+  "user_id": "295ea8fb-b764-4d0e-993c-c9c6be84a795",
+  "conversations": [
+    {
+      "id": "d5162701-0d4a-4cf4-9118-7e2b786e653e",
+      "user_id": "295ea8fb-b764-4d0e-993c-c9c6be84a795",
+      "created_at": "2025-06-12T04:27:55.141040",
+      "messages": [
+        {
+          "id": "user-0-1749702475",
+          "content": "das Mitagsessen",
+          "sender": "user",
+          "timestamp": "2025-06-12T04:27:55.140950",
+          "intent": "chat",
+          "audio_language": "German"
+        },
+        {
+          "id": "bot-1-1749702478",
+          "content": "Ja, das Mittagessen! Was hast du heute zum Mittagessen gegessen, Sarah?",
+          "sender": "bot",
+          "timestamp": "2025-06-12T04:27:58.602825",
+          "intent": "chat",
+          "audio_language": "German"
+        },
+        {
+          "id": "user-1-1749702500",
+          "content": "Bratwurst",
+          "sender": "user",
+          "timestamp": "2025-06-12T04:28:20.635621",
+          "intent": "chat",
+          "audio_language": "German"
+        },
+        {
+          "id": "bot-1-1749702503",
+          "content": "Lecker! Bratwurst ist ein typisches deutsches Essen. Hast du es mit Sauerkraut oder Senf gegessen?",
+          "sender": "bot",
+          "timestamp": "2025-06-12T04:28:23.368346",
+          "intent": "chat",
+          "audio_language": "German"
+        },
+        {
+          "id": "user-1-1749702526",
+          "content": "naturlich mit Sauerkraut und Senf",
+          "sender": "user",
+          "timestamp": "2025-06-12T04:28:46.098021",
+          "intent": "chat",
+          "audio_language": "German"
+        },
+        {
+          "id": "bot-1-1749702529",
+          "content": "Perfekt! Du scheinst die deutsche Küche wirklich zu genießen. Was ist dein Lieblingsgericht aus Deutschland?",
+          "sender": "bot",
+          "timestamp": "2025-06-12T04:28:49.296618",
+          "intent": "chat",
+          "audio_language": "German"
+        }
+      ],
+      "summary": ""
+    },
+    {
+      "id": "2c802c90-a909-4650-bd57-10fb072ac5c2",
+      "user_id": "295ea8fb-b764-4d0e-993c-c9c6be84a795",
+      "created_at": "2025-06-12T04:31:15.933376",
+      "messages": [],
+      "summary": ""
+    }
+  ],
+  "current_conversation_id": "2c802c90-a909-4650-bd57-10fb072ac5c2"
+}
