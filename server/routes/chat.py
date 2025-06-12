@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
-from utils.auth_utils import token_required
-from services.chat_service import ChatService
+from ..utils.auth_utils import token_required
+from ..services.chat_service import ChatService
 
 chat_bp = Blueprint('chat', __name__)
 

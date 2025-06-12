@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify
-from utils.auth_utils import token_required
-from utils.file_utils import find_user_by_id, update_user
-from models.user import User
+from ..utils.auth_utils import token_required
+from ..utils.file_utils import find_user_by_id, update_user
+from ..models.user import User
 
 user_bp = Blueprint('user', __name__)
 
