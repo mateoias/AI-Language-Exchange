@@ -6,6 +6,15 @@ from dotenv import load_dotenv
 load_dotenv()
 
 class Config:
+    # In the Config class, add validation
+    @classmethod
+    def validate_neo4j_config(cls):
+        """Check if Neo4j is properly configured"""
+        return all([
+            cls.NEO4J_URI,
+            cls.NEO4J_USERNAME,
+            cls.NEO4J_PASSWORD
+        ])
     # Flask configuration
     SECRET_KEY = os.environ.get('FLASK_SECRET_KEY')
     if not SECRET_KEY:

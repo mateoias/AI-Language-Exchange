@@ -4,8 +4,11 @@ from ..utils.file_utils import find_user_by_id, update_user
 from ..models.user import User
 import logging
 from ..database import setup_user_graph, update_from_personalization, get_user_context
+from ..services.graph_service import GraphService  # Add import
+from services.personalization_service import PersonalizationService
 
 user_bp = Blueprint('user', __name__)
+
 
 @user_bp.route('/personalization', methods=['PUT'])
 @token_required
@@ -18,37 +21,30 @@ def update_personalization(user_id):
         if not user_data:
             return jsonify({'message': 'User not found'}), 404
         
-        # Update personalization data (existing functionality)
+        # Update personalization data in JSON file
         user_data['personalization'] = data
         
-        # Save to file (existing functionality)
-        file_update_success = update_user(user_id, user_data)
-        if not file_update_success:
-            return jsonify({'message': 'Failed to update personalization'}), 500
+        # Extract entities and relationships using LLM
+        extractor = PersonalizationExtractor()
+        extracted_info = extractor.extract_from_form(user_id, data)
         
-        # NEW: Process through LLM for graph updates
-        graph_result = {"success": False, "updates": 0, "reasoning": "Not processed"}
-        try:
-            graph_result = update_from_personalization(
-                user_id=user_data.get('id', user_id),  # Use user ID
-                personalization_data=data
-            )
-            logging.info(f"Graph personalization result for user {user_id}: {graph_result}")
-            
-        except Exception as graph_error:
-            # Don't fail the whole request if graph processing fails
-            logging.error(f"Graph personalization update failed for user {user_id}: {graph_error}")
-            graph_result = {"success": False, "error": str(graph_error), "updates": 0}
+        # Update Neo4j if extraction successful
+        if extracted_info and extracted_info.get('entities'):
+            graph_service = GraphService()
+            if graph_service.is_connected():
+                result = graph_service.update_user_graph(user_id, extracted_info)
+                if not result['success']:
+                    # Log error but don't fail the request
+                    print(f"Graph update failed: {result.get('error')}")
         
-        # Return success with both file and graph info
-        user = User.from_dict(user_data)
-        return jsonify({
-            'message': 'Personalization updated successfully',
-            'user': user.to_public_dict(),
-            'graph_updates': graph_result.get('updates', 0),
-            'graph_reasoning': graph_result.get('reasoning', ''),
-            'graph_success': graph_result.get('success', False)
-        }), 200
+        # Save to file system
+        if update_user(user_id, user_data):
+            user = User.from_dict(user_data)
+            return jsonify({
+                'message': 'Personalization updated successfully',
+                'user': user.to_public_dict()
+            }), 200
+
             
     except Exception as e:
         logging.error(f"Personalization update error for user {user_id}: {e}")

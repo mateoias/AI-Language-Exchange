@@ -122,11 +122,11 @@ If no meaningful data, return empty strings and arrays."""
                     {"role": "user", "content": prompt}
                 ],
                 temperature=0.1,  # Low temperature for consistent extraction
-                max_tokens=500
+                max_tokens=5000
             )
             
             result = response.choices[0].message.content.strip()
-            
+            print("reult of parsing the form: ", result)
             # Parse JSON response
             try:
                 parsed_result = json.loads(result)
