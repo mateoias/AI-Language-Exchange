@@ -1,9 +1,9 @@
 import openai
 import azure.cognitiveservices.speech as speechsdk
-from models.conversation import Conversation, Message
-from utils.file_utils import find_user_by_id
-from services.conversation_service import ConversationService
-from language_config import get_voice_name, get_pause_durations, get_error_message
+from ..models.conversation import Conversation, Message
+from ..utils.file_utils import find_user_by_id
+from .conversation_service import ConversationService
+from ..language_config import get_voice_name, get_pause_durations, get_error_message
 
 from flask import current_app
 import json
@@ -47,50 +47,10 @@ class ChatService:
             )
         return self._speech_config
     
-    # def _get_voice_name(self, language):
-    #     """Map language to Azure voice name"""
-    #     # Using neural voices for better quality
-    #     voice_map = {
-    #         'Spanish': 'es-MX-DaliaNeural',      # Female Spanish voice
-    #         'English': 'en-US-GuyNeural',         # Male English voice
-    #         'French': 'fr-FR-HenriNeural',        # Male French voice
-    #         'German': 'de-DE-ConradNeural',       # Male German voice
-    #         'Italian': 'it-IT-DiegoNeural',       # Male Italian voice
-    #         'Portuguese': 'pt-BR-AntonioNeural',  # Male Brazilian Portuguese
-    #         'Russian': 'ru-RU-DmitryNeural',      # Male Russian voice
-    #         'Chinese': 'zh-CN-YunxiNeural',       # Male Mandarin voice
-    #         'Japanese': 'ja-JP-KeitaNeural',      # Male Japanese voice
-    #         'Korean': 'ko-KR-InJoonNeural',       # Male Korean voice
-    #         'Arabic': 'ar-SA-HamedNeural',        # Male Arabic voice
-    #         'Hindi': 'hi-IN-MadhurNeural'         # Male Hindi voice
-    #     }
-    #     return voice_map.get(language, 'en-US-GuyNeural')  # Default to English
     def _get_voice_name(self, language, voice_type='male'):
-        """Map language to Azure voice name"""
+        """Map language to Azure voice name using language config"""
         return get_voice_name(language, voice_type)
 
-    # ... rest of the function
-
-
-    # def _add_speech_marks(self, text, speed_rate=1.0, voice_name="en-US-AriaNeural"):
-    #     """Add SSML markup for natural pauses, speed, and voice"""
-    #     prosody_rate = f"{speed_rate:.1f}"
-
-    #     text = text.replace('.', '.<break time="300ms"/>')
-    #     text = text.replace(',', ',<break time="150ms"/>')
-    #     text = text.replace('!', '!<break time="300ms"/>')
-    #     text = text.replace('?', '?<break time="300ms"/>')
-    #     text = text.replace(';', ';<break time="200ms"/>')
-
-    #     ssml = f'''<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xml:lang="en-US">
-    #         <voice name="{voice_name}">
-    #             <prosody rate="{prosody_rate}">
-    #                 {text}
-    #             </prosody>
-    #         </voice>
-    #     </speak>'''
-        
-    #     return ssml
     def _add_speech_marks(self, text, speed_rate=1.0, voice_name="en-US-AriaNeural"):
         """Add SSML markup for natural pauses, speed, and voice"""
         prosody_rate = f"{speed_rate:.1f}"
@@ -99,11 +59,10 @@ class ChatService:
         pauses = get_pause_durations()
         pause_multiplier = 1.0 / speed_rate
         
-        # Calculate pause durations
+        # Calculate pause durations based on speed
         sentence_pause = int(pauses['sentence'] * pause_multiplier)
         comma_pause = int(pauses['comma'] * pause_multiplier)
         semicolon_pause = int(pauses['semicolon'] * pause_multiplier)
-    
         
         # Apply pauses
         text = text.replace('.', f'.<break time="{sentence_pause}ms"/>')
@@ -155,7 +114,7 @@ class ChatService:
                 
                 # Cache the result
                 self._audio_cache[cache_key] = audio_base64
-                print(f"Generating audio with speed: {speed_rate}")  # Add this debug line
+                print(f"Generated audio with speed: {speed_rate}")
 
                 return audio_base64
             elif result.reason == speechsdk.ResultReason.Canceled:
@@ -180,9 +139,6 @@ class ChatService:
         Target language = chat mode
         Native language = teaching mode
         """
-        # For MVP: Basic heuristic
-        # TODO: Implement proper language detection
-        
         # Simple keyword detection for teaching mode
         teaching_keywords = [
             'what does', 'how do i', 'explain', 'grammar', 'why',
@@ -321,7 +277,7 @@ Guidelines:
             
         except Exception as e:
             # Graceful error handling
-            error_message = get_error_message(user_data.get('learningLanguage', 'English'))
+            error_message = get_error_message(user_data.get('learningLanguage', 'English') if user_data else 'English')
             audio_data = None
             
             if user_data:

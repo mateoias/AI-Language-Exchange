@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify
-from models.user import User
-from utils.auth_utils import hash_password, verify_password, generate_token, token_required
-from utils.file_utils import load_users, save_users, find_user_by_email, find_user_by_id
+from ..models.user import User
+from ..utils.auth_utils import hash_password, verify_password, generate_token, token_required
+from ..utils.file_utils import load_users, save_users, find_user_by_email, find_user_by_id
 
 auth_bp = Blueprint('auth', __name__)
 
