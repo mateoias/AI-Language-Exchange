@@ -1,14 +1,25 @@
-
+import openai
+from flask import current_app
+from datetime import datetime
 from ..utils.conversation_utils import (
     load_user_conversations, save_user_conversations, add_message_to_conversation,
     get_recent_messages, should_summarize_conversation, get_current_conversation,
     start_new_conversation
 )
-from .llm_service import LLMService
 
 class ConversationService:
     def __init__(self):
-        self.llm_service = LLMService()
+        self._openai_client = None
+    
+    @property
+    def openai_client(self):
+        """Lazy initialization of OpenAI client"""
+        if self._openai_client is None:
+            api_key = current_app.config.get('OPENAI_API_KEY')
+            if not api_key:
+                raise ValueError("OPENAI_API_KEY not configured")
+            self._openai_client = openai.OpenAI(api_key=api_key)
+        return self._openai_client
     
     def generate_conversation_summary(self, messages):
         """Generate a summary of conversation messages using GPT-4"""
@@ -50,17 +61,16 @@ Provide the summary as bullet points:"""
         # Load user conversations
         conversations_data = load_user_conversations(user_id)
         
-        # Create message data
+        # Create message data (ID will be generated in add_message_to_conversation)
         message_data = {
-            'id': f"{sender}-{len(conversations_data.get('conversations', []))}-{int(__import__('time').time())}",
             'content': message_content,
             'sender': sender,
-            'timestamp': __import__('datetime').datetime.utcnow().isoformat(),
+            'timestamp': datetime.utcnow().isoformat(),
             'intent': intent,
             'audio_language': audio_language
         }
         
-        # Add message to conversation
+        # Add message to conversation (this will generate the proper ID)
         conversations_data = add_message_to_conversation(conversations_data, message_data)
         
         # Check if we need to summarize

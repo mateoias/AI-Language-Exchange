@@ -4,11 +4,9 @@ from ..utils.file_utils import find_user_by_id, update_user
 from ..models.user import User
 import logging
 from ..database import setup_user_graph, update_from_personalization, get_user_context
-from ..services.graph_service import GraphService  # Add import
-from services.personalization_service import PersonalizationService
+from ..services.personalization_service import PersonalizationService
 
 user_bp = Blueprint('user', __name__)
-
 
 @user_bp.route('/personalization', methods=['PUT'])
 @token_required
@@ -21,21 +19,28 @@ def update_personalization(user_id):
         if not user_data:
             return jsonify({'message': 'User not found'}), 404
         
-        # Update personalization data in JSON file
+        # Update personalization data in JSON file first
         user_data['personalization'] = data
         
-        # Extract entities and relationships using LLM
-        extractor = PersonalizationExtractor()
-        extracted_info = extractor.extract_from_form(user_id, data)
-        
-        # Update Neo4j if extraction successful
-        if extracted_info and extracted_info.get('entities'):
-            graph_service = GraphService()
-            if graph_service.is_connected():
-                result = graph_service.update_user_graph(user_id, extracted_info)
-                if not result['success']:
-                    # Log error but don't fail the request
-                    print(f"Graph update failed: {result.get('error')}")
+        # Process personalization using the service
+        try:
+            personalization_service = PersonalizationService()
+            # Pass the RAW form data (not processed data)
+            extracted_data = personalization_service.process_personalization(user_id, data)
+            
+            # Log success or any issues with graph processing
+            if extracted_data:
+                logging.info(f"Personalization extracted and processed for user {user_id}")
+                logging.info(f"Extracted {len(extracted_data.get('entities', []))} entities and {len(extracted_data.get('relationships', []))} relationships")
+            else:
+                logging.warning(f"No data extracted for user {user_id}")
+                
+        except Exception as graph_error:
+            # Log the graph processing error but don't fail the request
+            logging.error(f"Graph processing failed for user {user_id}: {graph_error}")
+            import traceback
+            logging.error(f"Graph processing traceback: {traceback.format_exc()}")
+            # Continue to save to JSON even if graph processing fails
         
         # Save to file system
         if update_user(user_id, user_data):
@@ -44,7 +49,8 @@ def update_personalization(user_id):
                 'message': 'Personalization updated successfully',
                 'user': user.to_public_dict()
             }), 200
-
+        else:
+            return jsonify({'message': 'Failed to update personalization'}), 500
             
     except Exception as e:
         logging.error(f"Personalization update error for user {user_id}: {e}")
@@ -61,6 +67,9 @@ def delete_personalization(user_id):
         
         # Clear personalization data
         user_data['personalization'] = {}
+        
+        # TODO: Also clear graph data if needed
+        # You might want to add a method to PersonalizationService to handle deletion
         
         if update_user(user_id, user_data):
             user = User.from_dict(user_data)

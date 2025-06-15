@@ -1,80 +1,80 @@
-from neo4j import GraphDatabase
-from flask import current_app
-import logging
+# server/database/services/graph_service.py
+"""
+Minimal Graph Service - LLM-Driven Graph Building
+Core functions for LLM-generated Cypher execution
+"""
 
-logger = logging.getLogger(__name__)
+from ..db_connection import db_connection
+import logging
+import json
 
 class GraphService:
-    def __init__(self):
-        self._driver = None
-        self._connect()
-    
-    def _connect(self):
-        """Initialize Neo4j connection"""
+    @staticmethod
+    def execute_cypher(query, parameters=None):
+        """Execute any Cypher query (read or write)"""
         try:
-            uri = current_app.config.get('NEO4J_URI')
-            username = current_app.config.get('NEO4J_USERNAME')
-            password = current_app.config.get('NEO4J_PASSWORD')
+            with db_connection.get_session() as session:
+                def execute_txn(tx):
+                    result = tx.run(query, parameters or {})
+                    return [record.data() for record in result]
+                
+                return session.execute_write(execute_txn)
+        except Exception as e:
+            logging.error(f"Cypher execution failed: {e}")
+            logging.error(f"Query: {query}")
+            logging.error(f"Parameters: {parameters}")
+            raise
+    
+    @staticmethod
+    def validate_cypher_safety(query):
+        """Basic safety check for LLM-generated Cypher"""
+        query_upper = query.upper()
+        
+        # Block dangerous operations
+        forbidden = ['DROP', 'DELETE ALL', 'DETACH DELETE ALL', 'REMOVE']
+        if any(dangerous in query_upper for dangerous in forbidden):
+            raise ValueError(f"Unsafe Cypher operation detected: {query}")
+        
+        # Must be CREATE, MERGE, MATCH, or SET operations
+        allowed_starts = ['CREATE', 'MERGE', 'MATCH', 'SET', 'WITH']
+        if not any(query_upper.strip().startswith(allowed) for allowed in allowed_starts):
+            raise ValueError(f"Only CREATE, MERGE, MATCH, SET operations allowed: {query}")
+        
+        return True
+    
+    @staticmethod
+    def execute_llm_cypher(cypher_response):
+        """Execute LLM-generated Cypher with safety checks"""
+        try:
+            # Parse LLM response (expecting JSON with query and parameters)
+            if isinstance(cypher_response, str):
+                parsed = json.loads(cypher_response)
+            else:
+                parsed = cypher_response
             
-            if uri and username and password:
-                self._driver = GraphDatabase.driver(uri, auth=(username, password))
-                # Test connection
-                self._driver.verify_connectivity()
-                logger.info("Neo4j connection established")
+            query = parsed.get('query', '')
+            parameters = parsed.get('parameters', {})
+            
+            if not query:
+                logging.warning("Empty query from LLM")
+                return []
+            
+            # Safety validation
+            GraphService.validate_cypher_safety(query)
+            
+            # Execute query
+            logging.info(f"Executing LLM-generated Cypher: {query[:100]}...")
+            result = GraphService.execute_cypher(query, parameters)
+            
+            logging.info(f"LLM Cypher executed successfully, {len(result)} results")
+            return result
+            
+        except json.JSONDecodeError as e:
+            logging.error(f"Failed to parse LLM Cypher response: {e}")
+            return []
+        except ValueError as e:
+            logging.error(f"Unsafe LLM Cypher blocked: {e}")
+            return []
         except Exception as e:
-            logger.error(f"Failed to connect to Neo4j: {str(e)}")
-            self._driver = None
-    
-    def is_connected(self):
-        """Check if Neo4j is connected"""
-        return self._driver is not None
-    
-    def update_user_graph(self, user_id, extracted_info):
-        """Update user's graph with extracted entities and relationships"""
-        if not self._driver:
-            return {'success': False, 'error': 'Neo4j not connected'}
-        
-        try:
-            with self._driver.session() as session:
-                # Ensure user node exists
-                session.run(
-                    "MERGE (u:User {id: $user_id})",
-                    user_id=user_id
-                )
-                
-                # Add entities
-                for entity in extracted_info.get('entities', []):
-                    # Create entity node based on type
-                    label = entity['type'] if entity['type'] in ['Person', 'Place', 'Animal', 'Activity'] else 'Entity'
-                    session.run(
-                        f"MERGE (e:{label} {{text: $text, context: $context}})",
-                        text=entity['text'],
-                        context=entity.get('context', '')
-                    )
-                
-                # Add relationships
-                for rel in extracted_info.get('relationships', []):
-                    # Direct user relationships
-                    if rel['subject'].lower() in ['user', 'john', user_id]:
-                        query = f"""
-                        MATCH (u:User {{id: $user_id}})
-                        MATCH (e {{text: $object}})
-                        MERGE (u)-[:{rel['predicate']} {{confidence: $confidence, created_at: timestamp()}}]->(e)
-                        """
-                        session.run(
-                            query,
-                            user_id=user_id,
-                            object=rel['object'],
-                            confidence=rel.get('confidence', 'medium')
-                        )
-                
-                return {'success': True}
-                
-        except Exception as e:
-            logger.error(f"Error updating graph: {str(e)}")
-            return {'success': False, 'error': str(e)}
-        
-    def close(self):
-        """Close Neo4j connection"""
-        if self._driver:
-            self._driver.close()
+            logging.error(f"LLM Cypher execution failed: {e}")
+            return []

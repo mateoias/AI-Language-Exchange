@@ -4,6 +4,7 @@ from threading import Lock
 from flask import current_app
 from datetime import datetime
 import uuid
+import time
 
 # File lock for conversation operations
 conversation_lock = Lock()
@@ -77,6 +78,11 @@ def add_message_to_conversation(conversations_data, message_data):
             break
     
     if current_conv:
+        # Generate proper message ID using message index within this conversation
+        message_index = len(current_conv['messages'])
+        timestamp = int(time.time())
+        message_data['id'] = f"{message_data['sender']}-{message_index}-{timestamp}"
+        
         current_conv['messages'].append(message_data)
     
     return conversations_data
