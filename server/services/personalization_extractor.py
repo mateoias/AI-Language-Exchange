@@ -1,5 +1,5 @@
-import openai
-from flask import current_app
+# services/personalization_extractor.py
+from .llm_manager import llm_manager
 import json
 import logging
 
@@ -7,7 +7,7 @@ logger = logging.getLogger(__name__)
 
 class PersonalizationExtractor:
     def __init__(self):
-        self.client = openai.OpenAI(api_key=current_app.config['OPENAI_API_KEY'])
+        pass  # No more direct OpenAI client needed
     
     def extract_from_form(self, user_id, form_data):
         """Extract entities and relationships from personalization form"""
@@ -18,22 +18,18 @@ class PersonalizationExtractor:
             # Create extraction prompt
             prompt = self._create_extraction_prompt(user_id, form_text)
             
-            # Call OpenAI
-            response = self.client.chat.completions.create(
-                model="gpt-4",
-                messages=[
-                    {"role": "system", "content": "You are an expert at extracting structured information from conversations."},
-                    {"role": "user", "content": prompt}
-                ],
+            # Use centralized LLM manager
+            system_prompt = "You are an expert at extracting structured information from conversations."
+            
+            response = llm_manager.generate_structured_response(
+                system_prompt=system_prompt,
+                user_prompt=prompt,
                 temperature=0.1,
                 max_tokens=1000
             )
             
-            # Parse response
-            response_text = response.choices[0].message.content
-            
             # Clean response if it contains markdown
-            cleaned_response = self._clean_llm_response(response_text)
+            cleaned_response = self._clean_llm_response(response)
             
             # Parse JSON
             try:

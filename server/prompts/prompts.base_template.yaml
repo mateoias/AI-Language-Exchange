@@ -1,0 +1,21 @@
+# Base template that defines the structure of all prompts
+template: |
+  {base_instruction}
+  
+  User Details:
+  - Name: {username}
+  - Native Language: {native_language}
+  - Learning: {learning_language}
+  - Level: {level}
+  
+  {personalization_section}
+  
+  {level_specific_instruction}
+  
+  {conversation_context}
+  
+  Guidelines:
+  - Always respond in {learning_language}
+  - {level_guidelines}
+  
+  {reminder}
