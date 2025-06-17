@@ -1,3 +1,4 @@
+# services/conversation_service.py
 from .llm_manager import llm_manager
 from datetime import datetime
 from ..utils.conversation_utils import (
@@ -8,17 +9,7 @@ from ..utils.conversation_utils import (
 
 class ConversationService:
     def __init__(self):
-        self._openai_client = None
-    
-    @property
-    def openai_client(self):
-        """Lazy initialization of OpenAI client"""
-        if self._openai_client is None:
-            api_key = current_app.config.get('OPENAI_API_KEY')
-            if not api_key:
-                raise ValueError("OPENAI_API_KEY not configured")
-            self._openai_client = openai.OpenAI(api_key=api_key)
-        return self._openai_client
+        pass  # No more OpenAI client needed
     
     def generate_conversation_summary(self, messages):
         """Generate a summary of conversation messages using GPT-4"""
@@ -28,28 +19,9 @@ class ConversationService:
                 f"{msg['sender']}: {msg['content']}" for msg in messages
             ])
             
-            summary_prompt = f"""Please create a concise bullet-point summary of this conversation between a language learner and AI tutor. Focus on:
-- Key personal information shared by the user
-- Topics discussed
-- Language learning progress or challenges
-- Important facts to remember for future conversations
-
-Conversation:
-{conversation_text}
-
-Provide the summary as bullet points:"""
-
-            response = self.openai_client.chat.completions.create(
-                model="gpt-4",
-                messages=[
-                    {"role": "system", "content": "You are a helpful assistant that creates concise conversation summaries."},
-                    {"role": "user", "content": summary_prompt}
-                ],
-                temperature=0.3,
-                max_tokens=200
-            )
-            
-            return response.choices[0].message.content.strip()
+            # Use centralized LLM manager for summary generation
+            summary = llm_manager.generate_summary(conversation_text)
+            return summary
             
         except Exception as e:
             print(f"Error generating summary: {e}")

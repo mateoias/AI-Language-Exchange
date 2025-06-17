@@ -1,0 +1,62 @@
+{
+  "user_id": "d7e4bbee-f1ac-4aad-b604-54ac43056f51",
+  "conversations": [
+    {
+      "id": "001936d7-53db-430a-a604-a97af645c0f6",
+      "user_id": "d7e4bbee-f1ac-4aad-b604-54ac43056f51",
+      "created_at": "2025-06-17T22:22:27.571949",
+      "messages": [
+        {
+          "content": "mi mutter",
+          "sender": "user",
+          "timestamp": "2025-06-17T22:22:27.571911",
+          "intent": "chat",
+          "audio_language": "German",
+          "id": "user-0-1750198947"
+        },
+        {
+          "content": "Du möchtest wahrscheinlich sagen \"meine Mutter\". Übe weiter, du machst das super!",
+          "sender": "bot",
+          "timestamp": "2025-06-17T22:22:31.011709",
+          "intent": "chat",
+          "audio_language": "German",
+          "id": "bot-1-1750198951"
+        },
+        {
+          "content": "meine mutter",
+          "sender": "user",
+          "timestamp": "2025-06-17T22:22:46.337100",
+          "intent": "chat",
+          "audio_language": "German",
+          "id": "user-2-1750198966"
+        },
+        {
+          "content": "Deine Mutter auf Deutsch ist \"meine Mutter\". Sehr gut, John!",
+          "sender": "bot",
+          "timestamp": "2025-06-17T22:22:48.616540",
+          "intent": "chat",
+          "audio_language": "German",
+          "id": "bot-3-1750198968"
+        },
+        {
+          "content": "ich mochte uber meine mutter sprachen",
+          "sender": "user",
+          "timestamp": "2025-06-17T22:23:07.938790",
+          "intent": "chat",
+          "audio_language": "German",
+          "id": "user-4-1750198987"
+        },
+        {
+          "content": "Das ist großartig, John! Du kannst sagen: \"Ich möchte über meine Mutter sprechen.\" Auf Deutsch wäre das: \"Ich möchte über meine Mutter sprechen.\" Weiter so!",
+          "sender": "bot",
+          "timestamp": "2025-06-17T22:23:11.560230",
+          "intent": "chat",
+          "audio_language": "German",
+          "id": "bot-5-1750198991"
+        }
+      ],
+      "summary": ""
+    }
+  ],
+  "current_conversation_id": "001936d7-53db-430a-a604-a97af645c0f6"
+}

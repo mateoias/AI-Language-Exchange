@@ -2,6 +2,94 @@
   "user_id": "f55dd822-8999-44dc-97df-027eadc2fe80",
   "conversations": [
     {
+      "id": "2b83bb2e-7bbc-4d63-aa26-4cb7664ec879",
+      "user_id": "f55dd822-8999-44dc-97df-027eadc2fe80",
+      "created_at": "2025-06-17T20:37:50.611363",
+      "messages": [
+        {
+          "content": "la musica",
+          "sender": "user",
+          "timestamp": "2025-06-17T20:38:04.021904",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "user-0-1750192684"
+        },
+        {
+          "content": "¡Ah, la música! ¿Te gusta la música, Mateoias?",
+          "sender": "bot",
+          "timestamp": "2025-06-17T20:38:06.650170",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-1-1750192686"
+        },
+        {
+          "content": "mucho",
+          "sender": "user",
+          "timestamp": "2025-06-17T20:38:17.433264",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "user-2-1750192697"
+        },
+        {
+          "content": "¡Genial! A Mateoias le gusta mucho la música. ¿Escuchas música todos los días?",
+          "sender": "bot",
+          "timestamp": "2025-06-17T20:38:20.543006",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-3-1750192700"
+        },
+        {
+          "content": "si",
+          "sender": "user",
+          "timestamp": "2025-06-17T20:38:29.704249",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "user-4-1750192709"
+        },
+        {
+          "content": "¡Perfecto! Entonces, Mateoias escucha música todos los días. ¿Te gusta la música pop o la música rock?",
+          "sender": "bot",
+          "timestamp": "2025-06-17T20:38:32.305636",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-5-1750192712"
+        },
+        {
+          "content": "la usica jazz",
+          "sender": "user",
+          "timestamp": "2025-06-17T20:38:46.477028",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "user-6-1750192726"
+        },
+        {
+          "content": "¡Excelente! A Mateoias le gusta la música jazz. ¿Escuchas jazz todos los días?",
+          "sender": "bot",
+          "timestamp": "2025-06-17T20:38:49.354098",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-7-1750192729"
+        },
+        {
+          "content": "cierto",
+          "sender": "user",
+          "timestamp": "2025-06-17T20:39:07.923793",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "user-8-1750192747"
+        },
+        {
+          "content": "¡Genial! Entonces, Mateoias escucha jazz todos los días. ¿Tienes un músico de jazz favorito?",
+          "sender": "bot",
+          "timestamp": "2025-06-17T20:39:10.804073",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-9-1750192750"
+        }
+      ],
+      "summary": "- The user's name is Mateoias.\n- Mateoias has a strong interest in music, specifically jazz.\n- He listens to music, particularly jazz, every day.\n- The AI tutor and Mateoias discussed music preferences, specifically the genre of jazz.\n- The AI tutor learned about Mateoias' daily music listening habits.\n- The AI tutor has yet to find out who Mateoias' favorite jazz musician is."
+    },
+    {
       "id": "9538190d-15c5-46e6-8c6f-354d291fde72",
       "user_id": "f55dd822-8999-44dc-97df-027eadc2fe80",
       "created_at": "2025-06-17T04:45:29.627617",
@@ -232,63 +320,7 @@
         }
       ],
       "summary": "- The user, Mateoias, enjoys scuba diving.\n- His favorite place to scuba dive is in Honduras, where he appreciates the clear water.\n- He has seen many marine creatures while diving, but struggles to name them in Spanish.\n- The AI tutor offered to help Mateoias learn the Spanish names for these creatures.\n- An important fact for future conversations is that Mateoias is a scuba diving enthusiast and is learning Spanish."
-    },
-    {
-      "id": "79111de1-a938-40dc-98ac-1134d700563f",
-      "user_id": "f55dd822-8999-44dc-97df-027eadc2fe80",
-      "created_at": "2025-06-12T01:43:34.980761",
-      "messages": [
-        {
-          "id": "user-5-1749692621",
-          "content": "la musica",
-          "sender": "user",
-          "timestamp": "2025-06-12T01:43:41.014689",
-          "intent": "chat",
-          "audio_language": "Spanish"
-        },
-        {
-          "id": "bot-5-1749692623",
-          "content": "¡La música es un tema genial! ¿Qué tipo de música te gusta escuchar, Mateoias?",
-          "sender": "bot",
-          "timestamp": "2025-06-12T01:43:43.737300",
-          "intent": "chat",
-          "audio_language": "Spanish"
-        },
-        {
-          "id": "user-5-1749692648",
-          "content": "el jazz",
-          "sender": "user",
-          "timestamp": "2025-06-12T01:44:08.193032",
-          "intent": "chat",
-          "audio_language": "Spanish"
-        },
-        {
-          "id": "bot-5-1749692650",
-          "content": "¡El jazz es un género fantástico! ¿Tienes algún músico de jazz favorito?",
-          "sender": "bot",
-          "timestamp": "2025-06-12T01:44:10.319144",
-          "intent": "chat",
-          "audio_language": "Spanish"
-        },
-        {
-          "id": "user-5-1749692665",
-          "content": "Maynard Ferguson",
-          "sender": "user",
-          "timestamp": "2025-06-12T01:44:25.623340",
-          "intent": "chat",
-          "audio_language": "Spanish"
-        },
-        {
-          "id": "bot-5-1749692668",
-          "content": "¡Excelente elección! Maynard Ferguson es un trompetista de jazz increíble. ¿Cuál es tu canción favorita de él?",
-          "sender": "bot",
-          "timestamp": "2025-06-12T01:44:28.336881",
-          "intent": "chat",
-          "audio_language": "Spanish"
-        }
-      ],
-      "summary": ""
     }
   ],
-  "current_conversation_id": "9538190d-15c5-46e6-8c6f-354d291fde72"
+  "current_conversation_id": "2b83bb2e-7bbc-4d63-aa26-4cb7664ec879"
 }

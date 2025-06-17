@@ -1,11 +1,14 @@
+# routes/chat.py
 from flask import Blueprint, request, jsonify
 from ..utils.auth_utils import token_required
 from ..services.chat_service import ChatService
+from ..services.audio_service import AudioService
 
 chat_bp = Blueprint('chat', __name__)
 
-# CHANGED: Create single service instance instead of factory function
+# Create single service instances
 chat_service = ChatService()
+audio_service = AudioService()
 
 @chat_bp.route('/message', methods=['POST'])
 @token_required
@@ -89,8 +92,8 @@ def regenerate_audio(user_id):
         if not 0.5 <= audio_speed <= 1.5:
             audio_speed = 0.8
         
-        # Generate audio only
-        audio_data = chat_service.generate_audio(text, language, audio_speed)
+        # Generate audio using the audio service
+        audio_data = audio_service.generate_audio(text, language, audio_speed)
         
         if audio_data:
             return jsonify({'audio_data': audio_data}), 200

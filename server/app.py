@@ -2,14 +2,15 @@ from flask import Flask
 from flask_cors import CORS
 from .config import Config
 from .database import db_connection, initialize_graph  # Add initialize_graph
+from .services.prompt_loader import prompt_loader
 import atexit
 import logging
-
 
 def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
-    
+    prompt_loader.initialize(app)
+
     logging.basicConfig(level=logging.DEBUG)
 
     # Enable CORS for all routes - ESSENTIAL for production!
@@ -32,6 +33,8 @@ def create_app():
     
     # Register cleanup function
     atexit.register(lambda: db_connection.close())
+    atexit.register(prompt_loader.stop)
+
     
     # Register blueprints with URL prefixes
     from .routes.auth import auth_bp
