@@ -2,10 +2,99 @@
   "user_id": "f55dd822-8999-44dc-97df-027eadc2fe80",
   "conversations": [
     {
+      "id": "9538190d-15c5-46e6-8c6f-354d291fde72",
+      "user_id": "f55dd822-8999-44dc-97df-027eadc2fe80",
+      "created_at": "2025-06-17T04:45:29.627617",
+      "messages": [
+        {
+          "content": "la musica",
+          "sender": "user",
+          "timestamp": "2025-06-17T04:45:37.600095",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "user-0-1750135537"
+        },
+        {
+          "content": "¡Ah, la música! Me gusta mucho la música. ¿Te gusta la música, Mateoias?",
+          "sender": "bot",
+          "timestamp": "2025-06-17T04:45:40.353168",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-1-1750135540"
+        },
+        {
+          "content": "como es te gusta la musica",
+          "sender": "user",
+          "timestamp": "2025-06-17T04:45:57.933608",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "user-2-1750135557"
+        },
+        {
+          "content": "Dices, \"¿Cómo te gusta la música?\" Me gusta la música tranquila. ¿Y a ti, Mateoias, te gusta la música tranquila o la música fuerte?",
+          "sender": "bot",
+          "timestamp": "2025-06-17T04:46:00.744843",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-3-1750135560"
+        }
+      ],
+      "summary": ""
+    },
+    {
+      "id": "277ad9b2-19df-4075-95ab-46bc5a14aafb",
+      "user_id": "f55dd822-8999-44dc-97df-027eadc2fe80",
+      "created_at": "2025-06-17T04:39:48.492050",
+      "messages": [
+        {
+          "content": "de la musica",
+          "sender": "user",
+          "timestamp": "2025-06-17T04:40:04.541047",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "user-0-1750135204"
+        }
+      ],
+      "summary": ""
+    },
+    {
       "id": "acb70282-9f0c-4803-913d-11281b252fcf",
       "user_id": "f55dd822-8999-44dc-97df-027eadc2fe80",
       "created_at": "2025-06-15T00:27:50.527588",
-      "messages": [],
+      "messages": [
+        {
+          "content": "la musica",
+          "sender": "user",
+          "timestamp": "2025-06-17T02:33:49.215339",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "user-0-1750127629"
+        },
+        {
+          "content": "¡Qué bien, Mateoias! Parece que te gusta la música. ¿Cuál es tu género musical favorito en español?",
+          "sender": "bot",
+          "timestamp": "2025-06-17T02:33:54.185391",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-1-1750127634"
+        },
+        {
+          "content": "jazz",
+          "sender": "user",
+          "timestamp": "2025-06-17T02:34:07.336826",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "user-2-1750127647"
+        },
+        {
+          "content": "¡El jazz es un género musical maravilloso, Mateoias! ¿Tienes algún músico de jazz favorito que cante en español?",
+          "sender": "bot",
+          "timestamp": "2025-06-17T02:34:10.121563",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-3-1750127650"
+        }
+      ],
       "summary": ""
     },
     {
@@ -199,38 +288,7 @@
         }
       ],
       "summary": ""
-    },
-    {
-      "id": "4dc084a6-6934-496d-887a-1b33e2ff6797",
-      "user_id": "f55dd822-8999-44dc-97df-027eadc2fe80",
-      "created_at": "2025-06-12T01:43:05.902305",
-      "messages": [],
-      "summary": ""
-    },
-    {
-      "id": "d78ef497-6aed-48dd-9253-bb13f95d5b64",
-      "user_id": "f55dd822-8999-44dc-97df-027eadc2fe80",
-      "created_at": "2025-06-12T01:33:59.313018",
-      "messages": [
-        {
-          "id": "user-5-1749692397",
-          "content": "la musica",
-          "sender": "user",
-          "timestamp": "2025-06-12T01:39:57.718238",
-          "intent": null,
-          "audio_language": "Spanish"
-        },
-        {
-          "id": "user-5-1749692410",
-          "content": "la musica",
-          "sender": "user",
-          "timestamp": "2025-06-12T01:40:10.033767",
-          "intent": null,
-          "audio_language": "Spanish"
-        }
-      ],
-      "summary": ""
     }
   ],
-  "current_conversation_id": "acb70282-9f0c-4803-913d-11281b252fcf"
+  "current_conversation_id": "9538190d-15c5-46e6-8c6f-354d291fde72"
 }
