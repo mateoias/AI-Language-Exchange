@@ -1,5 +1,4 @@
-import openai
-from flask import current_app
+from .llm_manager import llm_manager
 from datetime import datetime
 from ..utils.conversation_utils import (
     load_user_conversations, save_user_conversations, add_message_to_conversation,

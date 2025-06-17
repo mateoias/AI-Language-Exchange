@@ -5,13 +5,15 @@ Uses language models to analyze conversations and generate graph updates
 """
 
 from .graph_service import GraphService
-from ...services.llm_service import LLMService
+from ...services.llm_manager import llm_manager
 import logging
 import json
 
 class LLMGraphService:
     def __init__(self):
-        self.llm_service = LLMService()
+        # REMOVED: self.llm_service = LLMService()
+        # We'll use the global llm_manager directly
+        pass
     
     # ============ PROMPTS ============
     
@@ -114,19 +116,17 @@ If no meaningful data, return empty strings and arrays."""
                 conversation_messages=formatted_messages
             )
             
-            # Get LLM analysis
-            response = self.llm_service.openai_client.chat.completions.create(
-                model="gpt-4",
-                messages=[
-                    {"role": "system", "content": "You are an expert at extracting structured information from conversations."},
-                    {"role": "user", "content": prompt}
-                ],
+            # CHANGED: Use centralized LLM manager
+            system_prompt = "You are an expert at extracting structured information from conversations."
+            
+            result = llm_manager.generate_structured_response(
+                system_prompt=system_prompt,
+                user_prompt=prompt,
                 temperature=0.1,  # Low temperature for consistent extraction
                 max_tokens=5000
             )
             
-            result = response.choices[0].message.content.strip()
-            print("reult of parsing the form: ", result)
+            print("result of parsing the form: ", result)
             # Parse JSON response
             try:
                 parsed_result = json.loads(result)
@@ -150,17 +150,15 @@ If no meaningful data, return empty strings and arrays."""
                 extracted_info=json.dumps(extracted_info, indent=2)
             )
             
-            response = self.llm_service.openai_client.chat.completions.create(
-                model="gpt-4",
-                messages=[
-                    {"role": "system", "content": "You are a Neo4j Cypher expert. Generate safe, valid queries only."},
-                    {"role": "user", "content": prompt}
-                ],
+            # CHANGED: Use centralized LLM manager
+            system_prompt = "You are a Neo4j Cypher expert. Generate safe, valid queries only."
+            
+            result = llm_manager.generate_structured_response(
+                system_prompt=system_prompt,
+                user_prompt=prompt,
                 temperature=0.0,  # No creativity needed for Cypher
                 max_tokens=400
             )
-            
-            result = response.choices[0].message.content.strip()
             
             try:
                 cypher_json = json.loads(result)
@@ -204,17 +202,15 @@ If no meaningful data, return empty strings and arrays."""
                 graph_data="\n".join(formatted_data)
             )
             
-            response = self.llm_service.openai_client.chat.completions.create(
-                model="gpt-4",
-                messages=[
-                    {"role": "system", "content": "You are a conversation context expert for language learning."},
-                    {"role": "user", "content": prompt}
-                ],
+            # CHANGED: Use centralized LLM manager
+            system_prompt = "You are a conversation context expert for language learning."
+            
+            result = llm_manager.generate_structured_response(
+                system_prompt=system_prompt,
+                user_prompt=prompt,
                 temperature=0.3,
                 max_tokens=300
             )
-            
-            result = response.choices[0].message.content.strip()
             
             try:
                 context_json = json.loads(result)

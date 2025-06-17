@@ -1,8 +1,13 @@
-import openai
+# services/chat_service.py
+# REMOVED: import openai - no longer needed
 import azure.cognitiveservices.speech as speechsdk
 from ..models.conversation import Conversation, Message
 from ..utils.file_utils import find_user_by_id
 from .conversation_service import ConversationService
+# NEW IMPORT: Import the centralized LLM manager
+from .llm_manager import llm_manager
+# NEW IMPORT: Import the prompt builder (we'll create this next)
+from .prompt_builder import PromptBuilder
 from ..language_config import get_voice_name, get_pause_durations, get_error_message
 
 from flask import current_app
@@ -11,23 +16,18 @@ import os
 import base64
 import io
 
+
 class ChatService:
     def __init__(self):
-        self._openai_client = None
+        # REMOVED: self._openai_client = None
         self._speech_config = None
         self.conversation_service = ConversationService()
+        # NEW: Add prompt builder
+        self.prompt_builder = PromptBuilder()
         # Cache for audio data during session
         self._audio_cache = {}
     
-    @property
-    def openai_client(self):
-        """Lazy initialization of OpenAI client"""
-        if self._openai_client is None:
-            api_key = current_app.config.get('OPENAI_API_KEY')
-            if not api_key:
-                raise ValueError("OPENAI_API_KEY not configured")
-            self._openai_client = openai.OpenAI(api_key=api_key)
-        return self._openai_client
+    # REMOVED: @property def openai_client - entire property deleted
     
     @property
     def speech_config(self):
@@ -155,54 +155,7 @@ class ChatService:
         # Default to chat mode
         return 'chat'
     
-    def build_chat_prompt(self, user, conversation_context, current_message):
-        """Build optimized prompt for chatbot with enhanced memory"""
-        
-        # Base system prompt
-        system_prompt = f"""You are a friendly language exchange partner helping {user['username']} practice {user['learningLanguage']}. 
-
-You are having a natural conversation to help them improve their language skills through practice.
-
-User Details:
-- Native Language: {user['nativeLanguage']}
-- Learning: {user['learningLanguage']}
-- Name: {user['username']}"""
-
-        # Add personalization if available
-        if user.get('personalization'):
-            p = user['personalization']
-            if p.get('currentLocation'):
-                system_prompt += f"\n- Location: {p['currentLocation']}"
-            if p.get('workStudy'):
-                system_prompt += f"\n- Work/Study: {p['workStudy']}"
-
-        system_prompt += f"""
-
-Guidelines:
-- Always respond in {user['learningLanguage']}
-- Keep responses brief and conversational (2-3 sentences max)
-- ALWAYS ask a follow-up question at the end of each response to continue the conversation
-- Be encouraging and patient
-- Correct major errors gently by using the correct form in your response
-- Show genuine interest in the user's responses
-- Vary your questions to keep the conversation engaging"""
-
-        # Add conversation summaries for long-term memory
-        if conversation_context['conversation_summaries']:
-            system_prompt += "\n\nPrevious conversation highlights:"
-            for summary in conversation_context['conversation_summaries']:
-                system_prompt += f"\n{summary}"
-
-        # Add recent conversation context
-        if conversation_context['recent_messages']:
-            system_prompt += "\n\nRecent conversation:"
-            for msg in conversation_context['recent_messages']:
-                system_prompt += f"\n{msg['sender']}: {msg['content']}"
-
-        # Add behavior instructions
-        system_prompt += f"\n\nRemember to always use {user['learningLanguage']} and keep your response brief. Ask a question at the end of each response."
-        
-        return system_prompt
+    # REMOVED: build_chat_prompt method - replaced by PromptBuilder
     
     def generate_response(self, user_id, message_content, audio_speed=0.8):
         """Main method to generate chat response with persistent memory and audio"""
@@ -240,21 +193,25 @@ Guidelines:
             # Get conversation context for prompt
             conversation_context = self.conversation_service.get_conversation_context(user_id)
             
-            # Build prompt with enhanced context
-            prompt = self.build_chat_prompt(user_data, conversation_context, message_content)
-            
-            # Call OpenAI
-            response = self.openai_client.chat.completions.create(
-                model="gpt-4",
-                messages=[
-                    {"role": "system", "content": prompt},
-                    {"role": "user", "content": message_content}
-                ],
-                temperature=0.3,  # Low creativity for consistency
-                max_tokens=150,   # Keep responses brief
+            # NEW: Use PromptBuilder instead of build_chat_prompt
+            system_prompt, detected_level = self.prompt_builder.build_prompt(
+                user_data,
+                conversation_context,
+                message_content,
+                mode='chat'
             )
             
-            bot_response_content = response.choices[0].message.content.strip()
+            # NEW: Use centralized LLM manager
+            messages = [
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": message_content}
+            ]
+            
+            bot_response_content = llm_manager.generate_chat_response(
+                messages=messages,
+                temperature=0.3,
+                max_tokens=150
+            )
             
             # Generate audio for the response
             audio_data = self.generate_audio(
@@ -272,7 +229,8 @@ Guidelines:
                 'response': bot_response_content,
                 'intent': 'chat',
                 'audio_language': user_data['learningLanguage'],
-                'audio_data': audio_data
+                'audio_data': audio_data,
+                'level': detected_level  # NEW: Include detected level
             }
             
         except Exception as e:
