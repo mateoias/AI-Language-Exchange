@@ -2,13 +2,14 @@ from datetime import datetime
 import uuid
 
 class User:
-    def __init__(self, username, email, password_hash, native_language, learning_language):
+    def __init__(self, username, email, password_hash, native_language, learning_language, proficiency_level='beginner'):
         self.id = str(uuid.uuid4())
         self.username = username
         self.email = email
         self.password_hash = password_hash
         self.native_language = native_language
         self.learning_language = learning_language
+        self.proficiency_level = proficiency_level  # New field
         self.created_at = datetime.utcnow().isoformat()
         self.personalization = {}
     
@@ -20,6 +21,7 @@ class User:
             'password_hash': self.password_hash,
             'nativeLanguage': self.native_language,
             'learningLanguage': self.learning_language,
+            'proficiencyLevel': self.proficiency_level,  # Include in dict
             'created_at': self.created_at,
             'personalization': self.personalization
         }
@@ -32,6 +34,7 @@ class User:
             'email': self.email,
             'nativeLanguage': self.native_language,
             'learningLanguage': self.learning_language,
+            'proficiencyLevel': self.proficiency_level,  # Include in public dict
             'created_at': self.created_at,
             'personalization': self.personalization
         }
@@ -43,7 +46,8 @@ class User:
             email=data['email'],
             password_hash=data['password_hash'],
             native_language=data['nativeLanguage'],
-            learning_language=data['learningLanguage']
+            learning_language=data['learningLanguage'],
+            proficiency_level=data.get('proficiencyLevel', 'beginner')  # Default to beginner
         )
         user.id = data['id']
         user.created_at = data['created_at']

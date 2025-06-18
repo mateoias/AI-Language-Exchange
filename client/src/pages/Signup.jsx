@@ -7,6 +7,12 @@ const LANGUAGES = [
   'Russian', 'Chinese', 'Japanese', 'Korean', 'Arabic', 'Hindi'
 ]
 
+const PROFICIENCY_LEVELS = [
+  { value: 'beginner', label: 'Beginner', description: 'I know a few words' },
+  { value: 'intermediate', label: 'Intermediate', description: 'I can have simple conversations' },
+  { value: 'advanced', label: 'Advanced', description: 'I can discuss complex topics' }
+]
+
 function Signup() {
   const [formData, setFormData] = useState({
     username: '',
@@ -14,7 +20,8 @@ function Signup() {
     password: '',
     confirmPassword: '',
     nativeLanguage: '',
-    learningLanguage: ''
+    learningLanguage: '',
+    proficiencyLevel: 'beginner' // Default to beginner
   })
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
@@ -34,7 +41,14 @@ function Signup() {
     setLoading(true)
 
     try {
-      await signup(formData.username, formData.email, formData.password, formData.nativeLanguage, formData.learningLanguage)
+      await signup(
+        formData.username, 
+        formData.email, 
+        formData.password, 
+        formData.nativeLanguage, 
+        formData.learningLanguage,
+        formData.proficiencyLevel
+      )
       navigate('/personalization')
     } catch (err) {
       setError(err.message)
@@ -128,6 +142,22 @@ function Signup() {
               <option value="">Select language to learn</option>
               {LANGUAGES.filter(lang => lang !== formData.nativeLanguage).map(lang => (
                 <option key={lang} value={lang}>{lang}</option>
+              ))}
+            </select>
+          </div>
+
+          <div className="form-group">
+            <label>Your Current Level in {formData.learningLanguage || 'the language'}</label>
+            <select
+              name="proficiencyLevel"
+              value={formData.proficiencyLevel}
+              onChange={handleChange}
+              required
+            >
+              {PROFICIENCY_LEVELS.map(level => (
+                <option key={level.value} value={level.value}>
+                  {level.label} - {level.description}
+                </option>
               ))}
             </select>
           </div>

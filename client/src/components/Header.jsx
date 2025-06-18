@@ -1,10 +1,23 @@
 import { Link } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
+import { useNavigate } from 'react-router-dom'
+
 
 function Header({ onToggleSidebar }) {
   const { user, logout } = useAuth()
+  const navigate = useNavigate()
 
-  return (
+  const handleLogout = () => {
+    logout()
+    navigate('/login')
+  }
+
+  const formatLevel = (level) => {
+    if (!level) return ''
+    return level.charAt(0).toUpperCase() + level.slice(1)
+  }
+
+return (
     <header className="header">
       <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
         <button 
@@ -20,10 +33,10 @@ function Header({ onToggleSidebar }) {
         {user ? (
           <>
             <span className="user-info">
-              Hi, {user.username} — Learning: {user.learningLanguage}
+              Hi, {user.username} - {formatLevel(user.proficiencyLevel)} - {user.learningLanguage}
             </span>
             <Link to="/personalization" className="header-link">Settings</Link>
-            <button onClick={logout} className="logout-btn">Logout</button>
+            <button onClick={handleLogout} className="logout-btn">Logout</button>
           </>
         ) : (
           <nav>
@@ -37,5 +50,4 @@ function Header({ onToggleSidebar }) {
     </header>
   )
 }
-
 export default Header

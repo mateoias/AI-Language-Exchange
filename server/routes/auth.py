@@ -21,14 +21,15 @@ def signup():
         if existing_user:
             return jsonify({'message': 'User with this email already exists'}), 400
         
-        # Create new user
+        # Create new user with proficiency level
         password_hash = hash_password(data['password'])
         user = User(
             username=data['username'],
             email=data['email'],
             password_hash=password_hash,
             native_language=data['nativeLanguage'],
-            learning_language=data['learningLanguage']
+            learning_language=data['learningLanguage'],
+            proficiency_level=data.get('proficiencyLevel', 'beginner')  # Default to beginner
         )
         
         # Save user to file
@@ -68,11 +69,17 @@ def login():
         if not verify_password(data['password'], user_data['password_hash']):
             return jsonify({'message': 'Invalid credentials'}), 401
         
-        # Update language preferences if provided
+        # Update language preferences and proficiency level if provided
         if data.get('nativeLanguage') and data.get('learningLanguage'):
             user_data['nativeLanguage'] = data['nativeLanguage']
             user_data['learningLanguage'] = data['learningLanguage']
             
+        # Update proficiency level if provided
+        if data.get('proficiencyLevel'):
+            user_data['proficiencyLevel'] = data['proficiencyLevel']
+            
+        # Save updates if any changes were made
+        if data.get('nativeLanguage') or data.get('proficiencyLevel'):
             users_data = load_users()
             users_data[user_id] = user_data
             save_users(users_data)

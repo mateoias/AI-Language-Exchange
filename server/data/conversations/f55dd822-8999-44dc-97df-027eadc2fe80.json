@@ -2,6 +2,86 @@
   "user_id": "f55dd822-8999-44dc-97df-027eadc2fe80",
   "conversations": [
     {
+      "id": "d27dad06-70c9-4930-9e7d-5fbdc640eaa8",
+      "user_id": "f55dd822-8999-44dc-97df-027eadc2fe80",
+      "created_at": "2025-06-18T00:35:47.363948",
+      "messages": [
+        {
+          "content": "Die Arbiten",
+          "sender": "user",
+          "timestamp": "2025-06-18T00:36:00.658732",
+          "intent": "chat",
+          "audio_language": "German",
+          "id": "user-0-1750206960"
+        },
+        {
+          "content": "Du meinst wahrscheinlich \"die Arbeiten\". Das ist richtig! Gut gemacht!",
+          "sender": "bot",
+          "timestamp": "2025-06-18T00:36:02.653187",
+          "intent": "chat",
+          "audio_language": "German",
+          "id": "bot-1-1750206962"
+        }
+      ],
+      "summary": ""
+    },
+    {
+      "id": "b72a2f1f-0805-4560-b2cc-cffc531b8c00",
+      "user_id": "f55dd822-8999-44dc-97df-027eadc2fe80",
+      "created_at": "2025-06-17T23:44:02.833731",
+      "messages": [
+        {
+          "content": "ich mochte spreche von meine mutter",
+          "sender": "user",
+          "timestamp": "2025-06-17T23:44:29.769639",
+          "intent": "chat",
+          "audio_language": "German",
+          "id": "user-0-1750203869"
+        },
+        {
+          "content": "Du möchtest über deine Mutter sprechen. Das ist toll! Du könntest sagen: \"Ich möchte über meine Mutter sprechen.\" Übe diesen Satz und du wirst immer besser!",
+          "sender": "bot",
+          "timestamp": "2025-06-17T23:44:34.277551",
+          "intent": "chat",
+          "audio_language": "German",
+          "id": "bot-1-1750203874"
+        },
+        {
+          "content": "Ich habe pizza ger",
+          "sender": "user",
+          "timestamp": "2025-06-18T00:33:31.650815",
+          "intent": "chat",
+          "audio_language": "German",
+          "id": "user-2-1750206811"
+        },
+        {
+          "content": "Das ist fast richtig, Mateoias! Auf Deutsch sagt man \"Ich habe Pizza gegessen\". Weiter so!",
+          "sender": "bot",
+          "timestamp": "2025-06-18T00:33:33.677398",
+          "intent": "chat",
+          "audio_language": "German",
+          "id": "bot-3-1750206813"
+        },
+        {
+          "content": "ich habe bier gern",
+          "sender": "user",
+          "timestamp": "2025-06-18T00:34:50.437673",
+          "intent": "chat",
+          "audio_language": "German",
+          "id": "user-4-1750206890"
+        },
+        {
+          "content": "Das ist großartig, Mateoias! Dein Satz ist fast perfekt. Es sollte \"Ich mag Bier\" sein. Weiter so!",
+          "sender": "bot",
+          "timestamp": "2025-06-18T00:34:53.057112",
+          "intent": "chat",
+          "audio_language": "German",
+          "id": "bot-5-1750206893"
+        }
+      ],
+      "summary": ""
+    },
+    {
       "id": "2b83bb2e-7bbc-4d63-aa26-4cb7664ec879",
       "user_id": "f55dd822-8999-44dc-97df-027eadc2fe80",
       "created_at": "2025-06-17T20:37:50.611363",
@@ -144,183 +224,7 @@
         }
       ],
       "summary": ""
-    },
-    {
-      "id": "acb70282-9f0c-4803-913d-11281b252fcf",
-      "user_id": "f55dd822-8999-44dc-97df-027eadc2fe80",
-      "created_at": "2025-06-15T00:27:50.527588",
-      "messages": [
-        {
-          "content": "la musica",
-          "sender": "user",
-          "timestamp": "2025-06-17T02:33:49.215339",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "user-0-1750127629"
-        },
-        {
-          "content": "¡Qué bien, Mateoias! Parece que te gusta la música. ¿Cuál es tu género musical favorito en español?",
-          "sender": "bot",
-          "timestamp": "2025-06-17T02:33:54.185391",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "bot-1-1750127634"
-        },
-        {
-          "content": "jazz",
-          "sender": "user",
-          "timestamp": "2025-06-17T02:34:07.336826",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "user-2-1750127647"
-        },
-        {
-          "content": "¡El jazz es un género musical maravilloso, Mateoias! ¿Tienes algún músico de jazz favorito que cante en español?",
-          "sender": "bot",
-          "timestamp": "2025-06-17T02:34:10.121563",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "bot-3-1750127650"
-        }
-      ],
-      "summary": ""
-    },
-    {
-      "id": "d63f3c1d-3ea5-4168-bcbe-efe8f87055f1",
-      "user_id": "f55dd822-8999-44dc-97df-027eadc2fe80",
-      "created_at": "2025-06-13T03:03:59.481633",
-      "messages": [
-        {
-          "content": "scuba diving",
-          "sender": "user",
-          "timestamp": "2025-06-15T00:23:01.064254",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "user-0-1749946981"
-        },
-        {
-          "content": "¡Oh, buceo! ¿Has practicado buceo alguna vez, Mateoias?",
-          "sender": "bot",
-          "timestamp": "2025-06-15T00:23:02.949293",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "bot-1-1749946982"
-        },
-        {
-          "content": "si a mi me gusta buceo",
-          "sender": "user",
-          "timestamp": "2025-06-15T00:24:48.093608",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "user-2-1749947088"
-        },
-        {
-          "content": "¡Qué emocionante! ¿Dónde es tu lugar favorito para bucear?",
-          "sender": "bot",
-          "timestamp": "2025-06-15T00:24:49.751388",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "bot-3-1749947089"
-        },
-        {
-          "content": "Honduras",
-          "sender": "user",
-          "timestamp": "2025-06-15T00:25:05.284623",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "user-4-1749947105"
-        },
-        {
-          "content": "¡Honduras! Debe ser un lugar increíble para bucear. ¿Qué es lo que más te gusta de bucear allí?",
-          "sender": "bot",
-          "timestamp": "2025-06-15T00:25:07.788072",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "bot-5-1749947107"
-        },
-        {
-          "content": "el aqua es muy claro",
-          "sender": "user",
-          "timestamp": "2025-06-15T00:25:40.909104",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "user-6-1749947140"
-        },
-        {
-          "content": "¡Qué maravilloso! Debe ser impresionante ver la vida marina en agua tan clara. ¿Qué tipo de criaturas has visto mientras buceas allí?",
-          "sender": "bot",
-          "timestamp": "2025-06-15T00:25:44.641819",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "bot-7-1749947144"
-        },
-        {
-          "content": "muchos, pero no lo se en Espanyol",
-          "sender": "user",
-          "timestamp": "2025-06-15T00:26:08.391299",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "user-8-1749947168"
-        },
-        {
-          "content": "No hay problema, Mateoias. Podemos aprender los nombres juntos. ¿Has visto tiburones o tortugas mientras buceas?",
-          "sender": "bot",
-          "timestamp": "2025-06-15T00:26:10.638272",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "bot-9-1749947170"
-        },
-        {
-          "content": "si, hoy vista tiburones pequenyas",
-          "sender": "user",
-          "timestamp": "2025-06-15T00:26:48.528664",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "user-10-1749947208"
-        },
-        {
-          "content": "¡Vaya! Debe ser emocionante ver tiburones, aunque sean pequeños. ¿Has tenido la oportunidad de ver algún otro animal marino impresionante?",
-          "sender": "bot",
-          "timestamp": "2025-06-15T00:26:51.060406",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "bot-11-1749947211"
-        },
-        {
-          "content": "eels",
-          "sender": "user",
-          "timestamp": "2025-06-15T00:27:09.305452",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "user-12-1749947229"
-        },
-        {
-          "content": "¡Las anguilas son criaturas fascinantes! ¿Te asustaron o te parecieron interesantes? ¿Qué otros animales marinos te gustaría ver?",
-          "sender": "bot",
-          "timestamp": "2025-06-15T00:27:11.354114",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "bot-13-1749947231"
-        },
-        {
-          "content": "un rayo",
-          "sender": "user",
-          "timestamp": "2025-06-15T00:27:34.955908",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "user-14-1749947254"
-        },
-        {
-          "content": "¡Ver una raya debe ser una experiencia increíble! ¿Has tenido la oportunidad de ver alguna antes? ¿Qué otros animales te gustaría ver en el futuro?",
-          "sender": "bot",
-          "timestamp": "2025-06-15T00:27:37.447180",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "bot-15-1749947257"
-        }
-      ],
-      "summary": "- The user, Mateoias, enjoys scuba diving.\n- His favorite place to scuba dive is in Honduras, where he appreciates the clear water.\n- He has seen many marine creatures while diving, but struggles to name them in Spanish.\n- The AI tutor offered to help Mateoias learn the Spanish names for these creatures.\n- An important fact for future conversations is that Mateoias is a scuba diving enthusiast and is learning Spanish."
     }
   ],
-  "current_conversation_id": "2b83bb2e-7bbc-4d63-aa26-4cb7664ec879"
+  "current_conversation_id": "d27dad06-70c9-4930-9e7d-5fbdc640eaa8"
 }

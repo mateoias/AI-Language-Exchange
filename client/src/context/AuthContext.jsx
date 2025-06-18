@@ -36,15 +36,15 @@ export function AuthProvider({ children }) {
     return () => window.removeEventListener('beforeunload', handleBeforeUnload)
   }, [])
 
-  const login = async (email, password, nativeLanguage, learningLanguage) => {
-    const response = await api.login(email, password, nativeLanguage, learningLanguage)
+  const login = async (email, password, nativeLanguage, learningLanguage, proficiencyLevel) => {
+    const response = await api.login(email, password, nativeLanguage, learningLanguage, proficiencyLevel)
     localStorage.setItem('token', response.token)
     setUser(response.user)
     return response
   }
 
-  const signup = async (username, email, password, nativeLanguage, learningLanguage) => {
-    const response = await api.signup(username, email, password, nativeLanguage, learningLanguage)
+  const signup = async (username, email, password, nativeLanguage, learningLanguage, proficiencyLevel) => {
+    const response = await api.signup(username, email, password, nativeLanguage, learningLanguage, proficiencyLevel)
     localStorage.setItem('token', response.token)
     setUser(response.user)
     return response

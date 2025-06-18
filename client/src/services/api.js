@@ -23,16 +23,16 @@ const request = async (endpoint, options = {}) => {
 }
 
 export const api = {
-  login: (email, password, nativeLanguage, learningLanguage) =>
+  login: (email, password, nativeLanguage, learningLanguage, proficiencyLevel) =>
     request('/auth/login', {
       method: 'POST',
-      body: JSON.stringify({ email, password, nativeLanguage, learningLanguage })
+      body: JSON.stringify({ email, password, nativeLanguage, learningLanguage, proficiencyLevel })
     }),
 
-  signup: (username, email, password, nativeLanguage, learningLanguage) =>
+  signup: (username, email, password, nativeLanguage, learningLanguage, proficiencyLevel) =>
     request('/auth/signup', {
       method: 'POST',
-      body: JSON.stringify({ username, email, password, nativeLanguage, learningLanguage })
+      body: JSON.stringify({ username, email, password, nativeLanguage, learningLanguage, proficiencyLevel })
     }),
 
   getProfile: () => request('/auth/profile'),

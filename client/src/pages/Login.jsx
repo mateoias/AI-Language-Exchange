@@ -7,29 +7,39 @@ const LANGUAGES = [
   'Russian', 'Chinese', 'Japanese', 'Korean', 'Arabic', 'Hindi'
 ]
 
+const PROFICIENCY_LEVELS = [
+  { value: 'beginner', label: 'Beginner', description: 'I know a few words' },
+  { value: 'intermediate', label: 'Intermediate', description: 'I can have simple conversations' },
+  { value: 'advanced', label: 'Advanced', description: 'I can discuss complex topics' }
+]
+
 function Login() {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
     nativeLanguage: '',
-    learningLanguage: ''
+    learningLanguage: '',
+    proficiencyLevel: ''
   })
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+  const [showLevelUpdate, setShowLevelUpdate] = useState(false)
   
-  const { login } = useAuth()
+  const { login, user } = useAuth()
   const navigate = useNavigate()
 
   // Pre-populate language settings if user has them from previous session
   useEffect(() => {
     const savedNativeLanguage = localStorage.getItem('nativeLanguage')
     const savedLearningLanguage = localStorage.getItem('learningLanguage')
+    const savedProficiencyLevel = localStorage.getItem('proficiencyLevel')
     
     if (savedNativeLanguage && savedLearningLanguage) {
       setFormData(prev => ({
         ...prev,
         nativeLanguage: savedNativeLanguage,
-        learningLanguage: savedLearningLanguage
+        learningLanguage: savedLearningLanguage,
+        proficiencyLevel: savedProficiencyLevel || ''
       }))
     }
   }, [])
@@ -40,11 +50,20 @@ function Login() {
     setLoading(true)
 
     try {
-      await login(formData.email, formData.password, formData.nativeLanguage, formData.learningLanguage)
+      await login(
+        formData.email, 
+        formData.password, 
+        formData.nativeLanguage, 
+        formData.learningLanguage,
+        formData.proficiencyLevel || undefined // Only send if user wants to update
+      )
       
       // Save language preferences for next time
       localStorage.setItem('nativeLanguage', formData.nativeLanguage)
       localStorage.setItem('learningLanguage', formData.learningLanguage)
+      if (formData.proficiencyLevel) {
+        localStorage.setItem('proficiencyLevel', formData.proficiencyLevel)
+      }
       
       navigate('/')
     } catch (err) {
@@ -120,6 +139,34 @@ function Login() {
               ))}
             </select>
           </div>
+
+          <div className="form-check">
+            <input
+              type="checkbox"
+              id="updateLevel"
+              checked={showLevelUpdate}
+              onChange={(e) => setShowLevelUpdate(e.target.checked)}
+            />
+            <label htmlFor="updateLevel">Update my proficiency level</label>
+          </div>
+
+          {showLevelUpdate && (
+            <div className="form-group">
+              <label>Your Current Level in {formData.learningLanguage || 'the language'}</label>
+              <select
+                name="proficiencyLevel"
+                value={formData.proficiencyLevel}
+                onChange={handleChange}
+              >
+                <option value="">Keep current level</option>
+                {PROFICIENCY_LEVELS.map(level => (
+                  <option key={level.value} value={level.value}>
+                    {level.label} - {level.description}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
 
           <button type="submit" disabled={loading} className="auth-submit">
             {loading ? 'Logging in...' : 'Login'}

@@ -1237,3 +1237,20 @@ body {
     min-width: 1.5rem;
   }
 }
+
+.form-check {
+  display: flex;
+  align-items: center;
+  margin: 1rem 0;
+  gap: 0.5rem;
+}
+
+.form-check input[type="checkbox"] {
+  width: auto;
+  margin: 0;
+}
+
+.form-check label {
+  margin: 0;
+  cursor: pointer;
+}
