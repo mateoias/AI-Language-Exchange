@@ -11,8 +11,18 @@ def create_app():
     app.config.from_object(Config)
     prompt_loader.initialize(app)
 
-    logging.basicConfig(level=logging.DEBUG)
-
+    logging.basicConfig(
+        level=logging.WARNING,
+        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+    )
+        # Set specific loggers to INFO for debugging
+    logging.getLogger('server.services.prompt_loader').setLevel(logging.INFO)
+    
+    # Silence chatty libraries
+    logging.getLogger('azure').setLevel(logging.ERROR)
+    logging.getLogger('urllib3').setLevel(logging.ERROR)
+    logging.getLogger('watchdog').setLevel(logging.ERROR)
+    
     # Enable CORS for all routes - ESSENTIAL for production!
     CORS(app, origins=["http://localhost:5173"])  # Vite default port
     

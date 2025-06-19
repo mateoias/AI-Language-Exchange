@@ -102,3 +102,42 @@ def regenerate_audio(user_id):
             
     except Exception as e:
         return jsonify({'error': f'Server error: {str(e)}'}), 500
+    
+@chat_bp.route('/debug-prompt', methods=['GET'])
+@token_required
+def debug_prompt(user_id):
+    """Debug endpoint to see what prompt would be generated"""
+    try:
+        from ..utils.file_utils import find_user_by_id
+        from ..services.prompt_builder import PromptBuilder
+        
+        # Get user data
+        user_data = find_user_by_id(user_id)
+        if not user_data:
+            return jsonify({'error': 'User not found'}), 404
+        
+        # Get minimal conversation context
+        conversation_context = {
+            'recent_messages': [],
+            'conversation_summaries': [],
+            'message_count': 0
+        }
+        
+        # Build prompt
+        prompt_builder = PromptBuilder()
+        system_prompt, detected_level = prompt_builder.build_prompt(
+            user_data,
+            conversation_context,
+            "Test message",
+            mode='chat'
+        )
+        
+        return jsonify({
+            'user_level': detected_level,
+            'prompt_preview': system_prompt[:500] + '...' if len(system_prompt) > 500 else system_prompt,
+            'full_prompt': system_prompt,
+            'prompt_length': len(system_prompt)
+        }), 200
+        
+    except Exception as e:
+        return jsonify({'error': f'Server error: {str(e)}'}), 500

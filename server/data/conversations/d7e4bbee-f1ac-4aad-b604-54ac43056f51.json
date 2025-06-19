@@ -56,7 +56,231 @@
         }
       ],
       "summary": ""
+    },
+    {
+      "id": "4f5a0a71-01e8-425d-8039-48c81a11c3cd",
+      "user_id": "d7e4bbee-f1ac-4aad-b604-54ac43056f51",
+      "created_at": "2025-06-19T20:10:11.185595",
+      "messages": [
+        {
+          "content": "el futbol",
+          "sender": "user",
+          "timestamp": "2025-06-19T20:10:21.009601",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "user-0-1750363821"
+        },
+        {
+          "content": "¡Eso es correcto! \"El fútbol\" en español significa \"football\" en inglés. ¿Te gusta jugar al fútbol, John?",
+          "sender": "bot",
+          "timestamp": "2025-06-19T20:10:24.092980",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-1-1750363824"
+        }
+      ],
+      "summary": ""
+    },
+    {
+      "id": "d20ce31b-e716-4031-b296-8ec2f7666c36",
+      "user_id": "d7e4bbee-f1ac-4aad-b604-54ac43056f51",
+      "created_at": "2025-06-19T20:11:03.995226",
+      "messages": [
+        {
+          "content": "de mi casa",
+          "sender": "user",
+          "timestamp": "2025-06-19T20:11:10.887244",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "user-0-1750363870"
+        },
+        {
+          "content": "\"De mi casa\" significa \"from my house\" en inglés. ¿Puedes completar la frase, John? Por ejemplo, \"Voy a la escuela de mi casa\".",
+          "sender": "bot",
+          "timestamp": "2025-06-19T20:11:15.526373",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-1-1750363875"
+        },
+        {
+          "content": "quiero hablar de mi casa",
+          "sender": "user",
+          "timestamp": "2025-06-19T20:11:42.688077",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "user-2-1750363902"
+        },
+        {
+          "content": "¡Perfecto, John! Me encantaría escuchar sobre tu casa. ¿Cómo es tu casa? ¿Es grande o pequeña? ¿Cuántas habitaciones tiene?",
+          "sender": "bot",
+          "timestamp": "2025-06-19T20:11:45.821624",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-3-1750363905"
+        },
+        {
+          "content": "es pequenya",
+          "sender": "user",
+          "timestamp": "2025-06-19T20:13:20.825794",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "user-4-1750364000"
+        },
+        {
+          "content": "Entiendo, tu casa es pequeña. ¿Cuántas habitaciones tiene tu casa, John?",
+          "sender": "bot",
+          "timestamp": "2025-06-19T20:13:23.307659",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-5-1750364003"
+        },
+        {
+          "content": "quatro",
+          "sender": "user",
+          "timestamp": "2025-06-19T20:13:38.107879",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "user-6-1750364018"
+        },
+        {
+          "content": "¡Genial! Entonces, tu casa tiene cuatro habitaciones. ¿Y cuántos baños hay en tu casa, John?",
+          "sender": "bot",
+          "timestamp": "2025-06-19T20:13:41.510278",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-7-1750364021"
+        },
+        {
+          "content": "tres",
+          "sender": "user",
+          "timestamp": "2025-06-19T20:13:55.417287",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "user-8-1750364035"
+        },
+        {
+          "content": "¡Perfecto! Tu casa tiene tres baños. ¿Tienes un jardín en tu casa, John?",
+          "sender": "bot",
+          "timestamp": "2025-06-19T20:13:57.937537",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-9-1750364037"
+        },
+        {
+          "content": "si, un jardin pequenyo",
+          "sender": "user",
+          "timestamp": "2025-06-19T20:17:42.656944",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "user-10-1750364262"
+        },
+        {
+          "content": "¡Qué bonito! Un jardín pequeño puede ser muy acogedor. ¿Te gusta cuidar de las plantas en tu jardín, John?",
+          "sender": "bot",
+          "timestamp": "2025-06-19T20:17:46.390452",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-11-1750364266"
+        },
+        {
+          "content": "no",
+          "sender": "user",
+          "timestamp": "2025-06-19T20:18:04.707360",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "user-12-1750364284"
+        },
+        {
+          "content": "Entiendo, no a todos les gusta la jardinería. ¿Qué te gusta hacer en tu tiempo libre, John?",
+          "sender": "bot",
+          "timestamp": "2025-06-19T20:18:07.079875",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-13-1750364287"
+        },
+        {
+          "content": "leer",
+          "sender": "user",
+          "timestamp": "2025-06-19T20:18:18.522672",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "user-14-1750364298"
+        },
+        {
+          "content": "¡Leer es una actividad maravillosa! ¿Qué tipo de libros te gusta leer, John?",
+          "sender": "bot",
+          "timestamp": "2025-06-19T20:18:22.236780",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-15-1750364302"
+        },
+        {
+          "content": "science fiction",
+          "sender": "user",
+          "timestamp": "2025-06-19T20:18:52.003136",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "user-16-1750364332"
+        },
+        {
+          "content": "¡La ciencia ficción es un género fascinante! ¿Cuál es tu libro de ciencia ficción favorito, John?",
+          "sender": "bot",
+          "timestamp": "2025-06-19T20:18:54.797984",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-17-1750364334"
+        },
+        {
+          "content": "Lord of the Rings",
+          "sender": "user",
+          "timestamp": "2025-06-19T20:19:07.810879",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "user-18-1750364347"
+        },
+        {
+          "content": "\"El Señor de los Anillos\" es una gran obra de fantasía, no exactamente ciencia ficción, pero aún así es increíble. ¿Has leído otros libros de J.R.R. Tolkien, John?",
+          "sender": "bot",
+          "timestamp": "2025-06-19T20:19:12.696623",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-19-1750364352"
+        },
+        {
+          "content": "the hobbit",
+          "sender": "user",
+          "timestamp": "2025-06-19T20:20:13.527137",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "user-20-1750364413"
+        },
+        {
+          "content": "\"El Hobbit\" es otro gran libro de Tolkien. ¿Te gustó más que \"El Señor de los Anillos\"?",
+          "sender": "bot",
+          "timestamp": "2025-06-19T20:20:16.047410",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-21-1750364416"
+        },
+        {
+          "content": "No",
+          "sender": "user",
+          "timestamp": "2025-06-19T20:20:31.347841",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "user-22-1750364431"
+        },
+        {
+          "content": "Entiendo. ¿Hay algún otro libro que te guste tanto como \"El Señor de los Anillos\"?",
+          "sender": "bot",
+          "timestamp": "2025-06-19T20:20:33.784270",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-23-1750364433"
+        }
+      ],
+      "summary": "- User's name is John.\n- John is learning Spanish and practicing with the AI tutor.\n- John shared personal information about his house: it is small, has four rooms, and three bathrooms.\n- The AI tutor asked John if he has a garden at his house, but John did not respond.\n- John's language learning progress includes understanding and responding to questions about his house in Spanish."
     }
   ],
-  "current_conversation_id": "001936d7-53db-430a-a604-a97af645c0f6"
+  "current_conversation_id": "d20ce31b-e716-4031-b296-8ec2f7666c36"
 }

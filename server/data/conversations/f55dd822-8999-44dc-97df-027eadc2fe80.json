@@ -2,6 +2,46 @@
   "user_id": "f55dd822-8999-44dc-97df-027eadc2fe80",
   "conversations": [
     {
+      "id": "ec45a2d0-0d9a-4f38-a9c4-0da8904d2d1a",
+      "user_id": "f55dd822-8999-44dc-97df-027eadc2fe80",
+      "created_at": "2025-06-18T00:42:06.780705",
+      "messages": [
+        {
+          "content": "la musica",
+          "sender": "user",
+          "timestamp": "2025-06-18T01:07:05.860203",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "user-0-1750208825"
+        },
+        {
+          "content": "¡Excelente! \"La música\" en español significa \"The music\" en inglés. ¿Te gusta la música, Mateoias?",
+          "sender": "bot",
+          "timestamp": "2025-06-18T01:07:08.523234",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-1-1750208828"
+        },
+        {
+          "content": "si",
+          "sender": "user",
+          "timestamp": "2025-06-19T20:09:47.815563",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "user-2-1750363787"
+        },
+        {
+          "content": "¡Hola! ¿Cómo puedo ayudarte hoy?",
+          "sender": "bot",
+          "timestamp": "2025-06-19T20:09:50.097304",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-3-1750363790"
+        }
+      ],
+      "summary": ""
+    },
+    {
       "id": "d27dad06-70c9-4930-9e7d-5fbdc640eaa8",
       "user_id": "f55dd822-8999-44dc-97df-027eadc2fe80",
       "created_at": "2025-06-18T00:35:47.363948",
@@ -208,23 +248,7 @@
         }
       ],
       "summary": ""
-    },
-    {
-      "id": "277ad9b2-19df-4075-95ab-46bc5a14aafb",
-      "user_id": "f55dd822-8999-44dc-97df-027eadc2fe80",
-      "created_at": "2025-06-17T04:39:48.492050",
-      "messages": [
-        {
-          "content": "de la musica",
-          "sender": "user",
-          "timestamp": "2025-06-17T04:40:04.541047",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "user-0-1750135204"
-        }
-      ],
-      "summary": ""
     }
   ],
-  "current_conversation_id": "d27dad06-70c9-4930-9e7d-5fbdc640eaa8"
+  "current_conversation_id": "ec45a2d0-0d9a-4f38-a9c4-0da8904d2d1a"
 }

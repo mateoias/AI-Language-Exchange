@@ -82,6 +82,14 @@ class ChatService:
                 message_content,
                 mode='chat'
             )
+                        # LOG THE FULL PROMPT FOR DEBUGGING
+            print("\n" + "="*80)
+            print("PROMPT SENT TO CHATBOT:")
+            print("="*80)
+            print(system_prompt)
+            print("="*80)
+            print(f"User Message: {message_content}")
+            print("="*80 + "\n")
             
             # Use centralized LLM manager
             messages = [
