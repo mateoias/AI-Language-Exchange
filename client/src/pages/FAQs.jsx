@@ -43,6 +43,10 @@ function FAQs() {
     {
       question: "How do I report issues or suggest improvements?",
       answer: "You can email us at mateoias@hotmail.com with any feedback, bug reports, or feature suggestions. We value user input and use it to improve the platform."
+    },
+        {
+      question: "What is interlanguage?",
+      answer: "Interlanguage refers to the unique linguistic system that each learner develops as they are learning a language. Your interlanguage is different from your native language and also from the target language. It's a dynamic system, so at each point in your learning journey you have your own personal interlanguage - and you are trying to get it to line up with what native speakers of your target language expect. It's one of the really fun things to study if you are linguist, a language teacher, or just a plain old language nerd."
     }
   ]
 
