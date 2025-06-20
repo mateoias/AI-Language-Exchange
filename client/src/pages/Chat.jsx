@@ -2,6 +2,9 @@ import { useState, useEffect, useRef } from 'react'
 import { useAuth } from '../context/AuthContext'
 import { api } from '../services/api'
 import { getGreeting, getPlaceholder, getErrorMessage } from '../config/LanguageConfig'
+import AudioRecorder from '../components/AudioRecorder'
+import '../styles/AudioRecorder.css'
+
 
 function Chat() {
   const [messages, setMessages] = useState([])
@@ -11,6 +14,9 @@ function Chat() {
   const [historyLoaded, setHistoryLoaded] = useState(false)
   const [audioSpeed, setAudioSpeed] = useState(0.8) // Default 80% speed
   const [playingAudioId, setPlayingAudioId] = useState(null)
+
+  const [isTranscribing, setIsTranscribing] = useState(false)
+  const [inputMode, setInputMode] = useState('text') // 'text' or 'audio'
   
   const { user } = useAuth()
   const audioRefs = useRef({}) // Store audio elements by message ID
@@ -184,6 +190,45 @@ function Chat() {
       }
     } catch (err) {
       console.error('Failed to regenerate audio:', err)
+    }
+  }
+
+  const handleAudioRecording = async (audioBlob) => {
+    setIsTranscribing(true)
+    setError('')
+    
+    try {
+      // Get language hint from user's learning language
+      const languageMap = {
+        'Spanish': 'es',
+        'French': 'fr',
+        'German': 'de',
+        'Italian': 'it',
+        'Portuguese': 'pt',
+        'Russian': 'ru',
+        'Chinese': 'zh',
+        'Japanese': 'ja',
+        'Korean': 'ko',
+        'Arabic': 'ar',
+        'Hindi': 'hi'
+      }
+      
+      const languageCode = languageMap[user.learningLanguage] || null
+      
+      // Transcribe audio
+      const transcription = await api.transcribeAudio(audioBlob, languageCode)
+      
+      // Set transcribed text in input
+      setInput(transcription.text)
+      
+      // Switch back to text mode
+      setInputMode('text')
+      
+    } catch (err) {
+      setError('Failed to transcribe audio. Please try again.')
+      console.error('Transcription error:', err)
+    } finally {
+      setIsTranscribing(false)
     }
   }
 
@@ -391,15 +436,47 @@ function Chat() {
         )}
       </div>
       
-      <form className="chat-input" onSubmit={sendMessage}>
-        <input
-          type="text"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          placeholder={getPlaceholder(user.learningLanguage, user.nativeLanguage)}
-          disabled={loading}
-        />
-        <button type="submit" disabled={loading || !input.trim()}>
+        <form className="chat-input" onSubmit={sendMessage}>
+        <div className="input-wrapper">
+          {inputMode === 'text' ? (
+            <>
+              <input
+                type="text"
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                placeholder={isTranscribing ? 'Transcribing...' : getPlaceholder(user.learningLanguage, user.nativeLanguage)}
+                disabled={loading || isTranscribing}
+              />
+              <button
+                type="button"
+                className="input-mode-toggle"
+                onClick={() => setInputMode('audio')}
+                disabled={loading || isTranscribing}
+                title="Switch to voice input"
+              >
+                🎤
+              </button>
+            </>
+          ) : (
+            <div className="audio-input-container">
+              <AudioRecorder 
+                onRecordingComplete={handleAudioRecording}
+                disabled={loading || isTranscribing}
+              />
+              {isTranscribing && <span className="transcribing-text">Transcribing...</span>}
+              <button
+                type="button"
+                className="input-mode-toggle text-mode"
+                onClick={() => setInputMode('text')}
+                disabled={loading || isTranscribing}
+                title="Switch to text input"
+              >
+                ⌨️
+              </button>
+            </div>
+          )}
+        </div>
+        <button type="submit" disabled={loading || !input.trim() || isTranscribing}>
           {loading ? 'Sending...' : 'Send'}
         </button>
       </form>

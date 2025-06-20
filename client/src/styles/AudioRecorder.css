@@ -1,0 +1,158 @@
+.audio-recorder {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.record-button {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 3px solid #e74c3c;
+  background-color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.record-button:hover:not(:disabled) {
+  background-color: #fee;
+  transform: scale(1.05);
+}
+
+.record-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.record-button.recording {
+  background-color: #e74c3c;
+  animation: pulse 1.5s infinite;
+}
+
+.record-button.recording .stop-icon {
+  filter: brightness(0) invert(1);
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(231, 76, 60, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(231, 76, 60, 0);
+  }
+}
+
+.recording-indicator {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex: 1;
+}
+
+.recording-dot {
+  width: 8px;
+  height: 8px;
+  background-color: #e74c3c;
+  border-radius: 50%;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+.recording-time {
+  font-family: monospace;
+  font-size: 0.9rem;
+  color: #666;
+  min-width: 3rem;
+}
+
+.audio-level {
+  height: 4px;
+  background-color: #3498db;
+  border-radius: 2px;
+  transition: width 0.1s ease;
+  max-width: 100px;
+}
+
+.recording-error {
+  color: #e74c3c;
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+}
+
+/* Chat input modifications */
+.chat-input {
+  display: flex;
+  gap: 0.5rem;
+  padding: 1rem;
+  background-color: white;
+  border-top: 1px solid #eee;
+}
+
+.input-wrapper {
+  flex: 1;
+  display: flex;
+  gap: 0.5rem;
+  position: relative;
+}
+
+.input-wrapper input {
+  flex: 1;
+  padding-right: 3rem;
+}
+
+.input-mode-toggle {
+  position: absolute;
+  right: 0.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 0.25rem;
+  opacity: 0.6;
+  transition: opacity 0.2s;
+}
+
+.input-mode-toggle:hover:not(:disabled) {
+  opacity: 1;
+}
+
+.input-mode-toggle:disabled {
+  cursor: not-allowed;
+  opacity: 0.3;
+}
+
+.audio-input-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.5rem;
+  background-color: #f9f9f9;
+  border-radius: 0.5rem;
+  border: 1px solid #ddd;
+}
+
+.input-mode-toggle.text-mode {
+  position: static;
+  transform: none;
+  margin-left: auto;
+}
+
+.transcribing-text {
+  font-size: 0.85rem;
+  color: #666;
+  font-style: italic;
+}

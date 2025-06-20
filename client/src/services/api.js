@@ -65,5 +65,55 @@ export const api = {
     request('/chat/regenerate-audio', {
       method: 'POST',
       body: JSON.stringify({ text, language, audio_speed: audioSpeed })
-    })
+    }),
+
+    async transcribeAudio(audioBlob, language = null) {
+  const formData = new FormData()
+  formData.append('audio', audioBlob, 'recording.webm')
+  if (language) {
+    formData.append('language', language)
+  }
+
+  const token = getToken()
+
+  const response = await fetch(`${API_BASE}/chat/transcribe`, {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${token}`
+    },
+    body: formData
+  })
+
+  if (!response.ok) {
+    const error = await response.json()
+    throw new Error(error.message || 'Failed to transcribe audio')
+  }
+
+  return response.json()
 }
+}
+
+//     async transcribeAudio(audioBlob, language = null) {
+//     const formData = new FormData()
+//     formData.append('audio', audioBlob, 'recording.webm')
+//     if (language) {
+//       formData.append('language', language)
+//     }
+
+//     const response = await fetch(`${API_BASE_URL}/chat/transcribe`, {
+//       method: 'POST',
+//       headers: {
+//         'Authorization': `Bearer ${getAuthToken()}`
+//       },
+//       body: formData
+//     })
+
+//     if (!response.ok) {
+//       const error = await response.json()
+//       throw new Error(error.message || 'Failed to transcribe audio')
+//     }
+
+//     return response.json()
+//   }
+
+// }

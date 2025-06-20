@@ -1,5 +1,8 @@
 # routes/chat.py
-from flask import Blueprint, request, jsonify
+import logging
+from io import BytesIO
+
+from flask import Blueprint, request, jsonify, current_app
 from ..utils.auth_utils import token_required
 from ..services.chat_service import ChatService
 from ..services.audio_service import AudioService
@@ -102,7 +105,54 @@ def regenerate_audio(user_id):
             
     except Exception as e:
         return jsonify({'error': f'Server error: {str(e)}'}), 500
-    
+
+
+@chat_bp.route('/transcribe', methods=['POST'])
+@token_required
+def transcribe_audio(user_id):
+    """Transcribe audio using OpenAI Whisper"""
+    try:
+        # Check if audio file is in request
+        if 'audio' not in request.files:
+            return jsonify({'error': 'No audio file provided'}), 400
+        
+        audio_file = request.files['audio']
+        
+        if audio_file.filename == '':
+            return jsonify({'error': 'No audio file selected'}), 400
+        
+        # Get language from form data (optional)
+        language = request.form.get('language', None)  # None = auto-detect
+        
+       # Use Whisper API to transcribe
+        try:
+            from openai import OpenAI
+            client = OpenAI(api_key=current_app.config.get('OPENAI_API_KEY'))
+                
+                # Read the uploaded file into BytesIO (file-like object)
+            audio_bytes = audio_file.read()
+            audio_stream = BytesIO(audio_bytes)
+            audio_stream.seek(0)
+                
+            transcript = client.audio.transcriptions.create(
+                     model="whisper-1",
+                    file=(audio_file.filename, audio_stream, audio_file.mimetype),
+                    language=language  # Optional language hint
+                )
+            
+            return jsonify({
+                'text': transcript.text,
+                'language': language
+            }), 200
+            
+        except Exception as whisper_error:
+            logging.error(f"Whisper transcription error: {whisper_error}")
+            return jsonify({'error': 'Failed to transcribe audio'}), 500
+            
+    except Exception as e:
+        logging.error(f"Transcribe endpoint error: {e}")
+        return jsonify({'error': f'Server error: {str(e)}'}), 500
+
 @chat_bp.route('/debug-prompt', methods=['GET'])
 @token_required
 def debug_prompt(user_id):

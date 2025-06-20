@@ -132,8 +132,185 @@
       "id": "acf69f76-cb12-4527-a7b9-aa27db6c8d6f",
       "user_id": "24bcfd2c-296c-48b3-9086-7dcc616d9fcb",
       "created_at": "2025-06-07T02:05:14.784646",
-      "messages": [],
-      "summary": ""
+      "messages": [
+        {
+          "content": "de la musica",
+          "sender": "user",
+          "timestamp": "2025-06-20T03:02:47.493147",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "user-0-1750388567"
+        },
+        {
+          "content": "¿Qué tipo de música te gusta tocar, Mateo?",
+          "sender": "bot",
+          "timestamp": "2025-06-20T03:02:49.921534",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-1-1750388569"
+        },
+        {
+          "content": "A mí me gusta La Clásica.",
+          "sender": "user",
+          "timestamp": "2025-06-20T03:03:03.548975",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "user-2-1750388583"
+        },
+        {
+          "content": "¡La música clásica es maravillosa! ¿Tienes un compositor favorito?",
+          "sender": "bot",
+          "timestamp": "2025-06-20T03:03:05.423472",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-3-1750388585"
+        },
+        {
+          "content": "Mi compositor favorito es Mozart.",
+          "sender": "user",
+          "timestamp": "2025-06-20T03:03:21.814551",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "user-4-1750388601"
+        },
+        {
+          "content": "¡Mozart es un genio! ¿Cuál es tu pieza favorita de él?",
+          "sender": "bot",
+          "timestamp": "2025-06-20T03:03:23.736492",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-5-1750388603"
+        },
+        {
+          "content": "¡Pitá perfecto!",
+          "sender": "user",
+          "timestamp": "2025-06-20T03:03:38.261535",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "user-6-1750388618"
+        },
+        {
+          "content": "Creo que hubo un error en tu mensaje. ¿Podrías decirme de nuevo cuál es tu pieza favorita de Mozart?",
+          "sender": "bot",
+          "timestamp": "2025-06-20T03:03:40.635501",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-7-1750388620"
+        },
+        {
+          "content": "No lo sé cómo se dice en español. The magic flute",
+          "sender": "user",
+          "timestamp": "2025-06-20T03:04:11.638093",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "user-8-1750388651"
+        },
+        {
+          "content": "En español decimos \"La Flauta Mágica\". ¿Te gusta alguna otra obra de Mozart?",
+          "sender": "bot",
+          "timestamp": "2025-06-20T03:04:13.400990",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-9-1750388653"
+        },
+        {
+          "content": "Symphony # 40",
+          "sender": "user",
+          "timestamp": "2025-06-20T03:04:58.046620",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "user-10-1750388698"
+        },
+        {
+          "content": "En español, eso se dice \"Sinfonía número 40\". ¿Cuál es tu parte favorita de esa sinfonía?",
+          "sender": "bot",
+          "timestamp": "2025-06-20T03:05:00.201372",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-11-1750388700"
+        },
+        {
+          "content": "first movement",
+          "sender": "user",
+          "timestamp": "2025-06-20T03:05:18.285874",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "user-12-1750388718"
+        },
+        {
+          "content": "En español, eso se dice \"primer movimiento\". ¿Por qué te gusta tanto este movimiento?",
+          "sender": "bot",
+          "timestamp": "2025-06-20T03:05:19.953098",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-13-1750388719"
+        },
+        {
+          "content": "La tema.",
+          "sender": "user",
+          "timestamp": "2025-06-20T03:05:38.638569",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "user-14-1750388738"
+        },
+        {
+          "content": "¡Eso es genial! ¿Puedes decirme más sobre por qué te gusta tanto el tema del primer movimiento?",
+          "sender": "bot",
+          "timestamp": "2025-06-20T03:05:40.579715",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-15-1750388740"
+        },
+        {
+          "content": "Es un tema muy alegre.",
+          "sender": "user",
+          "timestamp": "2025-06-20T03:07:13.942733",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "user-16-1750388833"
+        },
+        {
+          "content": "¡Qué maravilloso! ¿Qué instrumentos se destacan en este tema alegre?",
+          "sender": "bot",
+          "timestamp": "2025-06-20T03:07:15.623627",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-17-1750388835"
+        },
+        {
+          "content": "¿Qué es se destacan?",
+          "sender": "user",
+          "timestamp": "2025-06-20T03:07:45.200230",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "user-18-1750388865"
+        },
+        {
+          "content": "\"Se destacan\" significa que algo o alguien sobresale o es notable en un grupo o situación. ¿Hay algún instrumento que sobresale en la música que estás escuchando?",
+          "sender": "bot",
+          "timestamp": "2025-06-20T03:07:47.790067",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-19-1750388867"
+        },
+        {
+          "content": "la violin",
+          "sender": "user",
+          "timestamp": "2025-06-20T03:08:07.498768",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "user-20-1750388887"
+        },
+        {
+          "content": "¡El violín! Un instrumento hermoso con un sonido muy distintivo. ¿Te gustaría aprender a tocarlo algún día?",
+          "sender": "bot",
+          "timestamp": "2025-06-20T03:08:09.523753",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-21-1750388889"
+        }
+      ],
+      "summary": "- User's name is Mateo.\n- Mateo enjoys playing classical music.\n- His favorite composer is Mozart.\n- He had difficulty expressing his favorite Mozart piece in Spanish, which is \"The Magic Flute\" or \"La Flauta Mágica\" in Spanish.\n- Topics discussed included Mateo's musical preferences and his favorite composer.\n- Mateo showed progress in his language learning but had a challenge translating the title of his favorite Mozart piece into Spanish.\n- Important to remember for future conversations: Mateo's love for classical music and Mozart, and his favorite piece is \"La Flauta Mágica\"."
     }
   ],
   "current_conversation_id": "acf69f76-cb12-4527-a7b9-aa27db6c8d6f"

@@ -2,6 +2,53 @@
   "user_id": "f55dd822-8999-44dc-97df-027eadc2fe80",
   "conversations": [
     {
+      "id": "7151b326-632b-4b5f-aa5e-81aed8d0d6a5",
+      "user_id": "f55dd822-8999-44dc-97df-027eadc2fe80",
+      "created_at": "2025-06-20T02:56:43.861661",
+      "messages": [
+        {
+          "content": "Hoy quiero hablar de mi mamá.",
+          "sender": "user",
+          "timestamp": "2025-06-20T02:56:59.081582",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "user-0-1750388219"
+        },
+        {
+          "content": "¡Qué bien! ¿Cómo se llama tu mamá?",
+          "sender": "bot",
+          "timestamp": "2025-06-20T02:57:01.180493",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-1-1750388221"
+        },
+        {
+          "content": "Se llama Larry.",
+          "sender": "user",
+          "timestamp": "2025-06-20T02:57:12.418263",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "user-2-1750388232"
+        },
+        {
+          "content": "¡Interesante! ¿Qué hace Larry para vivir?",
+          "sender": "bot",
+          "timestamp": "2025-06-20T02:57:14.094103",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-3-1750388234"
+        }
+      ],
+      "summary": ""
+    },
+    {
+      "id": "ec2ded5b-9478-49f8-97fb-378ac4a92cb1",
+      "user_id": "f55dd822-8999-44dc-97df-027eadc2fe80",
+      "created_at": "2025-06-20T02:41:24.289741",
+      "messages": [],
+      "summary": ""
+    },
+    {
       "id": "ec45a2d0-0d9a-4f38-a9c4-0da8904d2d1a",
       "user_id": "f55dd822-8999-44dc-97df-027eadc2fe80",
       "created_at": "2025-06-18T00:42:06.780705",
@@ -120,135 +167,7 @@
         }
       ],
       "summary": ""
-    },
-    {
-      "id": "2b83bb2e-7bbc-4d63-aa26-4cb7664ec879",
-      "user_id": "f55dd822-8999-44dc-97df-027eadc2fe80",
-      "created_at": "2025-06-17T20:37:50.611363",
-      "messages": [
-        {
-          "content": "la musica",
-          "sender": "user",
-          "timestamp": "2025-06-17T20:38:04.021904",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "user-0-1750192684"
-        },
-        {
-          "content": "¡Ah, la música! ¿Te gusta la música, Mateoias?",
-          "sender": "bot",
-          "timestamp": "2025-06-17T20:38:06.650170",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "bot-1-1750192686"
-        },
-        {
-          "content": "mucho",
-          "sender": "user",
-          "timestamp": "2025-06-17T20:38:17.433264",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "user-2-1750192697"
-        },
-        {
-          "content": "¡Genial! A Mateoias le gusta mucho la música. ¿Escuchas música todos los días?",
-          "sender": "bot",
-          "timestamp": "2025-06-17T20:38:20.543006",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "bot-3-1750192700"
-        },
-        {
-          "content": "si",
-          "sender": "user",
-          "timestamp": "2025-06-17T20:38:29.704249",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "user-4-1750192709"
-        },
-        {
-          "content": "¡Perfecto! Entonces, Mateoias escucha música todos los días. ¿Te gusta la música pop o la música rock?",
-          "sender": "bot",
-          "timestamp": "2025-06-17T20:38:32.305636",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "bot-5-1750192712"
-        },
-        {
-          "content": "la usica jazz",
-          "sender": "user",
-          "timestamp": "2025-06-17T20:38:46.477028",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "user-6-1750192726"
-        },
-        {
-          "content": "¡Excelente! A Mateoias le gusta la música jazz. ¿Escuchas jazz todos los días?",
-          "sender": "bot",
-          "timestamp": "2025-06-17T20:38:49.354098",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "bot-7-1750192729"
-        },
-        {
-          "content": "cierto",
-          "sender": "user",
-          "timestamp": "2025-06-17T20:39:07.923793",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "user-8-1750192747"
-        },
-        {
-          "content": "¡Genial! Entonces, Mateoias escucha jazz todos los días. ¿Tienes un músico de jazz favorito?",
-          "sender": "bot",
-          "timestamp": "2025-06-17T20:39:10.804073",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "bot-9-1750192750"
-        }
-      ],
-      "summary": "- The user's name is Mateoias.\n- Mateoias has a strong interest in music, specifically jazz.\n- He listens to music, particularly jazz, every day.\n- The AI tutor and Mateoias discussed music preferences, specifically the genre of jazz.\n- The AI tutor learned about Mateoias' daily music listening habits.\n- The AI tutor has yet to find out who Mateoias' favorite jazz musician is."
-    },
-    {
-      "id": "9538190d-15c5-46e6-8c6f-354d291fde72",
-      "user_id": "f55dd822-8999-44dc-97df-027eadc2fe80",
-      "created_at": "2025-06-17T04:45:29.627617",
-      "messages": [
-        {
-          "content": "la musica",
-          "sender": "user",
-          "timestamp": "2025-06-17T04:45:37.600095",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "user-0-1750135537"
-        },
-        {
-          "content": "¡Ah, la música! Me gusta mucho la música. ¿Te gusta la música, Mateoias?",
-          "sender": "bot",
-          "timestamp": "2025-06-17T04:45:40.353168",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "bot-1-1750135540"
-        },
-        {
-          "content": "como es te gusta la musica",
-          "sender": "user",
-          "timestamp": "2025-06-17T04:45:57.933608",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "user-2-1750135557"
-        },
-        {
-          "content": "Dices, \"¿Cómo te gusta la música?\" Me gusta la música tranquila. ¿Y a ti, Mateoias, te gusta la música tranquila o la música fuerte?",
-          "sender": "bot",
-          "timestamp": "2025-06-17T04:46:00.744843",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "bot-3-1750135560"
-        }
-      ],
-      "summary": ""
     }
   ],
-  "current_conversation_id": "ec45a2d0-0d9a-4f38-a9c4-0da8904d2d1a"
+  "current_conversation_id": "7151b326-632b-4b5f-aa5e-81aed8d0d6a5"
 }
