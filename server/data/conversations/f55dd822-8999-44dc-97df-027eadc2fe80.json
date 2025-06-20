@@ -2,6 +2,53 @@
   "user_id": "f55dd822-8999-44dc-97df-027eadc2fe80",
   "conversations": [
     {
+      "id": "3ece35a5-6629-4f13-ae3a-7a8c4270aa83",
+      "user_id": "f55dd822-8999-44dc-97df-027eadc2fe80",
+      "created_at": "2025-06-20T21:25:38.308352",
+      "messages": [],
+      "summary": ""
+    },
+    {
+      "id": "3b871db0-6ebf-4465-8777-e35b21d6b39d",
+      "user_id": "f55dd822-8999-44dc-97df-027eadc2fe80",
+      "created_at": "2025-06-20T21:24:28.145128",
+      "messages": [
+        {
+          "content": "y la música.",
+          "sender": "user",
+          "timestamp": "2025-06-20T21:24:47.015817",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "user-0-1750454687"
+        },
+        {
+          "content": "¿Qué tipo de música te gusta escuchar, Mateoias?",
+          "sender": "bot",
+          "timestamp": "2025-06-20T21:24:48.890162",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-1-1750454688"
+        },
+        {
+          "content": "El Jez",
+          "sender": "user",
+          "timestamp": "2025-06-20T21:25:08.436986",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "user-2-1750454708"
+        },
+        {
+          "content": "¿Te refieres a El Jez, el artista de música? ¿Cuál es tu canción favorita de él?",
+          "sender": "bot",
+          "timestamp": "2025-06-20T21:25:10.610758",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-3-1750454710"
+        }
+      ],
+      "summary": ""
+    },
+    {
       "id": "7151b326-632b-4b5f-aa5e-81aed8d0d6a5",
       "user_id": "f55dd822-8999-44dc-97df-027eadc2fe80",
       "created_at": "2025-06-20T02:56:43.861661",
@@ -37,6 +84,38 @@
           "intent": "chat",
           "audio_language": "Spanish",
           "id": "bot-3-1750388234"
+        },
+        {
+          "content": "es profesora",
+          "sender": "user",
+          "timestamp": "2025-06-20T21:15:16.828283",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "user-4-1750454116"
+        },
+        {
+          "content": "¡Eso es genial! ¿Qué materia enseña tu mamá?",
+          "sender": "bot",
+          "timestamp": "2025-06-20T21:15:19.348514",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-5-1750454119"
+        },
+        {
+          "content": "she likes english",
+          "sender": "user",
+          "timestamp": "2025-06-20T21:15:45.404302",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "user-6-1750454145"
+        },
+        {
+          "content": "¡Eso es maravilloso! ¿Le gusta enseñar inglés a Larry?",
+          "sender": "bot",
+          "timestamp": "2025-06-20T21:15:56.877161",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-7-1750454156"
         }
       ],
       "summary": ""
@@ -87,87 +166,7 @@
         }
       ],
       "summary": ""
-    },
-    {
-      "id": "d27dad06-70c9-4930-9e7d-5fbdc640eaa8",
-      "user_id": "f55dd822-8999-44dc-97df-027eadc2fe80",
-      "created_at": "2025-06-18T00:35:47.363948",
-      "messages": [
-        {
-          "content": "Die Arbiten",
-          "sender": "user",
-          "timestamp": "2025-06-18T00:36:00.658732",
-          "intent": "chat",
-          "audio_language": "German",
-          "id": "user-0-1750206960"
-        },
-        {
-          "content": "Du meinst wahrscheinlich \"die Arbeiten\". Das ist richtig! Gut gemacht!",
-          "sender": "bot",
-          "timestamp": "2025-06-18T00:36:02.653187",
-          "intent": "chat",
-          "audio_language": "German",
-          "id": "bot-1-1750206962"
-        }
-      ],
-      "summary": ""
-    },
-    {
-      "id": "b72a2f1f-0805-4560-b2cc-cffc531b8c00",
-      "user_id": "f55dd822-8999-44dc-97df-027eadc2fe80",
-      "created_at": "2025-06-17T23:44:02.833731",
-      "messages": [
-        {
-          "content": "ich mochte spreche von meine mutter",
-          "sender": "user",
-          "timestamp": "2025-06-17T23:44:29.769639",
-          "intent": "chat",
-          "audio_language": "German",
-          "id": "user-0-1750203869"
-        },
-        {
-          "content": "Du möchtest über deine Mutter sprechen. Das ist toll! Du könntest sagen: \"Ich möchte über meine Mutter sprechen.\" Übe diesen Satz und du wirst immer besser!",
-          "sender": "bot",
-          "timestamp": "2025-06-17T23:44:34.277551",
-          "intent": "chat",
-          "audio_language": "German",
-          "id": "bot-1-1750203874"
-        },
-        {
-          "content": "Ich habe pizza ger",
-          "sender": "user",
-          "timestamp": "2025-06-18T00:33:31.650815",
-          "intent": "chat",
-          "audio_language": "German",
-          "id": "user-2-1750206811"
-        },
-        {
-          "content": "Das ist fast richtig, Mateoias! Auf Deutsch sagt man \"Ich habe Pizza gegessen\". Weiter so!",
-          "sender": "bot",
-          "timestamp": "2025-06-18T00:33:33.677398",
-          "intent": "chat",
-          "audio_language": "German",
-          "id": "bot-3-1750206813"
-        },
-        {
-          "content": "ich habe bier gern",
-          "sender": "user",
-          "timestamp": "2025-06-18T00:34:50.437673",
-          "intent": "chat",
-          "audio_language": "German",
-          "id": "user-4-1750206890"
-        },
-        {
-          "content": "Das ist großartig, Mateoias! Dein Satz ist fast perfekt. Es sollte \"Ich mag Bier\" sein. Weiter so!",
-          "sender": "bot",
-          "timestamp": "2025-06-18T00:34:53.057112",
-          "intent": "chat",
-          "audio_language": "German",
-          "id": "bot-5-1750206893"
-        }
-      ],
-      "summary": ""
     }
   ],
-  "current_conversation_id": "7151b326-632b-4b5f-aa5e-81aed8d0d6a5"
+  "current_conversation_id": "3ece35a5-6629-4f13-ae3a-7a8c4270aa83"
 }

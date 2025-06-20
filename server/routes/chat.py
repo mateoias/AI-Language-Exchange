@@ -36,6 +36,23 @@ def send_message(user_id):
         
         # Generate response using persistent service with audio
         result = chat_service.generate_response(user_id, message_content, audio_speed)
+#         intent = self.detect_intent(
+#             message_content, 
+#             user_data['nativeLanguage'], 
+#             user_data['learningLanguage']
+# )
+        user_audio_data = None
+        try:
+            user_audio_data = audio_service.generate_audio(
+                message_content,
+                #user_data['learningLanguage'],
+                audio_speed
+            )
+        except Exception as e:
+            # Log error but don't fail the request
+            current_app.logger.warning(f"Failed to generate audio for user message: {e}")
+
+
         
         if 'error' in result:
             return jsonify({
@@ -49,8 +66,9 @@ def send_message(user_id):
             'response': result['response'],
             'intent': result['intent'],
             'audio_language': result['audio_language'],
-            'audio_data': result['audio_data']
-        }), 200
+            'audio_data': result['audio_data'],
+            'user_audio_data': user_audio_data         
+            }), 200
         
     except Exception as e:
         return jsonify({'error': f'Server error: {str(e)}'}), 500

@@ -311,7 +311,63 @@
         }
       ],
       "summary": "- User's name is Mateo.\n- Mateo enjoys playing classical music.\n- His favorite composer is Mozart.\n- He had difficulty expressing his favorite Mozart piece in Spanish, which is \"The Magic Flute\" or \"La Flauta Mágica\" in Spanish.\n- Topics discussed included Mateo's musical preferences and his favorite composer.\n- Mateo showed progress in his language learning but had a challenge translating the title of his favorite Mozart piece into Spanish.\n- Important to remember for future conversations: Mateo's love for classical music and Mozart, and his favorite piece is \"La Flauta Mágica\"."
+    },
+    {
+      "id": "0a9aee68-afd0-4b03-8f0a-4736586dde95",
+      "user_id": "24bcfd2c-296c-48b3-9086-7dcc616d9fcb",
+      "created_at": "2025-06-20T22:03:34.329221",
+      "messages": [
+        {
+          "content": "quiero hablar de mis suenos",
+          "sender": "user",
+          "timestamp": "2025-06-20T22:03:54.859018",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "user-0-1750457034"
+        },
+        {
+          "content": "¡Claro! Me encantaría escuchar sobre tus sueños. ¿Te refieres a tus metas y aspiraciones, o a los sueños que tienes cuando duermes? A veces, los sueños pueden ser un reflejo de nuestros deseos más profundos o incluso de nuestros miedos. ¿Hay algún sueño en particular que te gustaría compartir?",
+          "sender": "bot",
+          "timestamp": "2025-06-20T22:03:59.101096",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-1-1750457039"
+        },
+        {
+          "content": "refiero a mis aspiraciones",
+          "sender": "user",
+          "timestamp": "2025-06-20T22:06:20.629601",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "user-2-1750457180"
+        },
+        {
+          "content": "¡Excelente! Las aspiraciones son una parte importante de nuestra vida. Nos dan dirección y un sentido de propósito. ¿Podrías compartir algunas de tus aspiraciones conmigo? ¿Quizás relacionadas con tu carrera musical o tus intereses en la política? ¿Cómo planeas alcanzar estas metas?",
+          "sender": "bot",
+          "timestamp": "2025-06-20T22:06:26.039490",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-3-1750457186"
+        },
+        {
+          "content": "Ahora quiero crear un sistema de AI música.",
+          "sender": "user",
+          "timestamp": "2025-06-20T22:07:11.871415",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "user-4-1750457231"
+        },
+        {
+          "content": "¡Qué fascinante! La inteligencia artificial está revolucionando muchas áreas, incluyendo la música. ¿Cómo imaginas que funcionaría este sistema? ¿Sería capaz de componer melodías por sí mismo o ayudaría a los músicos a crear nuevas piezas? Además, ¿cómo crees que la IA podría influir en la autenticidad y la creatividad en la música? ¿No crees que la música creada por una máquina carecería de la emoción y la pasión que un humano puede transmitir?",
+          "sender": "bot",
+          "timestamp": "2025-06-20T22:07:17.201970",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-5-1750457237"
+        }
+      ],
+      "summary": ""
     }
   ],
-  "current_conversation_id": "acf69f76-cb12-4527-a7b9-aa27db6c8d6f"
+  "current_conversation_id": "0a9aee68-afd0-4b03-8f0a-4736586dde95"
 }

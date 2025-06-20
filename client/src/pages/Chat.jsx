@@ -133,10 +133,14 @@ function Chat() {
           currentAudioRef.current = null
         })
         
-        audio.addEventListener('error', (e) => {
+      audio.addEventListener('error', (e) => {
           console.error('Audio playback error:', e)
           setPlayingAudioId(null)
           currentAudioRef.current = null
+          
+          // Show user-friendly error
+          setError('Audio playback failed. Please try again.')
+          setTimeout(() => setError(''), 3000)
         })
       }
 
@@ -164,13 +168,15 @@ function Chat() {
   }
 
   const regenerateAudioWithNewSpeed = async (message) => {
-
-    try {
-      const response = await api.regenerateAudio(
-        message.content,
-        message.audio_language,
-        audioSpeed
-      )
+      try {
+        // Stop any currently playing audio first
+        stopAudio()
+        
+        const response = await api.regenerateAudio(
+          message.content,
+          message.audio_language,
+          audioSpeed
+        )
 
       if (response.audio_data) {
         // Update message with new audio
@@ -289,18 +295,29 @@ function Chat() {
     setError('')
     setLoading(true)
 
-    // Add user message to UI immediately
-    const newUserMessage = {
-      id: Date.now(),
-      content: userMessage,
-      sender: 'user',
-      timestamp: new Date().toISOString()
-    }
-    setMessages(prev => [...prev, newUserMessage])
+// Add user message to UI immediately (without audio initially)
+      const userMessageId = Date.now()
+      const newUserMessage = {
+        id: userMessageId,
+        content: userMessage,
+        sender: 'user',
+        timestamp: new Date().toISOString(),
+        audio_language: user.learningLanguage
+      }
+      setMessages(prev => [...prev, newUserMessage])
 
-    try {
-      // Send message to backend with audio speed preference
-      const response = await api.sendChatMessage(userMessage, audioSpeed)
+      try {
+  // Send message to backend with audio speed preference
+        const response = await api.sendChatMessage(userMessage, audioSpeed)
+        
+        // Update user message with audio if available
+        if (response.user_audio_data) {
+          setMessages(prev => prev.map(msg => 
+            msg.id === userMessageId 
+              ? { ...msg, audio_data: response.user_audio_data }
+              : msg
+          ))
+        }
       
       // Add bot response to UI
       const botMessage = {
@@ -399,7 +416,7 @@ function Chat() {
           <div key={message.id} className={`message ${message.sender}`}>
             <div className="message-bubble">
               {message.content}
-              {message.sender === 'bot' && message.audio_data && (
+              {message.audio_data && (
                 <button
                   className={`audio-btn ${playingAudioId === message.id ? 'playing' : ''}`}
                   onClick={() => {
@@ -414,7 +431,7 @@ function Chat() {
                   {playingAudioId === message.id ? '⏸️' : '🔊'}
                 </button>
               )}
-              {message.sender === 'bot' && !message.audio_data && (
+              {!message.audio_data && message.audio_language && (
                 <button
                   className="audio-btn regenerate"
                   onClick={() => regenerateAudioWithNewSpeed(message)}
