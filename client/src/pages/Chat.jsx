@@ -21,6 +21,13 @@ function Chat() {
   const { user } = useAuth()
   const audioRefs = useRef({}) // Store audio elements by message ID
   const currentAudioRef = useRef(null) // Track currently playing audio
+  const currentQueueIndexRef = useRef(-1)
+  const isProcessingQueueRef = useRef(false)
+
+  const [audioQueue, setAudioQueue] = useState([])
+  const [currentSegmentIndex, setCurrentSegmentIndex] = useState(-1)
+  const [isProcessingQueue, setIsProcessingQueue] = useState(false)
+  const audioQueueRef = useRef([])
 
   // Load chat history when component mounts
   useEffect(() => {
@@ -99,6 +106,7 @@ function Chat() {
       setTimeout(() => playAudio(botMessage.id, audioResponse.audio_data), 100)
       
     } catch (err) {
+      console.error('Failed to generate greeting audio:', err)
       // If audio fails, still show the message
       const botMessage = {
         id: `greeting-${Date.now()}`,
@@ -133,7 +141,7 @@ function Chat() {
           currentAudioRef.current = null
         })
         
-      audio.addEventListener('error', (e) => {
+        audio.addEventListener('error', (e) => {
           console.error('Audio playback error:', e)
           setPlayingAudioId(null)
           currentAudioRef.current = null
@@ -158,25 +166,208 @@ function Chat() {
     }
   }
 
-  const stopAudio = () => {
-    if (currentAudioRef.current) {
-      currentAudioRef.current.pause()
-      currentAudioRef.current.currentTime = 0
-      setPlayingAudioId(null)
-      currentAudioRef.current = null
-    }
+// Audio Queue Management - 
+const processAudioQueue = () => {
+  console.log('[DEBUG] processAudioQueue called, currentIndex:', currentQueueIndexRef.current, 'queueLength:', audioQueueRef.current.length, 'isProcessing:', isProcessingQueueRef.current)
+  
+  if (audioQueueRef.current.length === 0) {
+    console.log('[DEBUG] Queue is empty, stopping')
+    isProcessingQueueRef.current = false
+    setIsProcessingQueue(false)
+    currentQueueIndexRef.current = -1
+    setCurrentSegmentIndex(-1)
+    return
+  }
+  
+  if (!isProcessingQueueRef.current) {
+    console.log('[DEBUG] Queue processing stopped, aborting')
+    return
+  }
+  
+  // Check if we've reached the end
+  if (currentQueueIndexRef.current >= audioQueueRef.current.length - 1) {
+    console.log('[DEBUG] Reached end of queue, stopping')
+    isProcessingQueueRef.current = false
+    setIsProcessingQueue(false)
+    currentQueueIndexRef.current = -1
+    setCurrentSegmentIndex(-1)
+    return
   }
 
-  const regenerateAudioWithNewSpeed = async (message) => {
-      try {
-        // Stop any currently playing audio first
-        stopAudio()
+  // Move to next segment
+  currentQueueIndexRef.current += 1
+  const nextIndex = currentQueueIndexRef.current
+  setCurrentSegmentIndex(nextIndex) // Update state for UI
+  
+  console.log('[DEBUG] Moving to segment:', nextIndex, 'of', audioQueueRef.current.length)
+  
+  const segment = audioQueueRef.current[nextIndex]
+  console.log('[DEBUG] Processing segment:', segment.type, 'hasAudio:', !!segment.audio_data)
+  
+  if (segment.audio_data) {
+    // Only delay between segments, not for the first one
+    const delay = nextIndex === 0 ? 0 : 800
+    
+    console.log('[DEBUG] Scheduling segment playback with delay:', delay)
+    setTimeout(() => {
+      playSegmentAudio(segment, nextIndex)
+    }, delay)
+  } else {
+    // If no audio, move to next segment immediately
+    console.log('[DEBUG] No audio for segment, moving to next')
+    processAudioQueue()
+  }
+}
+
+const playSegmentAudio = (segment, segmentIndex) => {
+  console.log('[DEBUG] playSegmentAudio called for segment:', segment.type, 'index:', segmentIndex, 'isProcessing:', isProcessingQueueRef.current, 'currentIndex:', currentQueueIndexRef.current)
+  
+  // Check if we're still processing and this is the right segment
+  if (!isProcessingQueueRef.current) {
+    console.log('[DEBUG] Queue processing stopped, aborting playback')
+    return
+  }
+  
+  if (currentQueueIndexRef.current !== segmentIndex) {
+    console.log('[DEBUG] Index mismatch, aborting playback. Expected:', currentQueueIndexRef.current, 'Got:', segmentIndex)
+    return
+  }
+  
+  // Stop any currently playing audio
+  if (currentAudioRef.current) {
+    console.log('[DEBUG] Stopping previous audio')
+    currentAudioRef.current.pause()
+    currentAudioRef.current = null
+    setPlayingAudioId(null)
+  }
+
+  if (!segment.audio_data) {
+    console.log('[DEBUG] No audio data for segment:', segment.type)
+    processAudioQueue()
+    return
+  }
+
+  try {
+    const segmentId = `segment-${segment.type}-${segmentIndex}-${Date.now()}`
+    console.log('[DEBUG] Creating audio element with ID:', segmentId)
+    
+    // Create audio element
+    const audio = new Audio(`data:audio/mp3;base64,${segment.audio_data}`)
+    currentAudioRef.current = audio
+    setPlayingAudioId(segmentId)
+    
+    // Set up event listeners
+    const onEnded = () => {
+      console.log('[DEBUG] Audio ended for segment:', segment.type, 'index:', segmentIndex)
+      
+      // Double-check this is still the current audio
+      if (currentAudioRef.current === audio) {
+        setPlayingAudioId(null)
+        currentAudioRef.current = null
         
-        const response = await api.regenerateAudio(
-          message.content,
-          message.audio_language,
-          audioSpeed
-        )
+        // Only continue if we're still processing the queue
+        if (isProcessingQueueRef.current) {
+          console.log('[DEBUG] Moving to next segment after audio ended')
+          setTimeout(() => {
+            processAudioQueue()
+          }, 100)
+        } else {
+          console.log('[DEBUG] Queue processing stopped, not continuing')
+        }
+      }
+    }
+    
+    const onError = (e) => {
+      console.error('[DEBUG] Audio error for segment:', segment.type, 'error:', e)
+      
+      if (currentAudioRef.current === audio) {
+        setPlayingAudioId(null)
+        currentAudioRef.current = null
+        
+        // Continue to next segment even on error
+        if (isProcessingQueueRef.current) {
+          setTimeout(() => {
+            processAudioQueue()
+          }, 100)
+        }
+      }
+    }
+    
+    // Add event listeners
+    audio.addEventListener('ended', onEnded, { once: true })
+    audio.addEventListener('error', onError, { once: true })
+    
+    // Play the audio
+    console.log('[DEBUG] Starting audio playback for:', segment.type)
+    audio.play().catch(err => {
+      console.error('[DEBUG] Failed to play segment audio:', err)
+      onError(err)
+    })
+    
+  } catch (err) {
+    console.error('[DEBUG] Audio setup error:', err)
+    setTimeout(() => {
+      processAudioQueue()
+    }, 100)
+  }
+}
+
+const startAudioQueue = (segments) => {
+  console.log('[DEBUG] startAudioQueue called with segments:', segments.length)
+  console.log('[DEBUG] Segments details:', segments.map(s => ({ type: s.type, hasAudio: !!s.audio_data })))
+  
+  // Stop any existing audio and clear queue
+  stopAudio()
+  
+  // Reset queue state using refs (immediate) and state (for UI)
+  audioQueueRef.current = segments
+  currentQueueIndexRef.current = -1
+  isProcessingQueueRef.current = true  // Set ref immediately
+  
+  setCurrentSegmentIndex(-1)
+  setIsProcessingQueue(true)  // Set state for UI
+  
+  console.log('[DEBUG] Queue initialized, starting processing...')
+  
+  // Start processing immediately
+  setTimeout(() => {
+    console.log('[DEBUG] Starting queue processing...')
+    processAudioQueue()
+  }, 50)
+}
+
+// Updated stopAudio function
+const stopAudio = () => {
+  console.log('[DEBUG] stopAudio called')
+  
+  // Stop current audio
+  if (currentAudioRef.current) {
+    currentAudioRef.current.pause()
+    currentAudioRef.current.currentTime = 0
+    currentAudioRef.current = null
+  }
+  
+  // Clear all queue state (refs immediately, state for UI)
+  isProcessingQueueRef.current = false
+  currentQueueIndexRef.current = -1
+  audioQueueRef.current = []
+  
+  setIsProcessingQueue(false)
+  setPlayingAudioId(null)
+  setCurrentSegmentIndex(-1)
+  
+  console.log('[DEBUG] All audio stopped and queue cleared')
+}
+  const regenerateAudioWithNewSpeed = async (message) => {
+    try {
+      // Stop any currently playing audio first
+      stopAudio()
+      
+      const response = await api.regenerateAudio(
+        message.content,
+        message.audio_language,
+        audioSpeed
+      )
 
       if (response.audio_data) {
         // Update message with new audio
@@ -295,22 +486,42 @@ function Chat() {
     setError('')
     setLoading(true)
 
-// Add user message to UI immediately (without audio initially)
-      const userMessageId = Date.now()
-      const newUserMessage = {
-        id: userMessageId,
-        content: userMessage,
-        sender: 'user',
-        timestamp: new Date().toISOString(),
-        audio_language: user.learningLanguage
-      }
-      setMessages(prev => [...prev, newUserMessage])
+    // Add user message to UI immediately
+    const userMessageId = Date.now()
+    const newUserMessage = {
+      id: userMessageId,
+      content: userMessage,
+      sender: 'user',
+      timestamp: new Date().toISOString(),
+      audio_language: user.learningLanguage
+    }
+    setMessages(prev => [...prev, newUserMessage])
 
-      try {
-  // Send message to backend with audio speed preference
-        const response = await api.sendChatMessage(userMessage, audioSpeed)
+    try {
+      // Send message to backend with audio speed preference
+      const response = await api.sendChatMessage(userMessage, audioSpeed)
+      
+      console.log('[DEBUG] Full response received:', response)
+      
+      // Check if we got the new segment structure
+      if (response.segments) {
+        console.log('[DEBUG] Processing segments:', response.segments.length)
         
-        // Update user message with audio if available
+        // Handle new segmented response
+        const segments = response.segments
+        
+        // Find segments by type
+        const rephraseSegment = segments.find(s => s.type === 'rephrase')
+        const helpSegment = segments.find(s => s.type === 'help')
+        const responseSegment = segments.find(s => s.type === 'response')
+        
+        console.log('[DEBUG] Found segments:', {
+          rephrase: !!rephraseSegment,
+          help: !!helpSegment,
+          response: !!responseSegment
+        })
+        
+        // Update user message with audio if we generated it
         if (response.user_audio_data) {
           setMessages(prev => prev.map(msg => 
             msg.id === userMessageId 
@@ -318,31 +529,107 @@ function Chat() {
               : msg
           ))
         }
-      
-      // Add bot response to UI
-      const botMessage = {
-        id: Date.now() + 1,
-        content: response.response,
-        sender: 'bot',
-        timestamp: new Date().toISOString(),
-        intent: response.intent,
-        audio_language: response.audio_language,
-        audio_data: response.audio_data
-      }
-      
-      setMessages(prev => [...prev, botMessage])
-      
-      // Auto-play audio for new bot message
-      if (response.audio_data) {
-        setTimeout(() => playAudio(botMessage.id, response.audio_data), 100)
+        
+        // Add bot messages to UI
+        const botMessages = []
+        
+        if (rephraseSegment && rephraseSegment.text) {
+          console.log('[DEBUG] Adding rephrase segment with audio:', !!rephraseSegment.audio_data)
+          botMessages.push({
+            id: `rephrase-${Date.now()}`,
+            content: rephraseSegment.text,
+            sender: 'bot',
+            timestamp: new Date().toISOString(),
+            message_type: 'rephrase',
+            audio_data: rephraseSegment.audio_data,
+            audio_language: response.audio_language
+          })
+        }
+        
+        if (helpSegment && helpSegment.text) {
+          console.log('[DEBUG] Adding help segment with audio:', !!helpSegment.audio_data)
+          botMessages.push({
+            id: `help-${Date.now() + 1}`,
+            content: helpSegment.text,
+            sender: 'bot',
+            timestamp: new Date().toISOString(),
+            message_type: 'help',
+            audio_data: helpSegment.audio_data,
+            audio_language: user.nativeLanguage // Help in native language
+          })
+        }
+        
+        if (responseSegment && responseSegment.text) {
+          console.log('[DEBUG] Adding response segment with audio:', !!responseSegment.audio_data)
+          botMessages.push({
+            id: `response-${Date.now() + 2}`,
+            content: responseSegment.text,
+            sender: 'bot',
+            timestamp: new Date().toISOString(),
+            message_type: 'response',
+            audio_data: responseSegment.audio_data,
+            audio_language: response.audio_language
+          })
+        }
+        
+        console.log('[DEBUG] Total bot messages to add:', botMessages.length)
+        
+        // Add all bot messages
+        setMessages(prev => {
+          const newMessages = [...prev, ...botMessages]
+          console.log('[DEBUG] Messages state updated, total messages:', newMessages.length)
+          return newMessages
+        })
+        
+        // Prepare audio segments for queue
+        const audioSegments = segments.filter(s => s.audio_data)
+        console.log('[DEBUG] Audio segments found:', audioSegments.length)
+        audioSegments.forEach((seg, idx) => {
+          console.log(`[DEBUG] Audio segment ${idx}:`, {
+            type: seg.type,
+            hasAudio: !!seg.audio_data,
+            audioLength: seg.audio_data ? seg.audio_data.length : 0
+          })
+        })
+        
+        // Use setTimeout to ensure React state updates complete before starting audio
+        if (audioSegments.length > 0) {
+          console.log('[DEBUG] Starting audio queue with delay...')
+          setTimeout(() => {
+            console.log('[DEBUG] Actually starting audio queue now')
+            startAudioQueue(audioSegments)
+          }, 100) // Small delay to ensure DOM updates
+        } else {
+          console.log('[DEBUG] No audio segments to play')
+        }
+        
+      } else {
+        console.log('[DEBUG] Using fallback for old response format')
+        // Fallback for old response format
+        const botMessage = {
+          id: Date.now() + 1,
+          content: response.response,
+          sender: 'bot',
+          timestamp: new Date().toISOString(),
+          intent: response.intent,
+          audio_language: response.audio_language,
+          audio_data: response.audio_data
+        }
+        
+        setMessages(prev => [...prev, botMessage])
+        
+        // Auto-play audio for new bot message
+        if (response.audio_data) {
+          setTimeout(() => playAudio(botMessage.id, response.audio_data), 100)
+        }
       }
       
     } catch (err) {
+      console.error('[DEBUG] Chat error:', err)
       setError('Failed to send message. Please try again.')
-      console.error('Chat error:', err)
       
       // Remove the user message if sending failed
-      setMessages(prev => prev.filter(msg => msg.id !== newUserMessage.id))
+      setMessages(prev => prev.filter(msg => msg.id !== userMessageId))
     } finally {
       setLoading(false)
     }
@@ -413,8 +700,14 @@ function Chat() {
       
       <div className="chat-messages">
         {messages.map((message) => (
-          <div key={message.id} className={`message ${message.sender}`}>
+          <div key={message.id} className={`message ${message.sender} ${message.message_type || ''}`}>
             <div className="message-bubble">
+              {message.message_type === 'rephrase' && (
+                <span className="message-type-indicator">✓ </span>
+              )}
+              {message.message_type === 'help' && (
+                <span className="message-type-indicator">💡 </span>
+              )}
               {message.content}
               {message.audio_data && (
                 <button
@@ -423,10 +716,13 @@ function Chat() {
                     if (playingAudioId === message.id) {
                       stopAudio()
                     } else {
+                      // Stop queue if playing individual message
+                      setIsProcessingQueue(false)
                       playAudio(message.id, message.audio_data)
                     }
                   }}
                   title={playingAudioId === message.id ? 'Stop' : 'Play audio'}
+                  disabled={isProcessingQueue && !playingAudioId?.includes(message.id)}
                 >
                   {playingAudioId === message.id ? '⏸️' : '🔊'}
                 </button>
@@ -443,6 +739,14 @@ function Chat() {
             </div>
           </div>
         ))}
+
+        {/* Add audio queue indicator */}
+        {isProcessingQueue && (
+          <div className="audio-queue-indicator">
+            <span className="queue-dot"></span>
+            Playing audio sequence...
+          </div>
+        )}
         
         {loading && (
           <div className="message bot">
@@ -453,7 +757,7 @@ function Chat() {
         )}
       </div>
       
-        <form className="chat-input" onSubmit={sendMessage}>
+      <form className="chat-input" onSubmit={sendMessage}>
         <div className="input-wrapper">
           {inputMode === 'text' ? (
             <>

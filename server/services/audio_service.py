@@ -4,26 +4,27 @@ from ..language_config import get_voice_name, get_pause_durations
 import base64
 
 class AudioService:
-    def __init__(self):
+    def __init__(self, speech_key, speech_region):
         self._speech_config = None
         self._audio_cache = {}
+        self.speech_key = speech_key
+        self.speech_region = speech_region
+
     
     @property
     def speech_config(self):
-        """Lazy initialization of Azure Speech config"""
         if self._speech_config is None:
-            speech_key = current_app.config.get('AZURE_SPEECH_KEY')
-            speech_region = current_app.config.get('AZURE_SPEECH_REGION')
-            if not speech_key or not speech_region:
+            if not self.speech_key or not self.speech_region:
                 raise ValueError("Azure Speech credentials not configured")
             self._speech_config = speechsdk.SpeechConfig(
-                subscription=speech_key, 
-                region=speech_region
+                subscription=self.speech_key,
+                region=self.speech_region
             )
             self._speech_config.set_speech_synthesis_output_format(
                 speechsdk.SpeechSynthesisOutputFormat.Audio16Khz32KBitRateMonoMp3
             )
         return self._speech_config
+
     
     def _get_voice_name(self, language, voice_type='male'):
         """Map language to Azure voice name"""

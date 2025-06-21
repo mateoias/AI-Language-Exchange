@@ -2,171 +2,333 @@
   "user_id": "f55dd822-8999-44dc-97df-027eadc2fe80",
   "conversations": [
     {
-      "id": "3ece35a5-6629-4f13-ae3a-7a8c4270aa83",
+      "id": "04464716-5af4-4274-a803-8e026e6a581a",
       "user_id": "f55dd822-8999-44dc-97df-027eadc2fe80",
-      "created_at": "2025-06-20T21:25:38.308352",
-      "messages": [],
-      "summary": ""
-    },
-    {
-      "id": "3b871db0-6ebf-4465-8777-e35b21d6b39d",
-      "user_id": "f55dd822-8999-44dc-97df-027eadc2fe80",
-      "created_at": "2025-06-20T21:24:28.145128",
+      "created_at": "2025-06-21T17:55:08.065351",
       "messages": [
         {
-          "content": "y la música.",
+          "content": "de mi familia",
           "sender": "user",
-          "timestamp": "2025-06-20T21:24:47.015817",
-          "intent": "chat",
+          "timestamp": "2025-06-21T17:55:49.469124",
+          "intent": "normal_chat",
           "audio_language": "Spanish",
-          "id": "user-0-1750454687"
+          "id": "user-0-1750528549"
         },
         {
-          "content": "¿Qué tipo de música te gusta escuchar, Mateoias?",
+          "content": "Tu familia es importante para ti, ¿verdad?",
           "sender": "bot",
-          "timestamp": "2025-06-20T21:24:48.890162",
+          "timestamp": "2025-06-21T17:55:51.634861",
           "intent": "chat",
           "audio_language": "Spanish",
-          "id": "bot-1-1750454688"
+          "id": "bot-1-1750528551"
         },
         {
-          "content": "El Jez",
+          "content": "claro que si",
           "sender": "user",
-          "timestamp": "2025-06-20T21:25:08.436986",
-          "intent": "chat",
+          "timestamp": "2025-06-21T17:58:09.527435",
+          "intent": "normal_chat",
           "audio_language": "Spanish",
-          "id": "user-2-1750454708"
+          "id": "user-2-1750528689"
         },
         {
-          "content": "¿Te refieres a El Jez, el artista de música? ¿Cuál es tu canción favorita de él?",
+          "content": "¡Genial! Amas a tu familia mucho. ¿Tienes hermanos?",
           "sender": "bot",
-          "timestamp": "2025-06-20T21:25:10.610758",
+          "timestamp": "2025-06-21T17:58:12.006851",
           "intent": "chat",
           "audio_language": "Spanish",
-          "id": "bot-3-1750454710"
+          "id": "bot-3-1750528692"
+        },
+        {
+          "content": "What does Genial mean?",
+          "sender": "user",
+          "timestamp": "2025-06-21T17:58:31.438114",
+          "intent": "help_needed",
+          "audio_language": "Spanish",
+          "id": "user-4-1750528711"
+        },
+        {
+          "content": "¡Exacto! \"Genial\" es una palabra muy común en español. ¿Te gusta aprender español?",
+          "sender": "bot",
+          "timestamp": "2025-06-21T17:58:35.721697",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-5-1750528715"
+        },
+        {
+          "content": "claro que si!",
+          "sender": "user",
+          "timestamp": "2025-06-21T18:00:14.732165",
+          "intent": "normal_chat",
+          "audio_language": "Spanish",
+          "id": "user-6-1750528814"
+        },
+        {
+          "content": "¡Perfecto! Te gusta aprender español. ¿Estudias español todos los días?",
+          "sender": "bot",
+          "timestamp": "2025-06-21T18:00:16.377719",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-7-1750528816"
+        },
+        {
+          "content": "no, pero quisas puedo",
+          "sender": "user",
+          "timestamp": "2025-06-21T18:00:56.460724",
+          "intent": "normal_chat",
+          "audio_language": "Spanish",
+          "id": "user-8-1750528856"
+        },
+        {
+          "content": "¡Muy bien! Dices que tal vez puedes estudiar español todos los días. ¿Tienes un libro de español?",
+          "sender": "bot",
+          "timestamp": "2025-06-21T18:00:59.407305",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-9-1750528859"
+        },
+        {
+          "content": "si, de Borges",
+          "sender": "user",
+          "timestamp": "2025-06-21T19:56:27.066086",
+          "intent": "normal_chat",
+          "audio_language": "Spanish",
+          "id": "user-10-1750535787"
+        },
+        {
+          "content": "¡Qué bien! Tienes un libro de Borges. ¿Es difícil leer en español?",
+          "sender": "bot",
+          "timestamp": "2025-06-21T19:56:29.107446",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-11-1750535789"
+        },
+        {
+          "content": "Leer Borges es dificil",
+          "sender": "user",
+          "timestamp": "2025-06-21T19:56:53.931828",
+          "intent": "normal_chat",
+          "audio_language": "Spanish",
+          "id": "user-12-1750535813"
+        },
+        {
+          "content": "Entiendo, leer Borges en español es difícil. ¿Te gusta Borges?",
+          "sender": "bot",
+          "timestamp": "2025-06-21T19:56:57.333515",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-13-1750535817"
         }
       ],
-      "summary": ""
+      "summary": "- The user is a Spanish language learner.\n- The user expressed love for their family, indicating that family is important to them.\n- The user showed interest in learning Spanish and possibly studying it every day.\n- The user asked for the meaning of the Spanish word \"Genial\".\n- The AI tutor provided the translation and confirmed the user's interest in learning Spanish.\n- The AI tutor asked if the user has a Spanish book for studying.\n- The user did not confirm whether they have siblings or not."
     },
     {
-      "id": "7151b326-632b-4b5f-aa5e-81aed8d0d6a5",
+      "id": "61d5c839-d3f7-4b6b-8d0c-a3393d306c7e",
       "user_id": "f55dd822-8999-44dc-97df-027eadc2fe80",
-      "created_at": "2025-06-20T02:56:43.861661",
+      "created_at": "2025-06-21T17:43:45.886289",
       "messages": [
         {
-          "content": "Hoy quiero hablar de mi mamá.",
+          "content": "el futbol",
           "sender": "user",
-          "timestamp": "2025-06-20T02:56:59.081582",
-          "intent": "chat",
+          "timestamp": "2025-06-21T17:43:57.079083",
+          "intent": "normal_chat",
           "audio_language": "Spanish",
-          "id": "user-0-1750388219"
+          "id": "user-0-1750527837"
         },
         {
-          "content": "¡Qué bien! ¿Cómo se llama tu mamá?",
+          "content": "¡Sí, el fútbol es un deporte muy popular! ¿Te gusta el fútbol, mateoias?",
           "sender": "bot",
-          "timestamp": "2025-06-20T02:57:01.180493",
+          "timestamp": "2025-06-21T17:44:00.267565",
           "intent": "chat",
           "audio_language": "Spanish",
-          "id": "bot-1-1750388221"
-        },
-        {
-          "content": "Se llama Larry.",
-          "sender": "user",
-          "timestamp": "2025-06-20T02:57:12.418263",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "user-2-1750388232"
-        },
-        {
-          "content": "¡Interesante! ¿Qué hace Larry para vivir?",
-          "sender": "bot",
-          "timestamp": "2025-06-20T02:57:14.094103",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "bot-3-1750388234"
-        },
-        {
-          "content": "es profesora",
-          "sender": "user",
-          "timestamp": "2025-06-20T21:15:16.828283",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "user-4-1750454116"
-        },
-        {
-          "content": "¡Eso es genial! ¿Qué materia enseña tu mamá?",
-          "sender": "bot",
-          "timestamp": "2025-06-20T21:15:19.348514",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "bot-5-1750454119"
-        },
-        {
-          "content": "she likes english",
-          "sender": "user",
-          "timestamp": "2025-06-20T21:15:45.404302",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "user-6-1750454145"
-        },
-        {
-          "content": "¡Eso es maravilloso! ¿Le gusta enseñar inglés a Larry?",
-          "sender": "bot",
-          "timestamp": "2025-06-20T21:15:56.877161",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "bot-7-1750454156"
-        }
-      ],
-      "summary": ""
-    },
-    {
-      "id": "ec2ded5b-9478-49f8-97fb-378ac4a92cb1",
-      "user_id": "f55dd822-8999-44dc-97df-027eadc2fe80",
-      "created_at": "2025-06-20T02:41:24.289741",
-      "messages": [],
-      "summary": ""
-    },
-    {
-      "id": "ec45a2d0-0d9a-4f38-a9c4-0da8904d2d1a",
-      "user_id": "f55dd822-8999-44dc-97df-027eadc2fe80",
-      "created_at": "2025-06-18T00:42:06.780705",
-      "messages": [
-        {
-          "content": "la musica",
-          "sender": "user",
-          "timestamp": "2025-06-18T01:07:05.860203",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "user-0-1750208825"
-        },
-        {
-          "content": "¡Excelente! \"La música\" en español significa \"The music\" en inglés. ¿Te gusta la música, Mateoias?",
-          "sender": "bot",
-          "timestamp": "2025-06-18T01:07:08.523234",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "bot-1-1750208828"
+          "id": "bot-1-1750527840"
         },
         {
           "content": "si",
           "sender": "user",
-          "timestamp": "2025-06-19T20:09:47.815563",
-          "intent": "chat",
+          "timestamp": "2025-06-21T17:52:00.088597",
+          "intent": "normal_chat",
           "audio_language": "Spanish",
-          "id": "user-2-1750363787"
+          "id": "user-2-1750528320"
         },
         {
-          "content": "¡Hola! ¿Cómo puedo ayudarte hoy?",
+          "content": "¡Genial! A ti te gusta el fútbol. ¿Juegas al fútbol también?",
           "sender": "bot",
-          "timestamp": "2025-06-19T20:09:50.097304",
+          "timestamp": "2025-06-21T17:52:02.245308",
           "intent": "chat",
           "audio_language": "Spanish",
-          "id": "bot-3-1750363790"
+          "id": "bot-3-1750528322"
+        },
+        {
+          "content": "no",
+          "sender": "user",
+          "timestamp": "2025-06-21T17:52:36.943676",
+          "intent": "normal_chat",
+          "audio_language": "Spanish",
+          "id": "user-4-1750528356"
+        },
+        {
+          "content": "Entiendo, no juegas al fútbol. ¿Pero te gusta ver partidos de fútbol?",
+          "sender": "bot",
+          "timestamp": "2025-06-21T17:52:39.444958",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-5-1750528359"
+        },
+        {
+          "content": "si",
+          "sender": "user",
+          "timestamp": "2025-06-21T17:52:54.247119",
+          "intent": "normal_chat",
+          "audio_language": "Spanish",
+          "id": "user-6-1750528374"
+        },
+        {
+          "content": "¡Excelente! Entonces, te gusta ver partidos de fútbol. ¿Tienes un equipo favorito?",
+          "sender": "bot",
+          "timestamp": "2025-06-21T17:52:56.188434",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-7-1750528376"
+        },
+        {
+          "content": "What does entonces mean?",
+          "sender": "user",
+          "timestamp": "2025-06-21T17:53:22.626391",
+          "intent": "help_needed",
+          "audio_language": "Spanish",
+          "id": "user-8-1750528402"
+        },
+        {
+          "content": "¡Perfecto, Mateoias! Entonces, usas \"entonces\" cuando hablas español. ¿Te gusta aprender español?",
+          "sender": "bot",
+          "timestamp": "2025-06-21T17:53:31.286090",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-9-1750528411"
+        },
+        {
+          "content": "claro que si",
+          "sender": "user",
+          "timestamp": "2025-06-21T17:54:15.563139",
+          "intent": "normal_chat",
+          "audio_language": "Spanish",
+          "id": "user-10-1750528455"
+        },
+        {
+          "content": "\"Entonces\" significa \"so\" en inglés. Entonces, ¿entiendes ahora?",
+          "sender": "bot",
+          "timestamp": "2025-06-21T17:54:17.422532",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-11-1750528457"
+        },
+        {
+          "content": "si",
+          "sender": "user",
+          "timestamp": "2025-06-21T17:54:31.419042",
+          "intent": "normal_chat",
+          "audio_language": "Spanish",
+          "id": "user-12-1750528471"
+        },
+        {
+          "content": "¡Genial, Mateoias! Entonces, ¿quieres aprender más español hoy?",
+          "sender": "bot",
+          "timestamp": "2025-06-21T17:54:34.561838",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-13-1750528474"
+        },
+        {
+          "content": "no",
+          "sender": "user",
+          "timestamp": "2025-06-21T17:54:48.819143",
+          "intent": "normal_chat",
+          "audio_language": "Spanish",
+          "id": "user-14-1750528488"
+        },
+        {
+          "content": "No problema, Mateoias. ¿Quieres hablar de trabajo en Amtrak?",
+          "sender": "bot",
+          "timestamp": "2025-06-21T17:54:52.111393",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-15-1750528492"
+        }
+      ],
+      "summary": "- User's name is Mateoias.\n- Mateoias likes football but does not play it.\n- Mateoias enjoys watching football matches.\n- The conversation was primarily about football and the user's interest in it.\n- Mateoias is learning Spanish and asked for the meaning of the word \"entonces\".\n- The AI tutor confirmed that Mateoias likes learning Spanish."
+    },
+    {
+      "id": "8ecac2df-0da2-4d58-a051-f7c8ee4e9227",
+      "user_id": "f55dd822-8999-44dc-97df-027eadc2fe80",
+      "created_at": "2025-06-21T17:34:50.993673",
+      "messages": [
+        {
+          "content": "de mi familia",
+          "sender": "user",
+          "timestamp": "2025-06-21T17:35:03.277911",
+          "intent": "normal_chat",
+          "audio_language": "Spanish",
+          "id": "user-0-1750527303"
+        },
+        {
+          "content": "¡Muy bien! ¿Tienes una familia grande o pequeña?",
+          "sender": "bot",
+          "timestamp": "2025-06-21T17:35:06.050604",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-1-1750527306"
+        }
+      ],
+      "summary": ""
+    },
+    {
+      "id": "e0c2e7f1-4657-4a06-8a87-723b3fd3c353",
+      "user_id": "f55dd822-8999-44dc-97df-027eadc2fe80",
+      "created_at": "2025-06-21T17:22:40.786634",
+      "messages": [
+        {
+          "content": "mi familia",
+          "sender": "user",
+          "timestamp": "2025-06-21T17:23:00.909460",
+          "intent": "normal_chat",
+          "audio_language": "Spanish",
+          "id": "user-0-1750526580"
+        },
+        {
+          "content": "¡Excelente! ¿Tienes una familia grande o pequeña, Mateoias?",
+          "sender": "bot",
+          "timestamp": "2025-06-21T17:23:04.334566",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-1-1750526584"
+        }
+      ],
+      "summary": ""
+    },
+    {
+      "id": "503c0b64-eec9-4701-a214-a589b0ac1f13",
+      "user_id": "f55dd822-8999-44dc-97df-027eadc2fe80",
+      "created_at": "2025-06-21T17:17:33.652940",
+      "messages": [
+        {
+          "content": "de mi casa",
+          "sender": "user",
+          "timestamp": "2025-06-21T17:17:43.487422",
+          "intent": "normal_chat",
+          "audio_language": "Spanish",
+          "id": "user-0-1750526263"
+        },
+        {
+          "content": "Sí, hablas de tu casa. ¿Tu casa es grande?",
+          "sender": "bot",
+          "timestamp": "2025-06-21T17:17:45.532972",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-1-1750526265"
         }
       ],
       "summary": ""
     }
   ],
-  "current_conversation_id": "3ece35a5-6629-4f13-ae3a-7a8c4270aa83"
+  "current_conversation_id": "04464716-5af4-4274-a803-8e026e6a581a"
 }

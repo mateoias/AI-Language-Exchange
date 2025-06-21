@@ -48,12 +48,19 @@ export const api = {
       method: 'DELETE'
     }),
 
-  sendChatMessage: (message, audioSpeed = 0.8) =>
-    request('/chat/message', {
-      method: 'POST',
-      body: JSON.stringify({ message, audio_speed: audioSpeed })
-    }),
+sendChatMessage: (message, audioSpeed = 0.8) =>
+  request('/chat/message', {
+    method: 'POST',
+    body: JSON.stringify({ message, audio_speed: audioSpeed })
+  }),
 
+// Add this new function after sendChatMessage
+sendChatMessageLegacy: (message, audioSpeed = 0.8) =>
+  request('/chat/message-legacy', {
+    method: 'POST',
+    body: JSON.stringify({ message, audio_speed: audioSpeed })
+  }),
+  
   getChatHistory: () => request('/chat/history'),
 
   startNewChatSession: () =>
@@ -92,28 +99,3 @@ export const api = {
   return response.json()
 }
 }
-
-//     async transcribeAudio(audioBlob, language = null) {
-//     const formData = new FormData()
-//     formData.append('audio', audioBlob, 'recording.webm')
-//     if (language) {
-//       formData.append('language', language)
-//     }
-
-//     const response = await fetch(`${API_BASE_URL}/chat/transcribe`, {
-//       method: 'POST',
-//       headers: {
-//         'Authorization': `Bearer ${getAuthToken()}`
-//       },
-//       body: formData
-//     })
-
-//     if (!response.ok) {
-//       const error = await response.json()
-//       throw new Error(error.message || 'Failed to transcribe audio')
-//     }
-
-//     return response.json()
-//   }
-
-// }

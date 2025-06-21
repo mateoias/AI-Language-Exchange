@@ -1,7 +1,7 @@
 # routes/chat.py
 import logging
 from io import BytesIO
-
+import traceback
 from flask import Blueprint, request, jsonify, current_app
 from ..utils.auth_utils import token_required
 from ..services.chat_service import ChatService
@@ -9,16 +9,35 @@ from ..services.audio_service import AudioService
 
 chat_bp = Blueprint('chat', __name__)
 
-# Create single service instances
-chat_service = ChatService()
-audio_service = AudioService()
+# Service instances - will be initialized when first used
+_chat_service = None
+_audio_service = None
+
+def get_chat_service():
+    """Get or create chat service instance"""
+    global _chat_service
+    if _chat_service is None:
+        speech_key = current_app.config.get('AZURE_SPEECH_KEY')
+        speech_region = current_app.config.get('AZURE_SPEECH_REGION')
+        _chat_service = ChatService(speech_key, speech_region)
+    return _chat_service
+
+def get_audio_service():
+    """Get or create audio service instance"""
+    global _audio_service
+    if _audio_service is None:
+        speech_key = current_app.config.get('AZURE_SPEECH_KEY')
+        speech_region = current_app.config.get('AZURE_SPEECH_REGION')
+        _audio_service = AudioService(speech_key, speech_region)
+    return _audio_service
+
 
 @chat_bp.route('/message', methods=['POST'])
 @token_required
 def send_message(user_id):
-    """Send a message and get bot response with audio"""
     try:
         data = request.get_json()
+        print("Incoming data:", data)
         
         if not data or not data.get('message'):
             return jsonify({'error': 'Message content is required'}), 400
@@ -27,48 +46,93 @@ def send_message(user_id):
         if not message_content:
             return jsonify({'error': 'Message cannot be empty'}), 400
         
-        # Get audio speed preference (default to 0.8 = 80%)
         audio_speed = data.get('audio_speed', 0.8)
-        
-        # Validate audio speed (between 0.5 and 1.5)
         if not 0.5 <= audio_speed <= 1.5:
             audio_speed = 0.8
-        
-        # Generate response using persistent service with audio
-        result = chat_service.generate_response(user_id, message_content, audio_speed)
-#         intent = self.detect_intent(
-#             message_content, 
-#             user_data['nativeLanguage'], 
-#             user_data['learningLanguage']
-# )
-        user_audio_data = None
-        try:
-            user_audio_data = audio_service.generate_audio(
-                message_content,
-                #user_data['learningLanguage'],
-                audio_speed
-            )
-        except Exception as e:
-            # Log error but don't fail the request
-            current_app.logger.warning(f"Failed to generate audio for user message: {e}")
 
+        print("Calling chat_service.generate_response...")
+        result = get_chat_service().generate_response(user_id, message_content, audio_speed)
 
-        
+        print("Chat result:", result)
+
+        # Check for error in response
         if 'error' in result:
             return jsonify({
-                'response': result['response'],
-                'intent': result['intent'],
-                'audio_language': result['audio_language'],
-                'audio_data': result.get('audio_data')  # May be None on error
+                'response': '',
+                'intent': result.get('intent', 'unknown'),
+                'audio_language': result.get('audio_language', 'en'),
+                'audio_data': result.get('audio_data')
             }), 500
-        
-        return jsonify({
-            'response': result['response'],
-            'intent': result['intent'],
-            'audio_language': result['audio_language'],
-            'audio_data': result['audio_data'],
-            'user_audio_data': user_audio_data         
+
+        # NEW: Return the full segments structure
+        if 'segments' in result:
+            # Get user data for audio generation
+            from ..utils.file_utils import find_user_by_id
+            user_data = find_user_by_id(user_id)
+            
+            # Generate user audio (optional)
+            user_audio_data = None
+            try:
+                print("Calling audio_service.generate_audio for user message...")
+                if user_data:
+                    user_audio_data = get_audio_service().generate_audio(
+                        message_content,
+                        user_data['learningLanguage'],  # Fixed: need language parameter
+                        audio_speed
+                    )
+                    print("User audio generated")
+            except Exception as e:
+                print(f"User audio generation failed: {e}")
+                traceback.print_exc()
+
+            # Return the full segments response
+            return jsonify({
+                'segments': result['segments'],
+                'intent': result.get('intent', 'unknown'),
+                'audio_language': result.get('audio_language', 'en'),
+                'user_audio_data': user_audio_data,
+                'rephrased': result.get('rephrased', False)
             }), 200
+        
+        else:
+            # Fallback for old format (shouldn't happen with new service)
+            return jsonify({
+                'response': result.get('response', ''),
+                'intent': result.get('intent', 'unknown'),
+                'audio_language': result.get('audio_language', 'en'),
+                'audio_data': result.get('audio_data'),
+                'user_audio_data': None
+            }), 200
+
+    except Exception as e:
+        print("Exception in /message route:", e)
+        traceback.print_exc()
+        return jsonify({'error': f'Server error: {str(e)}'}), 500
+
+@chat_bp.route('/message-legacy', methods=['POST'])
+@token_required
+def send_message_legacy(user_id):
+    """Legacy endpoint for backward compatibility"""
+    # This just wraps the response in the old format
+    try:
+        result = send_message(user_id)
+        response_data = result[0].get_json()
+        
+        # Convert new format to old format
+        if 'segments' in response_data:
+            segments = response_data['segments']
+            response_segment = next((s for s in segments if s['type'] == 'response'), None)
+            
+            legacy_response = {
+                'response': response_segment['text'] if response_segment else '',
+                'intent': response_data.get('intent', 'chat'),
+                'audio_language': response_data.get('audio_language', ''),
+                'audio_data': response_segment['audio_data'] if response_segment else None
+            }
+            
+            return jsonify(legacy_response), 200
+        
+        return result
         
     except Exception as e:
         return jsonify({'error': f'Server error: {str(e)}'}), 500
@@ -78,18 +142,23 @@ def send_message(user_id):
 def get_history(user_id):
     """Get conversation history for current session"""
     try:
-        history = chat_service.get_conversation_history(user_id)
+        print(f"Received request for user_id: {user_id}")
+        history = get_chat_service().get_conversation_history(user_id)
+        print("History fetched:", history)
         return jsonify(history), 200
-        
     except Exception as e:
+        import traceback
+        print("Error in get_history:", e)
+        traceback.print_exc()
         return jsonify({'error': f'Server error: {str(e)}'}), 500
+
 
 @chat_bp.route('/new-session', methods=['POST'])
 @token_required
 def new_session(user_id):
     """Start a new conversation session"""
     try:
-        result = chat_service.start_new_session(user_id)
+        result = get_chat_service().start_new_session(user_id)
         return jsonify(result), 200
         
     except Exception as e:
@@ -113,8 +182,8 @@ def regenerate_audio(user_id):
         if not 0.5 <= audio_speed <= 1.5:
             audio_speed = 0.8
         
-        # Generate audio using the audio service
-        audio_data = audio_service.generate_audio(text, language, audio_speed)
+        # Generate audio using the audio service - FIXED: use get_audio_service()
+        audio_data = get_audio_service().generate_audio(text, language, audio_speed)
         
         if audio_data:
             return jsonify({'audio_data': audio_data}), 200
@@ -122,8 +191,10 @@ def regenerate_audio(user_id):
             return jsonify({'error': 'Failed to generate audio'}), 500
             
     except Exception as e:
+        print(f"Error in regenerate_audio: {e}")
+        import traceback
+        traceback.print_exc()
         return jsonify({'error': f'Server error: {str(e)}'}), 500
-
 
 @chat_bp.route('/transcribe', methods=['POST'])
 @token_required

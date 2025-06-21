@@ -1266,3 +1266,50 @@ body {
 .about-hero .hero-subtitle {
   font-size: 1.2rem;
 }
+
+/* Message Type Styles */
+.message.rephrase .message-bubble {
+  background: var(--primary);
+  opacity: 0.9;
+}
+
+.message.response .message-bubble {
+  border: 2px solid var(--success);
+  box-shadow: 0 0 8px rgba(81, 207, 102, 0.3);
+}
+
+.message.help .message-bubble {
+  background: #f39c12;
+  color: white;
+}
+
+.message-type-indicator {
+  font-size: 0.9em;
+  margin-right: 0.3rem;
+}
+
+/* Audio Queue Indicator */
+.audio-queue-indicator {
+  text-align: center;
+  padding: 0.5rem;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.queue-dot {
+  width: 8px;
+  height: 8px;
+  background-color: var(--primary);
+  border-radius: 50%;
+  animation: pulse 1.5s infinite;
+}
+
+/* Disabled audio button while queue is playing */
+.audio-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
