@@ -80,6 +80,7 @@ class PromptBuilder:
         
         return prompt, level
     
+    
     def _build_prompt_variables(
         self, 
         user_data: Dict, 
@@ -89,7 +90,6 @@ class PromptBuilder:
         mode: str
     ) -> Dict[str, str]:
         """Build variables to fill in the prompt template"""
-        # Basic user information
         variables = {
             'username': user_data.get('username', 'Student'),
             'native_language': user_data.get('nativeLanguage', 'English'),
@@ -114,16 +114,21 @@ class PromptBuilder:
         else:
             variables['personalization_section'] = ''
         
-        # Format conversation history
-        variables['conversation_context'] = self._format_conversation_history(
+        # Format conversation history with chunk summaries
+        recent_history = self._format_conversation_history(
             conversation_context.get('recent_messages', [])
         )
         
-        # Add reminder
+        chunk_summaries = self._format_chunk_summaries(
+            conversation_context.get('chunk_summaries', [])
+        )
+        
+        variables['conversation_context'] = chunk_summaries + recent_history
+        
         variables['reminder'] = reminder
         
         return variables
-    
+
     def _format_personalization(self, personalization: Dict) -> str:
         """Format personalization data for inclusion in prompt"""
         # For now, just include a few key items
@@ -146,13 +151,31 @@ class PromptBuilder:
         if not messages:
             return "\nThis is the start of your conversation."
         
+        # Use all messages provided (up to 10 from conversation_service)
         formatted = ["\nRecent conversation:"]
-        for msg in messages[-5:]:  # Last 5 messages
+        
+        for i, msg in enumerate(messages):
             sender = msg['sender'].capitalize()
-            formatted.append(f"{sender}: {msg['content']}")
+            # Add relative position for context
+            position = len(messages) - i  # countdown from most recent
+            formatted.append(f"[{position} messages ago] {sender}: {msg['content']}")
+        
+        # Add a separator before current interaction
+        formatted.append("\n[Current message]")
         
         return '\n'.join(formatted)
     
+    def _format_chunk_summaries(self, chunk_summaries: List[Dict]) -> str:
+        """Format chunk summaries for prompt inclusion"""
+        if not chunk_summaries:
+            return ""
+        
+        formatted = ["\nPrevious conversation context:"]
+        for summary in chunk_summaries:
+            formatted.append(f"[Messages {summary['message_range']}]: {summary['summary']}")
+        
+        return '\n'.join(formatted)
+
     def _get_fallback_prompt(self, user_data: Dict, conversation_context: Dict) -> str:
         """Fallback prompt if YAML loading fails"""
         return f"""You are a language tutor helping {user_data.get('username', 'the student')} 

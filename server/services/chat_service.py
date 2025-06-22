@@ -191,8 +191,15 @@ class ChatService:
     
     def start_new_session(self, user_id):
         """Start new conversation session"""
+        # Finalize current conversation first
+        finalized_data = self.conversation_service.finalize_conversation(user_id)
+        if finalized_data:
+            print(f"Conversation {finalized_data['conversation_id']} finalized with {finalized_data['message_count']} messages")
+            # TODO: Queue for database storage
+        
         # Clear audio cache in audio service
         self.audio_service.clear_cache()
         
+        # Start new conversation
         self.conversation_service.start_new_session(user_id)
-        return {"message": "New session started"}
+        return {"message": "New session started", "previous_conversation_finalized": bool(finalized_data)}

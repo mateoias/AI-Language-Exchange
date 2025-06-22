@@ -52,8 +52,11 @@ def send_message(user_id):
 
         print("Calling chat_service.generate_response...")
         result = get_chat_service().generate_response(user_id, message_content, audio_speed)
-
-        print("Chat result:", result)
+# print("Chat result:", result)
+        if result.get('error'):
+            print(f"Chat error: {result['error']}")
+        else:
+            print(f"Chat response generated with {len(result.get('segments', []))} segments")
 
         # Check for error in response
         if 'error' in result:
@@ -161,6 +164,29 @@ def new_session(user_id):
         result = get_chat_service().start_new_session(user_id)
         return jsonify(result), 200
         
+    except Exception as e:
+        return jsonify({'error': f'Server error: {str(e)}'}), 500
+
+
+@chat_bp.route('/finalize-conversation', methods=['POST'])
+@token_required
+def finalize_conversation(user_id):
+    """Finalize current conversation for database storage"""
+    try:
+        finalized_data = get_chat_service().conversation_service.finalize_conversation(user_id)
+        
+        if finalized_data:
+            return jsonify({
+                'success': True,
+                'conversation_id': finalized_data['conversation_id'],
+                'message_count': finalized_data['message_count']
+            }), 200
+        else:
+            return jsonify({
+                'success': False,
+                'message': 'No active conversation to finalize'
+            }), 200
+            
     except Exception as e:
         return jsonify({'error': f'Server error: {str(e)}'}), 500
 
