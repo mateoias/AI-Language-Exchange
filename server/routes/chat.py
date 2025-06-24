@@ -167,7 +167,6 @@ def new_session(user_id):
     except Exception as e:
         return jsonify({'error': f'Server error: {str(e)}'}), 500
 
-
 @chat_bp.route('/finalize-conversation', methods=['POST'])
 @token_required
 def finalize_conversation(user_id):
@@ -189,7 +188,7 @@ def finalize_conversation(user_id):
             
     except Exception as e:
         return jsonify({'error': f'Server error: {str(e)}'}), 500
-
+    
 @chat_bp.route('/regenerate-audio', methods=['POST'])
 @token_required
 def regenerate_audio(user_id):

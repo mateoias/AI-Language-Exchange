@@ -21,7 +21,8 @@ class ResponseService:
         user_data: Dict,
         conversation_context: Dict,
         intent_data: Dict,
-        include_help: bool = False
+        include_help: bool = False,
+        rephrase_text: Optional[str] = None 
     ) -> Dict[str, str]:
         """
         Generate the main conversation response
@@ -39,13 +40,15 @@ class ResponseService:
                 user_message, 
                 user_data, 
                 conversation_context,
-                intent_data
+                intent_data,
+                rephrase_text
             )
         else:
             return self._generate_chat_response(
                 user_message,
                 user_data,
-                conversation_context
+                conversation_context,
+                rephrase_text
             )
     
     def _generate_help_response(
@@ -53,7 +56,8 @@ class ResponseService:
         user_message: str,
         user_data: Dict,
         conversation_context: Dict,
-        intent_data: Dict
+        intent_data: Dict,
+        rephrase_text: Optional[str] = None
     ) -> Dict[str, str]:
         """Generate response when help is needed"""
         help_type = intent_data['details']['help_type']
@@ -98,7 +102,8 @@ Keep it encouraging and simple."""
         self,
         user_message: str,
         user_data: Dict,
-        conversation_context: Dict
+        conversation_context: Dict,
+        rephrase_text: Optional[str] = None
     ) -> Dict[str, str]:
         """Generate normal chat response"""
         system_prompt, _ = self.prompt_builder.build_prompt(
@@ -107,6 +112,26 @@ Keep it encouraging and simple."""
             user_message,
             mode='chat'
         )
+        if rephrase_text:
+        # Add context about the rephrase
+            effective_message = f"The student said '{user_message}' which means '{rephrase_text}'. Acknowledge this naturally and continue the conversation."
+        else:
+            effective_message = user_message
+
+        response = llm_manager.generate_chat_response(
+            messages=[
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": effective_message}
+            ],
+            temperature=0.7,
+            max_tokens=150
+        )
+        
+        return {
+            'response': response,
+            'help_text': None,
+            'continue_conversation': True
+        }
         
         response = llm_manager.generate_chat_response(
             messages=[

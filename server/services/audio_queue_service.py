@@ -20,7 +20,8 @@ class AudioQueueService:
         self,
         segments: List[Dict[str, str]],
         language: str,
-        speed: float = 0.8
+        speed: float = 0.8,
+        native_language: str = None 
     ) -> List[Dict[str, any]]:
         """
         Generate audio for multiple segments in parallel
@@ -34,13 +35,20 @@ class AudioQueueService:
             List of segments with audio_data added
         """
         # Submit all audio generation tasks
+# Submit all audio generation tasks
         futures = []
         for segment in segments:
             if segment.get('text'):
+                # Determine language based on segment type
+                if segment.get('type') == 'help':
+                    audio_language = native_language or language
+                else:
+                    audio_language = language
+                    
                 future = self.executor.submit(
                     self.audio_service.generate_audio,
                     segment['text'],
-                    language,
+                    audio_language,  # Use determined language
                     speed
                 )
                 futures.append((segment, future))

@@ -69,3 +69,6 @@ Thumbs.db
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+/data/*
+!/data/.gitkeep

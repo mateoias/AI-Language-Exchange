@@ -155,7 +155,10 @@ Rules:
 3. Maintain the student's intended meaning
 4. Keep it concise (under 15 words)
 5. Use the conversation context to fill in missing information
-6. Respond ONLY with the rephrased sentence in {language}"""
+6. Respond ONLY with the rephrased sentence in {language}
+7. IMPORTANT: Write from your perspective using second person (you/your/yours)
+   Example: Student says "soccer" → You write "you like soccer" 
+   NOT what the student would say: I like soccer"""
 
         user_prompt = f"""Student said: "{message}"
 

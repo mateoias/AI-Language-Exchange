@@ -117,7 +117,8 @@ class ChatService:
                     segments.append({
                         'type': 'rephrase',
                         'text': rephrase_text,
-                        'timing': 0
+                        'timing': 0,
+                        'persona': 'teacher' 
                     })
             
             # Generate main response (with optional help)
@@ -125,7 +126,9 @@ class ChatService:
                 message_content,
                 user_data,
                 conversation_context,
-                intent_data
+                intent_data,
+                False,  # include_help
+                rephrase_text if should_rephrase else None  
             )
             
             # Add help segment if needed
@@ -133,21 +136,24 @@ class ChatService:
                 segments.append({
                     'type': 'help',
                     'text': response_data['help_text'],
-                    'timing': len(segments) * 800  # 2 seconds per segment
+                    'timing': len(segments) * 800,
+                    'persona': 'teacher' 
                 })
             
             # Add main response
             segments.append({
                 'type': 'response',
                 'text': response_data['response'],
-                'timing': len(segments) * 800
+                'timing': len(segments) * 800,
+                'persona': 'partner'
             })
             
             # Step 4: Generate audio for all segments in parallel
             segments_with_audio = audio_queue_service.generate_audio_segments(
                 segments,
                 user_data['learningLanguage'],
-                audio_speed
+                audio_speed,
+                user_data['nativeLanguage'] 
             )
             
             # Add bot response to conversation

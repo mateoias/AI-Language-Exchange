@@ -68,6 +68,11 @@ sendChatMessageLegacy: (message, audioSpeed = 0.8) =>
       method: 'POST'
     }),
 
+    finalizeConversation: () =>
+  request('/chat/finalize-conversation', {
+    method: 'POST'
+  }),
+  
   regenerateAudio: (text, language, audioSpeed = 0.8) =>
     request('/chat/regenerate-audio', {
       method: 'POST',
