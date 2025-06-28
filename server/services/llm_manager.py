@@ -1,7 +1,6 @@
 # services/llm_manager.py
 """
-Centralized LLM Manager for OpenAI client
-Singleton pattern to ensure only one client instance exists
+Centralized LLM Manager for OpenAI client with comprehensive logging
 """
 import openai
 from flask import current_app
@@ -10,8 +9,7 @@ from typing import Optional, List, Dict
 
 class LLMManager:
     """
-    Centralized manager for LLM operations.
-    Uses singleton pattern to ensure only one OpenAI client exists.
+    Centralized manager for LLM operations with detailed logging
     """
     _instance = None
     _client = None
@@ -34,45 +32,81 @@ class LLMManager:
     def generate_chat_response(
         self, 
         messages: List[Dict[str, str]], 
-        model: str = "gpt-4",
+        model: str = "gpt-3.5-turbo",
         temperature: float = 0.3,
-        max_tokens: int = 150
+        max_tokens: int = 80,
+        log_request: bool = False  # New parameter for logging
     ) -> str:
         """
-        Generate a chat response using the OpenAI API
-        
-        Args:
-            messages: List of message dictionaries with 'role' and 'content'
-            model: The model to use (default: gpt-4)
-            temperature: Controls randomness (0-1)
-            max_tokens: Maximum tokens in response
-            
-        Returns:
-            The generated response text
+        Generate a chat response using the OpenAI API with optional detailed logging
         """
+        
+        if log_request:
+            # Log the full prompt with nice formatting
+            print("\n" + "="*80)
+            print(f"🤖 LLM REQUEST - Model: {model}, Temp: {temperature}, Max Tokens: {max_tokens}")
+            print("="*80)
+            
+            for i, message in enumerate(messages):
+                role_emoji = "🔧" if message['role'] == 'system' else "👤" if message['role'] == 'user' else "🤖"
+                print(f"\n{role_emoji} {message['role'].upper()} MESSAGE #{i+1}:")
+                print("-" * 50)
+                
+                # Truncate very long system prompts for readability
+                content = message['content']
+                if message['role'] == 'system' and len(content) > 1000:
+                    print(content[:500])
+                    print(f"\n... [TRUNCATED - Total length: {len(content)} chars] ...")
+                    print(content[-200:])
+                else:
+                    print(content)
+            
+            print("\n" + "="*80)
+        
         try:
+            import time
+            start_time = time.time()
+            
             response = self.client.chat.completions.create(
                 model=model,
                 messages=messages,
                 temperature=temperature,
                 max_tokens=max_tokens
             )
-            return response.choices[0].message.content.strip()
+            
+            end_time = time.time()
+            duration_ms = (end_time - start_time) * 1000
+            
+            result = response.choices[0].message.content.strip()
+            
+            if log_request:
+                print(f"🤖 LLM RESPONSE (took {duration_ms:.0f}ms):")
+                print("-" * 50)
+                
+                # For JSON responses, try to format nicely
+                if result.startswith('{') and result.endswith('}'):
+                    try:
+                        import json
+                        formatted_json = json.dumps(json.loads(result), indent=2)
+                        print(formatted_json)
+                    except:
+                        print(result)  # Fallback to raw output
+                else:
+                    print(result)
+                
+                print("="*80 + "\n")
+            
+            return result
+            
         except Exception as e:
+            if log_request:
+                print(f"❌ LLM ERROR: {e}")
+                print("="*80 + "\n")
             print(f"Error generating chat response: {e}")
             raise
     
     def generate_summary(self, conversation_text: str, max_tokens: int = 200) -> str:
-        """
-        Generate a conversation summary
-        
-        Args:
-            conversation_text: The conversation to summarize
-            max_tokens: Maximum tokens for summary
-            
-        Returns:
-            The generated summary
-        """
+        """Generate a conversation summary"""
         summary_prompt = f"""Please create a concise bullet-point summary of this conversation between a language learner and AI tutor. Focus on:
 - Key personal information shared by the user
 - Topics discussed  
@@ -92,7 +126,8 @@ Provide the summary as bullet points:"""
         return self.generate_chat_response(
             messages=messages,
             temperature=0.3,
-            max_tokens=max_tokens
+            max_tokens=max_tokens,
+            log_request=False  # Don't log summary generation
         )
     
     def generate_structured_response(
@@ -103,19 +138,7 @@ Provide the summary as bullet points:"""
         max_tokens: int = 1000,
         response_format: str = "json"
     ) -> str:
-        """
-        Generate a structured response (useful for graph analysis, etc.)
-        
-        Args:
-            system_prompt: System message for context
-            user_prompt: The user's prompt
-            temperature: Controls randomness (0-1)
-            max_tokens: Maximum tokens in response
-            response_format: Expected format (json, text, etc.)
-            
-        Returns:
-            The generated response
-        """
+        """Generate a structured response (useful for graph analysis, etc.)"""
         messages = [
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": user_prompt}
@@ -124,39 +147,8 @@ Provide the summary as bullet points:"""
         return self.generate_chat_response(
             messages=messages,
             temperature=temperature,
-            max_tokens=max_tokens
-        )
-    
-    def generate_structured_response(
-        self,
-        system_prompt: str,
-        user_prompt: str,
-        temperature: float = 0.1,
-        max_tokens: int = 1000,
-        response_format: str = "json"
-    ) -> str:
-        """
-        Generate a structured response (useful for graph analysis, etc.)
-        
-        Args:
-            system_prompt: System message for context
-            user_prompt: The user's prompt
-            temperature: Controls randomness (0-1)
-            max_tokens: Maximum tokens in response
-            response_format: Expected format (json, text, etc.)
-            
-        Returns:
-            The generated response
-        """
-        messages = [
-            {"role": "system", "content": system_prompt},
-            {"role": "user", "content": user_prompt}
-        ]
-        
-        return self.generate_chat_response(
-            messages=messages,
-            temperature=temperature,
-            max_tokens=max_tokens
+            max_tokens=max_tokens,
+            log_request=True if response_format == "json" else False
         )
     
     def reset_client(self):

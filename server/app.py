@@ -17,6 +17,9 @@ def create_app():
     )
         # Set specific loggers to INFO for debugging
     logging.getLogger('server.services.prompt_loader').setLevel(logging.INFO)
+    logging.getLogger('server.services.prompt_builder').setLevel(logging.DEBUG)  
+    logging.getLogger('server.services.rephrase_service').setLevel(logging.INFO) 
+    logging.getLogger('server.services.parallel_orchestrator').setLevel(logging.INFO)
     
     # Silence chatty libraries
     logging.getLogger('azure').setLevel(logging.ERROR)

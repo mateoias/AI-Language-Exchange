@@ -22,6 +22,9 @@ class PromptBuilder:
         if not prompt_loader.prompts_dir:
             prompt_loader.initialize()
     
+
+# Replace the build_prompt method in your server/services/prompt_builder.py with this:
+
     def build_prompt(
         self, 
         user_data: Dict, 
@@ -74,11 +77,24 @@ class PromptBuilder:
         # Format the template
         try:
             prompt = base_template.format(**prompt_vars)
+            
+            # DEBUG: Log the prompt if debug mode is enabled
+            if logger.isEnabledFor(logging.DEBUG):
+                logger.debug("="*50)
+                logger.debug("GENERATED PROMPT:")
+                logger.debug("="*50)
+                logger.debug(f"Mode: {mode}, Level: {level}")
+                logger.debug(f"Current message: {current_message}")
+                logger.debug("-"*50)
+                logger.debug(prompt)
+                logger.debug("="*50)
+                
         except KeyError as e:
             logger.error(f"Missing variable in prompt template: {e}")
             return self._get_fallback_prompt(user_data, conversation_context), level
         
         return prompt, level
+
     
     
     def _build_prompt_variables(

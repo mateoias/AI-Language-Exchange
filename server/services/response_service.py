@@ -1,15 +1,18 @@
 # server/services/response_service.py
-"""
-Service for generating main conversation responses
-"""
+# ENHANCED VERSION - New methods for parallel generation
+
 from .llm_manager import llm_manager
 from .prompt_builder import PromptBuilder
 from typing import Dict, Optional
+import logging
+
+logger = logging.getLogger(__name__)
 
 class ResponseService:
     """
     Generates the main conversational response
     Can include help/explanations based on intent
+    Enhanced to support parallel generation with hints
     """
     
     def __init__(self):
@@ -51,25 +54,18 @@ class ResponseService:
                 rephrase_text
             )
     
-    def _generate_help_response(
+    def generate_response_with_hint(
         self,
         user_message: str,
         user_data: Dict,
         conversation_context: Dict,
-        intent_data: Dict,
+        hint: Dict,
         rephrase_text: Optional[str] = None
     ) -> Dict[str, str]:
-        """Generate response when help is needed"""
-        help_type = intent_data['details']['help_type']
-        
-        # Generate help content
-        help_text = self._generate_help_text(
-            user_message,
-            user_data,
-            help_type
-        )
-        
-        # Generate continuation prompt
+        """
+        Generate response with a hint about likely corrections
+        This allows the partner to naturally incorporate corrections
+        """
         system_prompt, _ = self.prompt_builder.build_prompt(
             user_data,
             conversation_context,
@@ -77,24 +73,35 @@ class ResponseService:
             mode='chat'
         )
         
-        continuation_prompt = f"""{system_prompt}
+        # Add special instructions for natural correction handling
+        enhanced_prompt = f"""{system_prompt}
 
-The student just asked for help. I've provided the help.
-Now continue the conversation naturally, acknowledging they needed help but moving forward.
-Keep it encouraging and simple."""
+IMPORTANT: The student's response might be incomplete or have minor errors.
+Based on context, they likely mean: {hint.get('likely_meaning', 'continuation of conversation')}.
+Respond naturally as if they said it correctly, without pointing out any errors.
+If they gave a short response, expand on it conversationally."""
 
-        continuation = llm_manager.generate_chat_response(
+        # Construct the effective message with context
+        if hint.get('is_short') and hint.get('response_type'):
+            # For short responses, provide context
+            effective_message = f"""The student said: "{user_message}"
+Context: This appears to be a {hint['response_type']} response to your previous question.
+Continue the conversation naturally."""
+        else:
+            effective_message = user_message
+
+        response = llm_manager.generate_chat_response(
             messages=[
-                {"role": "system", "content": continuation_prompt},
-                {"role": "user", "content": f"I just helped them with: {help_text[:100]}..."}
+                {"role": "system", "content": enhanced_prompt},
+                {"role": "user", "content": effective_message}
             ],
-            temperature=0.5,
-            max_tokens=100
+            temperature=0.7,
+            max_tokens=150
         )
         
         return {
-            'response': continuation,
-            'help_text': help_text,
+            'response': response,
+            'help_text': None,
             'continue_conversation': True
         }
     
@@ -112,9 +119,13 @@ Keep it encouraging and simple."""
             user_message,
             mode='chat'
         )
+        
+        # ENHANCED: Handle rephrase more naturally
         if rephrase_text:
-        # Add context about the rephrase
-            effective_message = f"The student said '{user_message}' which means '{rephrase_text}'. Acknowledge this naturally and continue the conversation."
+            # Don't explicitly mention the rephrase
+            effective_message = user_message
+            # Add subtle context to the system prompt
+            system_prompt += f"\nNote: The student is practicing expressing themselves. Respond to their intent naturally."
         else:
             effective_message = user_message
 
@@ -132,51 +143,53 @@ Keep it encouraging and simple."""
             'help_text': None,
             'continue_conversation': True
         }
-        
-        response = llm_manager.generate_chat_response(
-            messages=[
-                {"role": "system", "content": system_prompt},
-                {"role": "user", "content": user_message}
-            ],
-            temperature=0.7,
-            max_tokens=150
-        )
-        
-        return {
-            'response': response,
-            'help_text': None,
-            'continue_conversation': True
-        }
     
+# Replace the _generate_help_text method in your response_service.py with this:
+
     def _generate_help_text(
         self,
         user_message: str,
         user_data: Dict,
-        help_type: str
+        help_type: str,
+        conversation_context: Optional[Dict] = None
     ) -> str:
-        """Generate specific help text"""
+        """Generate specific help text with context awareness"""
         native_lang = user_data['nativeLanguage']
         learning_lang = user_data['learningLanguage']
         
+        # Extract the phrase they're asking about
+        import re
+        # Pattern to match quoted text or text after "mean" or "significa"
+        quote_pattern = r'"([^"]*)"'
+        match = re.search(quote_pattern, user_message)
+        phrase_to_explain = match.group(1) if match else user_message
+        
         if help_type == 'translation':
             prompt = f"""Translate this phrase from {learning_lang} to {native_lang}.
+Be accurate and natural. If it's a sentence fragment, translate it as such.
 Provide ONLY the translation, no explanations.
 
-Phrase: {user_message}"""
+Phrase: {phrase_to_explain}"""
         
         elif help_type == 'explanation':
-            prompt = f"""Explain what this means in simple {native_lang}.
-Keep it brief (1-2 sentences).
+            # For "what does X mean" questions
+            prompt = f"""The student is learning {learning_lang} and asked what this means.
+Explain in simple {native_lang} what this phrase means.
+Be brief and clear (1-2 sentences max).
+If the phrase seems incomplete or strange, mention that too.
 
-Phrase: {user_message}"""
+Phrase to explain: "{phrase_to_explain}"
+
+Provide a natural explanation as you would to a language learner."""
         
         else:  # general help
             prompt = f"""The student learning {learning_lang} seems confused.
-Provide a brief helpful hint in {native_lang} about: {user_message}"""
+They said: "{user_message}"
+Provide a brief helpful response in {native_lang}."""
         
         response = llm_manager.generate_chat_response(
             messages=[
-                {"role": "system", "content": "You are a helpful language tutor."},
+                {"role": "system", "content": f"You are a helpful {learning_lang} language tutor. Always be accurate and helpful."},
                 {"role": "user", "content": prompt}
             ],
             temperature=0.3,

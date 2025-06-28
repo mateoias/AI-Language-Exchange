@@ -10,10 +10,13 @@ from .rephrase_service import RephraseService
 from .response_service import ResponseService
 from .audio_queue_service import AudioQueueService
 from ..language_config import get_error_message
+from .parallel_orchestrator import ParallelOrchestrator  # PARALLEL: New import
 
 from flask import current_app
 import json
 import os
+import logging  
+logger = logging.getLogger(__name__) 
 
 class ChatService:
     def __init__(self, speech_key=None, speech_region=None):
@@ -28,6 +31,10 @@ class ChatService:
         else:
             self.audio_service = None
             self.audio_queue_service = None
+        self.intent_service = IntentService()
+        self.rephrase_service = RephraseService()
+        self.response_service = ResponseService()
+        self.parallel_orchestrator = None
     
     def detect_intent(self, message, user_native_language, user_learning_language):
         """
@@ -68,9 +75,9 @@ class ChatService:
             intent_service = IntentService()
             rephrase_service = RephraseService()
             response_service = ResponseService()
-            speech_key = current_app.config['AZURE_SPEECH_KEY']
-            speech_region = current_app.config['AZURE_SPEECH_REGION']
-            audio_queue_service = AudioQueueService(speech_key, speech_region)
+            
+            # NEW: Check if we should use parallel processing
+            use_parallel = current_app.config.get('USE_PARALLEL_PROCESSING', True)
             
             # Step 1: Quick intent detection
             intent_data = intent_service.detect_intent(
@@ -97,83 +104,125 @@ class ChatService:
                 intent_data['details']
             )
             
-            # Step 3: Build response segments
-            segments = []
-            
             # Add user message to conversation first
             self.conversation_service.add_message(
                 user_id, message_content, 'user', intent_data['intent'], user_data['learningLanguage']
             )
             
-            # Generate rephrase if needed
-            if should_rephrase:
-                rephrase_text = rephrase_service.generate_rephrase(
-                    message_content,
-                    conversation_context,
-                    user_data['learningLanguage'],
-                    intent_data['details']
+            # NEW: Use parallel processing if enabled
+            if use_parallel:
+                # Initialize parallel orchestrator if needed
+                if not self.parallel_orchestrator:
+                    self.parallel_orchestrator = ParallelOrchestrator(
+                        rephrase_service,
+                        response_service,
+                        self.audio_queue_service
+                    )
+                
+                # Use parallel generation
+                result = self.parallel_orchestrator.generate_parallel_response(
+                    user_message=message_content,
+                    user_data=user_data,
+                    conversation_context=conversation_context,
+                    intent_data=intent_data,
+                    should_rephrase=should_rephrase,
+                    audio_speed=audio_speed
                 )
-                if rephrase_text:
+                
+                segments_with_audio = result['segments']
+                
+                # Add bot response to conversation
+                response_segment = next((s for s in segments_with_audio if s['type'] == 'response'), None)
+                if response_segment:
+                    self.conversation_service.add_message(
+                        user_id, 
+                        response_segment['text'], 
+                        'bot', 
+                        'chat', 
+                        user_data['learningLanguage']
+                    )
+                
+                return {
+                    'segments': segments_with_audio,
+                    'intent': intent_data['intent'],
+                    'rephrased': should_rephrase,
+                    'audio_language': user_data['learningLanguage'],
+                    'generation_times': result.get('generation_times', {})
+                }
+            
+            else:
+                # ORIGINAL CODE: Step 3 onwards remains the same for backwards compatibility
+                segments = []
+                
+                # Generate rephrase if needed
+                if should_rephrase:
+                    rephrase_text = rephrase_service.generate_rephrase(
+                        message_content,
+                        conversation_context,
+                        user_data['learningLanguage'],
+                        intent_data['details']
+                    )
+                    if rephrase_text:
+                        segments.append({
+                            'type': 'rephrase',
+                            'text': rephrase_text,
+                            'timing': 0,
+                            'persona': 'teacher' 
+                        })
+                
+                # Generate main response (with optional help)
+                response_data = response_service.generate_response(
+                    message_content,
+                    user_data,
+                    conversation_context,
+                    intent_data,
+                    False,  # include_help
+                    rephrase_text if should_rephrase else None  
+                )
+                
+                # Add help segment if needed
+                if response_data.get('help_text'):
                     segments.append({
-                        'type': 'rephrase',
-                        'text': rephrase_text,
-                        'timing': 0,
+                        'type': 'help',
+                        'text': response_data['help_text'],
+                        'timing': len(segments) * 800,
                         'persona': 'teacher' 
                     })
-            
-            # Generate main response (with optional help)
-            response_data = response_service.generate_response(
-                message_content,
-                user_data,
-                conversation_context,
-                intent_data,
-                False,  # include_help
-                rephrase_text if should_rephrase else None  
-            )
-            
-            # Add help segment if needed
-            if response_data.get('help_text'):
+                
+                # Add main response
                 segments.append({
-                    'type': 'help',
-                    'text': response_data['help_text'],
+                    'type': 'response',
+                    'text': response_data['response'],
                     'timing': len(segments) * 800,
-                    'persona': 'teacher' 
+                    'persona': 'partner'
                 })
-            
-            # Add main response
-            segments.append({
-                'type': 'response',
-                'text': response_data['response'],
-                'timing': len(segments) * 800,
-                'persona': 'partner'
-            })
-            
-            # Step 4: Generate audio for all segments in parallel
-            segments_with_audio = audio_queue_service.generate_audio_segments(
-                segments,
-                user_data['learningLanguage'],
-                audio_speed,
-                user_data['nativeLanguage'] 
-            )
-            
-            # Add bot response to conversation
-            self.conversation_service.add_message(
-                user_id, 
-                response_data['response'], 
-                'bot', 
-                'chat', 
-                user_data['learningLanguage']
-            )
-            
-            # Cleanup
-            audio_queue_service.cleanup()
-            
-            return {
-                'segments': segments_with_audio,
-                'intent': intent_data['intent'],
-                'rephrased': should_rephrase,
-                'audio_language': user_data['learningLanguage']
-            }
+                
+                # Step 4: Generate audio for all segments in parallel
+                segments_with_audio = self.audio_queue_service.generate_audio_segments(
+                    segments,
+                    user_data['learningLanguage'],
+                    audio_speed,
+                    user_data['nativeLanguage'] 
+                )
+                
+                # Add bot response to conversation
+                self.conversation_service.add_message(
+                    user_id, 
+                    response_data['response'], 
+                    'bot', 
+                    'chat', 
+                    user_data['learningLanguage']
+                )
+                
+                # Cleanup
+                self.audio_queue_service.cleanup()
+                
+                return {
+                    'segments': segments_with_audio,
+                    'intent': intent_data['intent'],
+                    'rephrased': should_rephrase,
+                    'audio_language': user_data['learningLanguage']
+                }
             
         except Exception as e:
             # Error handling remains the same
@@ -189,7 +238,13 @@ class ChatService:
                 'audio_language': user_data.get('learningLanguage', 'English') if user_data else 'English',
                 'error': str(e)
             }
-
+        finally:
+            # NEW: Cleanup parallel orchestrator if needed
+            if hasattr(self, 'parallel_orchestrator') and self.parallel_orchestrator:
+                try:
+                    self.parallel_orchestrator.cleanup()
+                except:
+                    pass
 
     def get_conversation_history(self, user_id):
         """Get conversation history using persistent storage"""

@@ -45,8 +45,11 @@ class Config:
     NEO4J_USERNAME = os.environ.get('NEO4J_USERNAME')
     NEO4J_PASSWORD = os.environ.get('NEO4J_PASSWORD')
     NEO4J_DATABASE = os.environ.get('NEO4J_DATABASE', 'neo4j')
-
     
+    USE_PARALLEL_PROCESSING = True 
+    ENABLE_PROMPT_LOGGING = True
+    PARALLEL_TIMEOUT = 3.0  
+    PARALLEL_MAX_WORKERS = 3 
     # Ensure data directory exists
     os.makedirs(DATA_DIR, exist_ok=True)
 

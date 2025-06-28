@@ -2,424 +2,805 @@
   "user_id": "1a99b5f0-3775-4313-b755-f09208242364",
   "conversations": [
     {
-      "id": "431d43c7-597b-4cee-840d-1ab2c6884432",
+      "id": "4b390ad8-5408-405c-96b8-6f23e649b99a",
       "user_id": "1a99b5f0-3775-4313-b755-f09208242364",
-      "created_at": "2025-06-24T01:31:06.364872",
-      "messages": [],
-      "summary": ""
-    },
-    {
-      "id": "31fddca4-a985-4453-8617-951858e077ab",
-      "user_id": "1a99b5f0-3775-4313-b755-f09208242364",
-      "created_at": "2025-06-24T01:08:51.278449",
+      "created_at": "2025-06-28T02:23:44.322263",
       "messages": [
         {
-          "content": "¡Qué mis hijos!",
+          "content": "de mi madre",
           "sender": "user",
-          "timestamp": "2025-06-24T01:16:44.262466",
+          "timestamp": "2025-06-28T02:29:00.599073",
           "intent": "normal_chat",
           "audio_language": "Spanish",
-          "id": "user-0-1750727804"
+          "id": "user-0-1751077740"
         },
         {
-          "content": "Entiendo, Mateoias. Podrías explicarme un poco más sobre lo que quieres decir con \"¡Qué mis hijos!\"?",
+          "content": "¿Cómo estás hoy?",
           "sender": "bot",
-          "timestamp": "2025-06-24T01:16:47.529431",
+          "timestamp": "2025-06-28T02:29:01.918052",
           "intent": "chat",
           "audio_language": "Spanish",
-          "id": "bot-1-1750727807"
+          "id": "bot-1-1751077741"
         },
         {
-          "content": "Quiero hablar de mis hijos.",
+          "content": "what does \"De mi madre es la receta de la paella.\" mean?",
           "sender": "user",
-          "timestamp": "2025-06-24T01:17:13.320760",
-          "intent": "normal_chat",
-          "audio_language": "Spanish",
-          "id": "user-2-1750727833"
-        },
-        {
-          "content": "¡Claro! Me encantaría escuchar sobre tus hijos. ¿Cuántos hijos tienes?",
-          "sender": "bot",
-          "timestamp": "2025-06-24T01:17:17.072151",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "bot-3-1750727837"
-        },
-        {
-          "content": "Tengo tres hijos, dos niños, una niña.",
-          "sender": "user",
-          "timestamp": "2025-06-24T01:17:55.483280",
-          "intent": "normal_chat",
-          "audio_language": "Spanish",
-          "id": "user-4-1750727875"
-        },
-        {
-          "content": "¡Qué maravilloso! ¿Cuántos años tienen tus hijos?",
-          "sender": "bot",
-          "timestamp": "2025-06-24T01:17:57.196338",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "bot-5-1750727877"
-        },
-        {
-          "content": "La niña tiene 16. Y los niños quieren venti.",
-          "sender": "user",
-          "timestamp": "2025-06-24T01:21:19.590971",
-          "intent": "normal_chat",
-          "audio_language": "Spanish",
-          "id": "user-6-1750728079"
-        },
-        {
-          "content": "¡Interesante! ¿Qué significa que los niños quieren \"venti\"? ¿Es un tipo de juguete o juego?",
-          "sender": "bot",
-          "timestamp": "2025-06-24T01:21:22.977279",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "bot-7-1750728082"
-        },
-        {
-          "content": "No, los niños tienen 20 años.",
-          "sender": "user",
-          "timestamp": "2025-06-24T01:21:41.864555",
-          "intent": "normal_chat",
-          "audio_language": "Spanish",
-          "id": "user-8-1750728101"
-        },
-        {
-          "content": "¡Ah, entiendo! Por \"venti\" te referías a la edad de tus hijos. ¡Tienes una familia grande! ¿La niña también está aprendiendo español?",
-          "sender": "bot",
-          "timestamp": "2025-06-24T01:21:45.974566",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "bot-9-1750728105"
-        },
-        {
-          "content": "La niña aprende un poco de español en la escuela.",
-          "sender": "user",
-          "timestamp": "2025-06-24T01:22:21.819785",
-          "intent": "normal_chat",
-          "audio_language": "Spanish",
-          "id": "user-10-1750728141"
-        },
-        {
-          "content": "¡Qué bien! Es muy útil aprender un segundo idioma desde joven. ¿Y tus hijos mayores, también hablan español?",
-          "sender": "bot",
-          "timestamp": "2025-06-24T01:22:25.460363",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "bot-11-1750728145"
-        },
-        {
-          "content": "No, pero se habla en chino. No lo sé por qué.",
-          "sender": "user",
-          "timestamp": "2025-06-24T01:24:35.404689",
-          "intent": "normal_chat",
-          "audio_language": "Spanish",
-          "id": "user-12-1750728275"
-        },
-        {
-          "content": "¡Vaya! Eso es impresionante. El chino es un idioma muy desafiante. ¿Ellos aprendieron en la escuela o por su cuenta?",
-          "sender": "bot",
-          "timestamp": "2025-06-24T01:24:39.358879",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "bot-13-1750728279"
-        },
-        {
-          "content": "Ellos aprendieron en la casa, su mamá es de Taiwán.",
-          "sender": "user",
-          "timestamp": "2025-06-24T01:25:09.386806",
-          "intent": "normal_chat",
-          "audio_language": "Spanish",
-          "id": "user-14-1750728309"
-        },
-        {
-          "content": "¡Qué fascinante! Entonces, tus hijos son bilingües. ¿Tienes interés en aprender chino también?",
-          "sender": "bot",
-          "timestamp": "2025-06-24T01:25:12.192478",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "bot-15-1750728312"
-        },
-        {
-          "content": "Yo hablo chino. Mejor que hablo español.",
-          "sender": "user",
-          "timestamp": "2025-06-24T01:29:16.409938",
-          "intent": "normal_chat",
-          "audio_language": "Spanish",
-          "id": "user-16-1750728556"
-        },
-        {
-          "content": "¡Eso es increíble! Hablar varios idiomas es una gran habilidad. ¿Dónde aprendiste chino?",
-          "sender": "bot",
-          "timestamp": "2025-06-24T01:29:18.468507",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "bot-17-1750728558"
-        },
-        {
-          "content": "en Taiwán. Viva en Taiwán 20 años.",
-          "sender": "user",
-          "timestamp": "2025-06-24T01:29:39.540680",
-          "intent": "normal_chat",
-          "audio_language": "Spanish",
-          "id": "user-18-1750728579"
-        },
-        {
-          "content": "¡Vaya! Vivir en Taiwán durante 20 años debe haber sido una experiencia interesante. ¿Qué fue lo que más te gustó de vivir allí?",
-          "sender": "bot",
-          "timestamp": "2025-06-24T01:29:43.411672",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "bot-19-1750728583"
-        }
-      ],
-      "summary": "",
-      "chunk_summaries": [
-        {
-          "chunk_number": 1,
-          "summary": "The conversation is between the user and the bot about the user's children. The user has three children, two boys aged 20 and a 16-year-old girl. The bot misunderstood the term \"venti\" but the user clarified it referred to the boys' age. The bot then asked if the girl is also learning Spanish. The conversation was friendly and engaging, heading towards discussing more about the user's children.",
-          "message_range": "1-10",
-          "created_at": "2025-06-24T01:21:48.325158"
-        },
-        {
-          "chunk_number": 2,
-          "summary": "The conversation is about language learning within the user's family. The user's daughter is learning Spanish at school, while their older children speak Chinese, learned at home from their Taiwanese mother. The user also speaks Chinese, learned while living in Taiwan for 20 years. The bot is showing interest and asking questions about the family's language skills and experiences living in Taiwan. The conversation is heading towards discussing the user's experiences in Taiwan. The tone is friendly and curious.",
-          "message_range": "11-20",
-          "created_at": "2025-06-24T01:29:47.068387"
-        }
-      ]
-    },
-    {
-      "id": "1db5c1be-2936-4c54-a854-6e82f4ab6783",
-      "user_id": "1a99b5f0-3775-4313-b755-f09208242364",
-      "created_at": "2025-06-24T00:22:39.363481",
-      "messages": [
-        {
-          "content": "de mi mamá.",
-          "sender": "user",
-          "timestamp": "2025-06-24T00:47:55.887721",
-          "intent": "normal_chat",
-          "audio_language": "Spanish",
-          "id": "user-0-1750726075"
-        },
-        {
-          "content": "Exacto, estás hablando de tu mamá. ¿Cómo se llama tu mamá?",
-          "sender": "bot",
-          "timestamp": "2025-06-24T00:47:59.649589",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "bot-1-1750726079"
-        },
-        {
-          "content": "Mi mama se llama Lari.",
-          "sender": "user",
-          "timestamp": "2025-06-24T00:48:19.327534",
-          "intent": "normal_chat",
-          "audio_language": "Spanish",
-          "id": "user-2-1750726099"
-        },
-        {
-          "content": "¡Qué bonito nombre! ¿Y de donde es Lari?",
-          "sender": "bot",
-          "timestamp": "2025-06-24T00:48:23.148563",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "bot-3-1750726103"
-        },
-        {
-          "content": "Ahora, la ríe esta muerta.",
-          "sender": "user",
-          "timestamp": "2025-06-24T00:48:41.842729",
-          "intent": "normal_chat",
-          "audio_language": "Spanish",
-          "id": "user-4-1750726121"
-        },
-        {
-          "content": "Lo siento mucho por tu pérdida. ¿Cómo te sientes en este momento?",
-          "sender": "bot",
-          "timestamp": "2025-06-24T00:48:44.197773",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "bot-5-1750726124"
-        },
-        {
-          "content": "Muy bien. Mi mamá muerta antes 10 años.",
-          "sender": "user",
-          "timestamp": "2025-06-24T00:49:07.934553",
-          "intent": "normal_chat",
-          "audio_language": "Spanish",
-          "id": "user-6-1750726147"
-        },
-        {
-          "content": "Lamento escuchar eso. ¿Quieres compartir algún recuerdo especial que tengas de ella?",
-          "sender": "bot",
-          "timestamp": "2025-06-24T00:49:10.146418",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "bot-7-1750726150"
-        },
-        {
-          "content": "Ella está en Taipei muchos años.",
-          "sender": "user",
-          "timestamp": "2025-06-24T00:53:39.470733",
-          "intent": "normal_chat",
-          "audio_language": "Spanish",
-          "id": "user-8-1750726419"
-        },
-        {
-          "content": "Entiendo, tu mamá pasó mucho tiempo en Taipei. ¿Cómo llegó a estar allí?",
-          "sender": "bot",
-          "timestamp": "2025-06-24T00:53:42.902843",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "bot-9-1750726422"
-        },
-        {
-          "content": "Yo he estado en Taipei y mi mamá conmigo viviendo.",
-          "sender": "user",
-          "timestamp": "2025-06-24T00:56:14.260289",
-          "intent": "normal_chat",
-          "audio_language": "Spanish",
-          "id": "user-10-1750726574"
-        },
-        {
-          "content": "Eso suena como una experiencia muy especial. ¿Qué cosas hiciste y viste en Taipei con tu mamá?",
-          "sender": "bot",
-          "timestamp": "2025-06-24T00:56:16.352601",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "bot-11-1750726576"
-        },
-        {
-          "content": "con los hijos jugando.",
-          "sender": "user",
-          "timestamp": "2025-06-24T00:58:57.381963",
-          "intent": "normal_chat",
-          "audio_language": "Spanish",
-          "id": "user-12-1750726737"
-        },
-        {
-          "content": "¡Qué bonito! Jugando con los niños es una actividad muy especial. ¿Cuál era su juego favorito?",
-          "sender": "bot",
-          "timestamp": "2025-06-24T00:58:59.541240",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "bot-13-1750726739"
-        },
-        {
-          "content": "el fútbol.",
-          "sender": "user",
-          "timestamp": "2025-06-24T01:00:22.815287",
-          "intent": "normal_chat",
-          "audio_language": "Spanish",
-          "id": "user-14-1750726822"
-        },
-        {
-          "content": "¡El fútbol! Es un juego muy divertido. ¿Tu mamá también disfrutaba de jugar al fútbol contigo?",
-          "sender": "bot",
-          "timestamp": "2025-06-24T01:00:26.083002",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "bot-15-1750726826"
-        },
-        {
-          "content": "No, es disfrutable ver.",
-          "sender": "user",
-          "timestamp": "2025-06-24T01:01:19.511833",
-          "intent": "normal_chat",
-          "audio_language": "Spanish",
-          "id": "user-16-1750726879"
-        },
-        {
-          "content": "Entiendo, a tu mamá le gustaba verte jugar al fútbol. ¿Recuerdas alguna ocasión en particular que te haya animado mucho?",
-          "sender": "bot",
-          "timestamp": "2025-06-24T01:01:23.843143",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "bot-17-1750726883"
-        },
-        {
-          "content": "Desayuno.",
-          "sender": "user",
-          "timestamp": "2025-06-24T01:07:08.094656",
-          "intent": "normal_chat",
-          "audio_language": "Spanish",
-          "id": "user-18-1750727228"
-        },
-        {
-          "content": "¡Por supuesto! Desayunar con alguien especial puede ser un recuerdo muy valioso. ¿Qué solías comer en esos desayunos con tu mamá?",
-          "sender": "bot",
-          "timestamp": "2025-06-24T01:07:11.728597",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "bot-19-1750727231"
-        }
-      ],
-      "summary": "",
-      "chunk_summaries": [
-        {
-          "chunk_number": 1,
-          "summary": "The conversation revolves around the user's mother, Lari, who passed away 10 years ago. The bot expresses sympathy and invites the user to share special memories of her. The user reveals that Lari spent a significant amount of time in Taipei. The bot shows interest in how Lari ended up in Taipei, setting the direction for the next part of the conversation. The mood is respectful and empathetic.",
-          "message_range": "1-10",
-          "created_at": "2025-06-24T00:53:45.972206"
-        },
-        {
-          "chunk_number": 2,
-          "summary": "The conversation is about the user's time in Taipei with their mother, focusing on their experiences and memories. They discussed playing football with children and the user's mother watching them play. The bot asked about a specific time when the user's mother was particularly supportive, but the user responded with \"breakfast\", leading the bot to ask about their typical breakfast meals. The conversation has a nostalgic and warm tone.",
-          "message_range": "11-20",
-          "created_at": "2025-06-24T01:07:15.195712"
-        }
-      ]
-    },
-    {
-      "id": "877629d0-6a44-4769-be47-cc574774554a",
-      "user_id": "1a99b5f0-3775-4313-b755-f09208242364",
-      "created_at": "2025-06-24T00:22:37.463232",
-      "messages": [],
-      "summary": ""
-    },
-    {
-      "id": "f1dfb2b3-02df-472d-952f-a0d17fb24b06",
-      "user_id": "1a99b5f0-3775-4313-b755-f09208242364",
-      "created_at": "2025-06-23T22:31:23.507084",
-      "messages": [
-        {
-          "content": "I want to know how to say soccer in Spanish.",
-          "sender": "user",
-          "timestamp": "2025-06-23T22:34:08.961467",
+          "timestamp": "2025-06-28T02:29:31.841685",
           "intent": "help_needed",
           "audio_language": "Spanish",
-          "id": "user-0-1750718048"
+          "id": "user-2-1751077771"
         },
         {
-          "content": "¡Exacto, Mateoias! \"Fútbol\" es la palabra correcta en español para \"soccer\". ¿Te gusta jugar al fútbol?",
+          "content": "muy bien",
+          "sender": "user",
+          "timestamp": "2025-06-28T02:29:46.842650",
+          "intent": "normal_chat",
+          "audio_language": "Spanish",
+          "id": "user-3-1751077786"
+        },
+        {
+          "content": "¡Me alegra escuchar eso! ¿Qué has estado haciendo para practicar tu español últimamente?",
           "sender": "bot",
-          "timestamp": "2025-06-23T22:34:12.495546",
+          "timestamp": "2025-06-28T02:29:48.618421",
           "intent": "chat",
           "audio_language": "Spanish",
-          "id": "bot-1-1750718052"
+          "id": "bot-4-1751077788"
+        },
+        {
+          "content": "nada",
+          "sender": "user",
+          "timestamp": "2025-06-28T02:30:01.146862",
+          "intent": "normal_chat",
+          "audio_language": "Spanish",
+          "id": "user-5-1751077801"
+        },
+        {
+          "content": "¿Qué te gustaría hacer para practicar tu español hoy?",
+          "sender": "bot",
+          "timestamp": "2025-06-28T02:30:02.417626",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-6-1751077802"
+        },
+        {
+          "content": "What does \"Estás nadando.\" mean?",
+          "sender": "user",
+          "timestamp": "2025-06-28T02:30:15.445458",
+          "intent": "help_needed",
+          "audio_language": "Spanish",
+          "id": "user-7-1751077815"
+        },
+        {
+          "content": "charlar",
+          "sender": "user",
+          "timestamp": "2025-06-28T02:30:34.108284",
+          "intent": "normal_chat",
+          "audio_language": "Spanish",
+          "id": "user-8-1751077834"
+        },
+        {
+          "content": "¿Te gustaría charlar sobre algún tema en particular en español hoy?",
+          "sender": "bot",
+          "timestamp": "2025-06-28T02:30:35.438506",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-9-1751077835"
+        },
+        {
+          "content": "charlamos de el futbol",
+          "sender": "user",
+          "timestamp": "2025-06-28T19:30:31.496049",
+          "intent": "normal_chat",
+          "audio_language": "Spanish",
+          "id": "user-10-1751139031"
+        },
+        {
+          "content": "Tráemelos..de �l flipas",
+          "sender": "user",
+          "timestamp": "2025-06-28T19:34:28.189419",
+          "intent": "normal_chat",
+          "audio_language": "Spanish",
+          "id": "user-11-1751139268"
+        },
+        {
+          "content": "Charlamos de el fútbol.",
+          "sender": "user",
+          "timestamp": "2025-06-28T19:40:51.643423",
+          "intent": "normal_chat",
+          "audio_language": "Spanish",
+          "id": "user-12-1751139651"
+        },
+        {
+          "content": "¡Qué interesante! ¿Qué equipo de fútbol te gusta?",
+          "sender": "bot",
+          "timestamp": "2025-06-28T19:40:54.567795",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-13-1751139654"
+        },
+        {
+          "content": "A mí me gusta Liverpool.",
+          "sender": "user",
+          "timestamp": "2025-06-28T19:41:49.663749",
+          "intent": "normal_chat",
+          "audio_language": "Spanish",
+          "id": "user-14-1751139709"
+        },
+        {
+          "content": "¡Qué bien! ¿Qué es lo que más te gusta del Liverpool?",
+          "sender": "bot",
+          "timestamp": "2025-06-28T19:41:50.727728",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-15-1751139710"
+        },
+        {
+          "content": "Es porque mi amigo te gusta del libro.",
+          "sender": "user",
+          "timestamp": "2025-06-28T19:42:08.490473",
+          "intent": "normal_chat",
+          "audio_language": "Spanish",
+          "id": "user-16-1751139728"
+        },
+        {
+          "content": "¿Por qué le gusta tanto ese libro a tu amigo?",
+          "sender": "bot",
+          "timestamp": "2025-06-28T19:42:09.238609",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-17-1751139729"
+        },
+        {
+          "content": "no es libre, es el equipo liverpool",
+          "sender": "user",
+          "timestamp": "2025-06-28T19:42:57.158346",
+          "intent": "normal_chat",
+          "audio_language": "Spanish",
+          "id": "user-18-1751139777"
+        },
+        {
+          "content": "¡Entiendo! ¿Qué es lo que más te gusta del equipo Liverpool?",
+          "sender": "bot",
+          "timestamp": "2025-06-28T19:42:58.510008",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-19-1751139778"
+        },
+        {
+          "content": "salah",
+          "sender": "user",
+          "timestamp": "2025-06-28T19:43:10.131912",
+          "intent": "normal_chat",
+          "audio_language": "Spanish",
+          "id": "user-20-1751139790"
+        },
+        {
+          "content": "¡Mohamed Salah es un jugador increíble! ¿Qué es lo que más te gusta de Salah en el Liverpool?",
+          "sender": "bot",
+          "timestamp": "2025-06-28T19:43:11.297900",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-21-1751139791"
+        }
+      ],
+      "summary": "",
+      "chunk_summaries": [
+        {
+          "chunk_number": 1,
+          "summary": "The conversation started with a user mentioning \"de mi madre\" and asking about the meaning of a Spanish sentence. The user shared they have been practicing Spanish and the bot asked about their recent practice activities. The user expressed interest in chatting and asked about the meaning of \"Estás nadando.\" The conversation is heading towards discussing specific topics to chat about in Spanish, with a friendly and engaging tone. Unanswered questions include what the user has been doing to practice Spanish and what they would like to do to practice today.",
+          "message_range": "1-10",
+          "created_at": "2025-06-28T02:30:36.539000"
+        },
+        {
+          "chunk_number": 2,
+          "summary": "The conversation started with discussing football and the user expressing their preference for Liverpool. The bot inquired about the user's favorite aspects of the team, leading to a misunderstanding about a book. The tone is light-hearted and informative, with the conversation flowing towards exploring the user's specific reasons for liking Liverpool. To continue, you could elaborate on what aspects of Liverpool's team appeal to you or clarify the confusion about the book mentioned earlier.",
+          "message_range": "11-20",
+          "created_at": "2025-06-28T19:42:59.342437"
+        }
+      ]
+    },
+    {
+      "id": "5c622374-1098-44bf-a36a-b4d8571533e0",
+      "user_id": "1a99b5f0-3775-4313-b755-f09208242364",
+      "created_at": "2025-06-28T01:38:55.291907",
+      "messages": [
+        {
+          "content": "la musica",
+          "sender": "user",
+          "timestamp": "2025-06-28T01:39:05.741151",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "user-0-1751074745"
+        },
+        {
+          "content": "¿Te gusta la música?",
+          "sender": "bot",
+          "timestamp": "2025-06-28T01:39:06.984812",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-1-1751074746"
         },
         {
           "content": "claro que si",
           "sender": "user",
-          "timestamp": "2025-06-23T22:37:39.508575",
-          "intent": "normal_chat",
-          "audio_language": "Spanish",
-          "id": "user-2-1750718259"
-        },
-        {
-          "content": "¡Genial! ¿Cuál es tu equipo de fútbol favorito?",
-          "sender": "bot",
-          "timestamp": "2025-06-23T22:37:41.536030",
+          "timestamp": "2025-06-28T01:39:49.739861",
           "intent": "chat",
           "audio_language": "Spanish",
-          "id": "bot-3-1750718261"
+          "id": "user-2-1751074789"
+        },
+        {
+          "content": "¿Te gusta la música?",
+          "sender": "bot",
+          "timestamp": "2025-06-28T01:39:50.627770",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-3-1751074790"
+        },
+        {
+          "content": "si me gusta la musica",
+          "sender": "user",
+          "timestamp": "2025-06-28T01:40:04.214883",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "user-4-1751074804"
+        },
+        {
+          "content": "¿Qué género de música te gusta?",
+          "sender": "bot",
+          "timestamp": "2025-06-28T01:40:05.176933",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-5-1751074805"
+        },
+        {
+          "content": "el jazz",
+          "sender": "user",
+          "timestamp": "2025-06-28T01:40:14.357972",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "user-6-1751074814"
+        },
+        {
+          "content": "¿Qué es lo que más te gusta del jazz?",
+          "sender": "bot",
+          "timestamp": "2025-06-28T01:40:15.971789",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-7-1751074815"
+        },
+        {
+          "content": "el ritmo",
+          "sender": "user",
+          "timestamp": "2025-06-28T01:40:24.090439",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "user-8-1751074824"
+        },
+        {
+          "content": "¿Qué te gusta del ritmo?",
+          "sender": "bot",
+          "timestamp": "2025-06-28T01:40:25.313573",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-9-1751074825"
+        },
+        {
+          "content": "me gusta bailar",
+          "sender": "user",
+          "timestamp": "2025-06-28T01:40:40.469369",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "user-10-1751074840"
+        },
+        {
+          "content": "¿Qué te gusta bailar?",
+          "sender": "bot",
+          "timestamp": "2025-06-28T01:40:41.307771",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-11-1751074841"
+        },
+        {
+          "content": "mi gusta el tango",
+          "sender": "user",
+          "timestamp": "2025-06-28T02:12:21.909850",
+          "intent": "normal_chat",
+          "audio_language": "Spanish",
+          "id": "user-12-1751076741"
+        }
+      ],
+      "summary": "",
+      "chunk_summaries": [
+        {
+          "chunk_number": 1,
+          "summary": "The conversation is centered around music preferences, specifically jazz. The user expresses their liking for jazz music and its rhythm. The bot is exploring the user's reasons for liking jazz, focusing on the rhythm aspect. The tone is casual and inquisitive, with the conversation flowing smoothly towards a deeper understanding of the user's musical tastes. A natural continuation could involve discussing specific jazz artists or songs the user enjoys.",
+          "message_range": "1-10",
+          "created_at": "2025-06-28T01:40:26.103448"
+        }
+      ]
+    },
+    {
+      "id": "7c2e8979-9d6d-4b21-96a2-7dea530e635c",
+      "user_id": "1a99b5f0-3775-4313-b755-f09208242364",
+      "created_at": "2025-06-26T00:27:23.006521",
+      "messages": [
+        {
+          "content": "de mi mama",
+          "sender": "user",
+          "timestamp": "2025-06-26T00:27:31.900294",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "user-0-1750897651"
+        },
+        {
+          "content": "¿Hablas mucho con tu mamá?",
+          "sender": "bot",
+          "timestamp": "2025-06-26T00:27:33.001912",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-1-1750897653"
+        },
+        {
+          "content": "no esta muerta",
+          "sender": "user",
+          "timestamp": "2025-06-26T00:28:51.900436",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "user-2-1750897731"
+        },
+        {
+          "content": "¿Está viva?",
+          "sender": "bot",
+          "timestamp": "2025-06-26T00:28:52.602920",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-3-1750897732"
         }
       ],
       "summary": "",
       "chunk_summaries": []
+    },
+    {
+      "id": "e1c8e79e-10ef-4b60-b821-d065167f4f38",
+      "user_id": "1a99b5f0-3775-4313-b755-f09208242364",
+      "created_at": "2025-06-25T22:38:08.148160",
+      "messages": [
+        {
+          "content": "yes",
+          "sender": "user",
+          "timestamp": "2025-06-25T22:49:14.378634",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "user-0-1750891754"
+        },
+        {
+          "content": "Perfecto, ¿cómo puedo ayudarte hoy?",
+          "sender": "bot",
+          "timestamp": "2025-06-25T22:49:18.573885",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-1-1750891758"
+        },
+        {
+          "content": "de mi familia",
+          "sender": "user",
+          "timestamp": "2025-06-25T23:00:07.272402",
+          "intent": "normal_chat",
+          "audio_language": "Spanish",
+          "id": "user-2-1750892407"
+        },
+        {
+          "content": "¡Claro! Me encantaría conocer más sobre tu familia. ¿Cuántos miembros hay en tu familia?",
+          "sender": "bot",
+          "timestamp": "2025-06-25T23:00:10.803776",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-3-1750892410"
+        },
+        {
+          "content": "yes",
+          "sender": "user",
+          "timestamp": "2025-06-25T23:00:45.747612",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "user-4-1750892445"
+        },
+        {
+          "content": "yes",
+          "sender": "user",
+          "timestamp": "2025-06-25T23:03:23.042258",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "user-5-1750892603"
+        },
+        {
+          "content": "Bien, tienes familia. ¿Tienes hermanos o hermanas?",
+          "sender": "bot",
+          "timestamp": "2025-06-25T23:03:27.722051",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-6-1750892607"
+        },
+        {
+          "content": "soccer",
+          "sender": "user",
+          "timestamp": "2025-06-25T23:03:29.058458",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "user-7-1750892609"
+        },
+        {
+          "content": "I like pizza",
+          "sender": "user",
+          "timestamp": "2025-06-25T23:03:34.842345",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "user-8-1750892614"
+        },
+        {
+          "content": "What does hola mean?",
+          "sender": "user",
+          "timestamp": "2025-06-25T23:03:40.071213",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "user-9-1750892620"
+        },
+        {
+          "content": "No me gusta",
+          "sender": "user",
+          "timestamp": "2025-06-25T23:03:46.008525",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "user-10-1750892626"
+        },
+        {
+          "content": "yes",
+          "sender": "user",
+          "timestamp": "2025-06-25T23:03:49.754946",
+          "intent": "normal_chat",
+          "audio_language": "Spanish",
+          "id": "user-11-1750892629"
+        },
+        {
+          "content": "¡Qué bien! Tienes familia. ¿Te gusta jugar al fútbol con tu familia?",
+          "sender": "bot",
+          "timestamp": "2025-06-25T23:03:51.936479",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-12-1750892631"
+        },
+        {
+          "content": "yes",
+          "sender": "user",
+          "timestamp": "2025-06-25T23:03:51.938695",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "user-13-1750892631"
+        },
+        {
+          "content": "yes",
+          "sender": "user",
+          "timestamp": "2025-06-25T23:08:26.103231",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "user-14-1750892906"
+        },
+        {
+          "content": "¡Genial! ¿Juegas al fútbol a menudo con tu familia?",
+          "sender": "bot",
+          "timestamp": "2025-06-25T23:08:28.818611",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-15-1750892908"
+        },
+        {
+          "content": "soccer",
+          "sender": "user",
+          "timestamp": "2025-06-25T23:08:29.330088",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "user-16-1750892909"
+        },
+        {
+          "content": "¡Juego al fútbol!",
+          "sender": "bot",
+          "timestamp": "2025-06-25T23:08:31.018838",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-17-1750892911"
+        },
+        {
+          "content": "I like pizza",
+          "sender": "user",
+          "timestamp": "2025-06-25T23:08:31.530102",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "user-18-1750892911"
+        },
+        {
+          "content": "¡Me gusta la pizza!",
+          "sender": "bot",
+          "timestamp": "2025-06-25T23:08:33.692490",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-19-1750892913"
+        },
+        {
+          "content": "yes",
+          "sender": "user",
+          "timestamp": "2025-06-25T23:08:37.157365",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "user-20-1750892917"
+        },
+        {
+          "content": "Sí, estoy de acuerdo.",
+          "sender": "bot",
+          "timestamp": "2025-06-25T23:08:39.010165",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-21-1750892919"
+        },
+        {
+          "content": "soccer",
+          "sender": "user",
+          "timestamp": "2025-06-25T23:08:39.518157",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "user-22-1750892919"
+        },
+        {
+          "content": "Estás hablando de fútbol, ¿verdad?",
+          "sender": "bot",
+          "timestamp": "2025-06-25T23:08:42.366461",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-23-1750892922"
+        },
+        {
+          "content": "yes",
+          "sender": "user",
+          "timestamp": "2025-06-25T23:08:42.874538",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "user-24-1750892922"
+        },
+        {
+          "content": "Genial, ¿te gusta jugar al fútbol?",
+          "sender": "bot",
+          "timestamp": "2025-06-25T23:08:44.600715",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-25-1750892924"
+        },
+        {
+          "content": "yes",
+          "sender": "user",
+          "timestamp": "2025-06-25T23:08:44.609796",
+          "intent": "normal_chat",
+          "audio_language": "Spanish",
+          "id": "user-26-1750892924"
+        },
+        {
+          "content": "¡Sí, te gusta jugar al fútbol! ¿Te gusta la pizza con queso?",
+          "sender": "bot",
+          "timestamp": "2025-06-25T23:08:46.506037",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-27-1750892926"
+        },
+        {
+          "content": "yes",
+          "sender": "user",
+          "timestamp": "2025-06-25T23:08:46.532589",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "user-28-1750892926"
+        },
+        {
+          "content": "¡Sí, me gusta la pizza con queso! ¿Te gusta el helado?",
+          "sender": "bot",
+          "timestamp": "2025-06-25T23:08:48.877463",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-29-1750892928"
+        },
+        {
+          "content": "yes",
+          "sender": "user",
+          "timestamp": "2025-06-25T23:30:24.976665",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "user-30-1750894224"
+        },
+        {
+          "content": "¿Sí te gusta la pizza con queso?",
+          "sender": "bot",
+          "timestamp": "2025-06-25T23:30:26.274709",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-31-1750894226"
+        },
+        {
+          "content": "soccer",
+          "sender": "user",
+          "timestamp": "2025-06-25T23:30:26.785162",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "user-32-1750894226"
+        },
+        {
+          "content": "¿Te gusta el fútbol?",
+          "sender": "bot",
+          "timestamp": "2025-06-25T23:30:27.703344",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-33-1750894227"
+        },
+        {
+          "content": "I like pizza",
+          "sender": "user",
+          "timestamp": "2025-06-25T23:30:28.211313",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "user-34-1750894228"
+        },
+        {
+          "content": "¿Te gusta la pizza?",
+          "sender": "bot",
+          "timestamp": "2025-06-25T23:30:28.876273",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-35-1750894228"
+        },
+        {
+          "content": "yes",
+          "sender": "user",
+          "timestamp": "2025-06-25T23:30:29.382857",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "user-36-1750894229"
+        },
+        {
+          "content": "¿Sí?",
+          "sender": "bot",
+          "timestamp": "2025-06-25T23:30:30.371484",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-37-1750894230"
+        },
+        {
+          "content": "soccer",
+          "sender": "user",
+          "timestamp": "2025-06-25T23:30:30.885632",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "user-38-1750894230"
+        },
+        {
+          "content": "¿Te gusta el fútbol?",
+          "sender": "bot",
+          "timestamp": "2025-06-25T23:30:32.147272",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-39-1750894232"
+        },
+        {
+          "content": "yes",
+          "sender": "user",
+          "timestamp": "2025-06-25T23:30:33.829706",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "user-40-1750894233"
+        },
+        {
+          "content": "¿Te gusta algo en particular de la clase de español?",
+          "sender": "bot",
+          "timestamp": "2025-06-25T23:30:34.610511",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-41-1750894234"
+        },
+        {
+          "content": "yes",
+          "sender": "user",
+          "timestamp": "2025-06-25T23:30:34.618083",
+          "intent": "normal_chat",
+          "audio_language": "Spanish",
+          "id": "user-42-1750894234"
+        },
+        {
+          "content": "¡Qué bien! Te gusta el español. ¿Te gustaría aprender más vocabulario en español?",
+          "sender": "bot",
+          "timestamp": "2025-06-25T23:30:36.568967",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-43-1750894236"
+        },
+        {
+          "content": "yes",
+          "sender": "user",
+          "timestamp": "2025-06-25T23:30:36.621510",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "user-44-1750894236"
+        },
+        {
+          "content": "¿Te gusta el español?",
+          "sender": "bot",
+          "timestamp": "2025-06-25T23:30:37.202797",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-45-1750894237"
+        },
+        {
+          "content": "si",
+          "sender": "user",
+          "timestamp": "2025-06-26T00:26:31.256147",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "user-46-1750897591"
+        },
+        {
+          "content": "¿Te gusta el español?",
+          "sender": "bot",
+          "timestamp": "2025-06-26T00:26:33.157017",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-47-1750897593"
+        },
+        {
+          "content": "si",
+          "sender": "user",
+          "timestamp": "2025-06-26T00:26:44.831168",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "user-48-1750897604"
+        },
+        {
+          "content": "¿Te gusta el español?",
+          "sender": "bot",
+          "timestamp": "2025-06-26T00:26:45.699828",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-49-1750897605"
+        }
+      ],
+      "summary": "",
+      "chunk_summaries": [
+        {
+          "chunk_number": 2,
+          "summary": "The conversation was primarily about the user's interests, specifically playing soccer and liking pizza. The bot asked if the user enjoys playing soccer with their family and how often. The user confirmed their interest in soccer but did not specify the frequency. The conversation then shifted to food, with the user mentioning their preference for pizza. The tone was friendly and casual. The conversation could continue with the bot asking more about the user's favorite pizza or other interests.",
+          "message_range": "11-20",
+          "created_at": "2025-06-25T23:08:36.649995"
+        },
+        {
+          "chunk_number": 3,
+          "summary": "The user and the bot are discussing the user's interests, specifically soccer and food preferences like cheese pizza and ice cream. The conversation is heading towards a deeper understanding of the user's likes and dislikes. The user has been responsive but hasn't provided any additional information beyond affirming the bot's inquiries. The mood is casual and friendly.",
+          "message_range": "21-30",
+          "created_at": "2025-06-25T23:08:51.971201"
+        },
+        {
+          "chunk_number": 4,
+          "summary": "The conversation started with a question about liking cheese pizza, then shifted to soccer. The bot continued to ask about liking pizza and soccer, leading to a repetitive loop. To continue, you could elaborate on your favorite soccer team or share a specific pizza topping preference. The tone is casual and repetitive, with a focus on food and sports preferences.",
+          "message_range": "31-40",
+          "created_at": "2025-06-25T23:30:33.320489"
+        },
+        {
+          "chunk_number": 5,
+          "summary": "The conversation is focused on the user's interest in learning Spanish vocabulary. The bot is trying to confirm the user's liking for Spanish and their willingness to learn more vocabulary. The repetitive questioning about liking Spanish sets a light and playful tone. To continue, the user could elaborate on why they like Spanish or express interest in specific topics within the language.",
+          "message_range": "41-50",
+          "created_at": "2025-06-26T00:26:46.466065"
+        }
+      ]
+    },
+    {
+      "id": "c0f85c64-5cc8-4865-bb64-4f690d0ed418",
+      "user_id": "1a99b5f0-3775-4313-b755-f09208242364",
+      "created_at": "2025-06-25T22:37:59.581693",
+      "messages": [],
+      "summary": ""
     }
   ],
-  "current_conversation_id": "431d43c7-597b-4cee-840d-1ab2c6884432"
+  "current_conversation_id": "4b390ad8-5408-405c-96b8-6f23e649b99a"
 }
