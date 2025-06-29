@@ -53,6 +53,27 @@ class Config:
     # Ensure data directory exists
     os.makedirs(DATA_DIR, exist_ok=True)
 
+
+    # Error Detection and Correction Settings
+    ERROR_DETECTION_ENABLED = True
+    DEFAULT_CORRECTION_FREQUENCY = 50  # 0-100 scale
+    
+    # Correction strategies by level
+    CORRECTION_STRATEGIES = {
+        'beginner': {
+            'frequency': 70,  # More corrections for beginners
+            'style': 'explicit'
+        },
+        'intermediate': {
+            'frequency': 50,
+            'style': 'gentle'
+        },
+        'advanced': {
+            'frequency': 30, 
+            'style': 'subtle'
+        }
+    }
+
 class DevelopmentConfig(Config):
     DEBUG = True
     TESTING = False

@@ -331,8 +331,202 @@ class ParallelOrchestrator:
                 conversation_context
             )
     
+
+    # Add this method to your existing parallel_orchestrator.py:
+
+    def generate_parallel_response_with_correction(
+        self,
+        user_message: str,
+        user_data: Dict,
+        conversation_context: Dict,
+        intent_data: Dict,
+        error_data: Dict,
+        correction_strategy: Dict,
+        should_rephrase: bool,
+        audio_speed: float = 0.8
+    ) -> Dict:
+        """
+        Generate responses in parallel with error correction awareness
+        
+        This is the enhanced version that handles corrections intelligently
+        """
+        start_time = time.time()
+        generation_times = {}
+        
+        # Determine strategy based on correction strategy
+        if correction_strategy.get('should_correct'):
+            strategy = "parallel_with_correction"
+        elif intent_data['intent'] == 'help_needed':
+            strategy = "help_only"
+        elif should_rephrase:
+            strategy = "parallel_with_hint"
+        else:
+            strategy = "normal_conversation"
+            
+        logger.info(f"Using strategy: {strategy} with correction: {correction_strategy.get('strategy', 'none')}")
+        
+        if strategy == "help_only":
+            return self._generate_help_only(
+                user_message, user_data, conversation_context, 
+                intent_data, audio_speed, generation_times
+            )
+        
+        elif strategy == "parallel_with_correction":
+            # New strategy for error correction
+            return self._generate_parallel_with_correction(
+                user_message, user_data, conversation_context,
+                intent_data, error_data, correction_strategy,
+                audio_speed, generation_times
+            )
+        
+        elif strategy == "parallel_with_hint":
+            # Use existing method but with error awareness
+            return self._generate_parallel_with_hint(
+                current_app._get_current_object(),
+                user_message, user_data, conversation_context,
+                intent_data, should_rephrase, audio_speed, generation_times
+            )
+        
+        else:
+            return self._generate_normal_conversation(
+                user_message, user_data, conversation_context,
+                intent_data, audio_speed, generation_times
+            )
+    
+    def _generate_parallel_with_correction(
+        self, user_message: str, user_data: Dict,
+        conversation_context: Dict, intent_data: Dict,
+        error_data: Dict, correction_strategy: Dict,
+        audio_speed: float, generation_times: Dict
+    ) -> Dict:
+        """Generate correction and continuation in parallel"""
+        segments = []
+        futures = {}
+        
+        # Capture the Flask app instance
+        app = current_app._get_current_object()
+        
+        try:
+            # Start correction generation (teacher)
+            if correction_strategy.get('teacher_response'):
+                correction_start = time.time()
+                # Correction is already generated, just add it
+                segments.append({
+                    'type': 'correction',
+                    'text': correction_strategy['teacher_response'],
+                    'timing': 0,
+                    'persona': 'teacher'
+                })
+                generation_times['correction'] = time.time() - correction_start
+            
+            # Start conversation generation WITH correction hint
+            conv_start = time.time()
+            futures['conversation'] = self.executor.submit(
+                self._run_with_app_context,
+                app,
+                self._generate_corrected_response,
+                user_message,
+                user_data,
+                conversation_context,
+                correction_strategy.get('partner_hint', {}),
+                error_data
+            )
+            
+            # Process conversation result
+            for future_name, future in futures.items():
+                try:
+                    result = future.result(timeout=3.0)
+                    
+                    if future_name == 'conversation':
+                        generation_times['conversation'] = time.time() - conv_start
+                        segments.append({
+                            'type': 'response',
+                            'text': result['response'],
+                            'timing': len(segments) * 800,
+                            'persona': 'partner'
+                        })
+                        
+                except Exception as e:
+                    logger.error(f"Error in {future_name} generation: {e}")
+                    # Fallback
+                    result = self.response_service._generate_chat_response(
+                        user_message,
+                        user_data,
+                        conversation_context
+                    )
+                    segments.append({
+                        'type': 'response',
+                        'text': result['response'],
+                        'timing': len(segments) * 800,
+                        'persona': 'partner'
+                    })
+        
+        except Exception as e:
+            logger.error(f"Parallel correction execution failed: {e}")
+            # Fallback to sequential
+            if correction_strategy.get('teacher_response'):
+                segments.append({
+                    'type': 'correction',
+                    'text': correction_strategy['teacher_response'],
+                    'timing': 0,
+                    'persona': 'teacher'
+                })
+            
+            result = self.response_service._generate_chat_response(
+                user_message,
+                user_data,
+                conversation_context
+            )
+            segments.append({
+                'type': 'response',
+                'text': result['response'],
+                'timing': len(segments) * 800,
+                'persona': 'partner'
+            })
+        
+        # Generate audio for all segments
+        segments_with_audio = self.audio_queue_service.generate_audio_segments(
+            segments,
+            user_data['learningLanguage'],
+            audio_speed,
+            user_data['nativeLanguage']
+        )
+        
+        return {
+            'segments': segments_with_audio,
+            'generation_times': generation_times,
+            'strategy_used': 'parallel_with_correction'
+        }
+    
+    def _generate_corrected_response(
+        self, user_message: str, user_data: Dict,
+        conversation_context: Dict, partner_hint: Dict,
+        error_data: Dict
+    ) -> Dict:
+        """Generate response assuming the correction happened"""
+        
+        # If we have a specific correction, use the corrected version
+        corrected_message = user_message
+        if partner_hint.get('likely_meant'):
+            # Replace the error with the correction in the message
+            if error_data.get('corrections'):
+                for correction in error_data['corrections']:
+                    if correction.get('original') in user_message.lower():
+                        corrected_message = user_message.lower().replace(
+                            correction['original'],
+                            correction['suggested']
+                        )
+        
+        # Generate response with corrected understanding
+        return self.response_service.generate_response_with_correction_context(
+            corrected_message,
+            user_data,
+            conversation_context,
+            partner_hint,
+            error_data
+        )
+
     def cleanup(self):
         """Cleanup executor - NO LONGER SHUTS DOWN since we use shared executor"""
         # Don't shutdown the shared executor
         pass
-    

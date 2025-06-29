@@ -144,8 +144,6 @@ Continue the conversation naturally."""
             'continue_conversation': True
         }
     
-# Replace the _generate_help_text method in your response_service.py with this:
-
     def _generate_help_text(
         self,
         user_message: str,
@@ -197,3 +195,108 @@ Provide a brief helpful response in {native_lang}."""
         )
         
         return response.strip()
+    
+    # Add these methods to your existing response_service.py:
+
+    def generate_response_with_correction_hint(
+        self,
+        user_message: str,
+        user_data: Dict,
+        conversation_context: Dict,
+        intent_data: Dict,
+        partner_hint: Dict
+    ) -> Dict[str, str]:
+        """
+        Generate response with awareness of correction happening
+        Used in non-parallel mode
+        """
+        system_prompt, _ = self.prompt_builder.build_prompt(
+            user_data,
+            conversation_context,
+            user_message,
+            mode='chat'
+        )
+        
+        # Enhance prompt with correction awareness
+        if partner_hint.get('has_error') and partner_hint.get('likely_meant'):
+            enhanced_prompt = f"""{system_prompt}
+
+IMPORTANT: The student made a small error but meant to say "{partner_hint['likely_meant']}".
+Respond naturally to what they meant, without mentioning the error.
+Continue the conversation as if they said it correctly."""
+            
+            # Use the corrected meaning
+            effective_message = partner_hint['likely_meant']
+        else:
+            enhanced_prompt = system_prompt
+            effective_message = user_message
+
+        response = llm_manager.generate_chat_response(
+            messages=[
+                {"role": "system", "content": enhanced_prompt},
+                {"role": "user", "content": effective_message}
+            ],
+            temperature=0.7,
+            max_tokens=150
+        )
+        
+        return {
+            'response': response,
+            'help_text': None,
+            'continue_conversation': True
+        }
+    
+    def generate_response_with_correction_context(
+        self,
+        corrected_message: str,
+        user_data: Dict,
+        conversation_context: Dict,
+        partner_hint: Dict,
+        error_data: Dict
+    ) -> Dict[str, str]:
+        """
+        Generate response with full correction context
+        Used in parallel mode when teacher is correcting
+        """
+        system_prompt, _ = self.prompt_builder.build_prompt(
+            user_data,
+            conversation_context,
+            corrected_message,
+            mode='chat'
+        )
+        
+        # Create context about the correction
+        correction_context = ""
+        if partner_hint.get('correction_happening'):
+            if partner_hint.get('error_type') == 'context_confusion':
+                correction_context = f"""
+The student confused "{error_data['corrections'][0]['original']}" with "{error_data['corrections'][0]['suggested']}".
+The teacher is clarifying this. You should continue the conversation about {error_data['corrections'][0]['suggested']}.
+"""
+            elif partner_hint.get('error_type') == 'grammar':
+                correction_context = """
+The student made a grammar error which the teacher is correcting.
+Continue the conversation naturally with what they meant to say.
+"""
+        
+        enhanced_prompt = f"""{system_prompt}
+
+{correction_context}
+
+Respond naturally and continue the conversation. Be encouraging but don't mention the correction.
+Build on their corrected statement to keep the conversation flowing."""
+
+        response = llm_manager.generate_chat_response(
+            messages=[
+                {"role": "system", "content": enhanced_prompt},
+                {"role": "user", "content": corrected_message}
+            ],
+            temperature=0.7,
+            max_tokens=150
+        )
+        
+        return {
+            'response': response,
+            'help_text': None,
+            'continue_conversation': True
+        }

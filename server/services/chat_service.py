@@ -11,6 +11,8 @@ from .response_service import ResponseService
 from .audio_queue_service import AudioQueueService
 from ..language_config import get_error_message
 from .parallel_orchestrator import ParallelOrchestrator  # PARALLEL: New import
+from .error_detection_service import ErrorDetectionService
+from .correction_strategy_service import CorrectionStrategyService
 
 from flask import current_app
 import json
@@ -33,6 +35,8 @@ class ChatService:
             self.audio_queue_service = None
         self.intent_service = IntentService()
         self.rephrase_service = RephraseService()
+        self.error_detection_service = ErrorDetectionService()
+        self.correction_strategy_service = CorrectionStrategyService()
         self.response_service = ResponseService()
         self.parallel_orchestrator = None
     
@@ -60,7 +64,7 @@ class ChatService:
 
 
     def generate_response(self, user_id, message_content, audio_speed=0.8):
-        """Main method to generate chat response with parallel processing"""
+        """Main method to generate chat response with parallel processing and error detection"""
         try:
             # Get user data
             user_data = find_user_by_id(user_id)
@@ -95,14 +99,37 @@ class ChatService:
                 if last_bot_msg:
                     conversation_context['last_bot_message'] = last_bot_msg['content']
             
-            # Step 2: Determine if we need to rephrase
-            # For now, assume no errors (error detection can be added later)
-            has_errors = False
+            # Step 2: ERROR DETECTION (NEW!)
+            error_data = self.error_detection_service.detect_errors(
+                message_content,
+                conversation_context,
+                user_data['learningLanguage']
+            )
+            
+            logger.info(f"Error detection result: {error_data}")
+            
+            # Step 3: CORRECTION STRATEGY (NEW!)
+            correction_settings = {
+                'frequency': user_data.get('correctionFrequency', 50)  # From user settings
+            }
+            
+            correction_strategy = self.correction_strategy_service.determine_correction_strategy(
+                error_data,
+                user_data,
+                conversation_context,
+                correction_settings
+            )
+            
+            logger.info(f"Correction strategy: {correction_strategy['strategy']}")
+            
+            # Step 4: Determine if we need to rephrase (UPDATED!)
+            # Now considers both errors and intent
+            has_errors = error_data.get('has_errors', False)
             should_rephrase = rephrase_service.should_rephrase(
                 user_data.get('proficiencyLevel', 'beginner'),
-                has_errors,
+                has_errors,  # NOW USING ACTUAL ERROR DETECTION!
                 intent_data['details']
-            )
+            ) or correction_strategy.get('should_correct', False)
             
             # Add user message to conversation first
             self.conversation_service.add_message(
@@ -119,12 +146,14 @@ class ChatService:
                         self.audio_queue_service
                     )
                 
-                # Use parallel generation
-                result = self.parallel_orchestrator.generate_parallel_response(
+                # Use parallel generation with error awareness
+                result = self.parallel_orchestrator.generate_parallel_response_with_correction(
                     user_message=message_content,
                     user_data=user_data,
                     conversation_context=conversation_context,
                     intent_data=intent_data,
+                    error_data=error_data,  # NEW!
+                    correction_strategy=correction_strategy,  # NEW!
                     should_rephrase=should_rephrase,
                     audio_speed=audio_speed
                 )
@@ -147,15 +176,25 @@ class ChatService:
                     'intent': intent_data['intent'],
                     'rephrased': should_rephrase,
                     'audio_language': user_data['learningLanguage'],
-                    'generation_times': result.get('generation_times', {})
+                    'generation_times': result.get('generation_times', {}),
+                    'error_detected': has_errors,  # NEW!
+                    'correction_applied': correction_strategy.get('should_correct', False)  # NEW!
                 }
             
             else:
-                # ORIGINAL CODE: Step 3 onwards remains the same for backwards compatibility
+                # ORIGINAL CODE with error detection added
                 segments = []
                 
-                # Generate rephrase if needed
-                if should_rephrase:
+                # Generate correction/rephrase if needed
+                if correction_strategy.get('should_correct') and correction_strategy.get('teacher_response'):
+                    segments.append({
+                        'type': 'correction',
+                        'text': correction_strategy['teacher_response'],
+                        'timing': 0,
+                        'persona': 'teacher'
+                    })
+                elif should_rephrase and not correction_strategy.get('should_correct'):
+                    # Regular rephrase (no error correction)
                     rephrase_text = rephrase_service.generate_rephrase(
                         message_content,
                         conversation_context,
@@ -170,14 +209,13 @@ class ChatService:
                             'persona': 'teacher' 
                         })
                 
-                # Generate main response (with optional help)
-                response_data = response_service.generate_response(
+                # Generate main response with correction hint
+                response_data = response_service.generate_response_with_correction_hint(
                     message_content,
                     user_data,
                     conversation_context,
                     intent_data,
-                    False,  # include_help
-                    rephrase_text if should_rephrase else None  
+                    correction_strategy.get('partner_hint', {})  # NEW!
                 )
                 
                 # Add help segment if needed
@@ -197,7 +235,7 @@ class ChatService:
                     'persona': 'partner'
                 })
                 
-                # Step 4: Generate audio for all segments in parallel
+                # Generate audio for all segments
                 segments_with_audio = self.audio_queue_service.generate_audio_segments(
                     segments,
                     user_data['learningLanguage'],
@@ -214,14 +252,13 @@ class ChatService:
                     user_data['learningLanguage']
                 )
                 
-                # Cleanup
-                self.audio_queue_service.cleanup()
-                
                 return {
                     'segments': segments_with_audio,
                     'intent': intent_data['intent'],
                     'rephrased': should_rephrase,
-                    'audio_language': user_data['learningLanguage']
+                    'audio_language': user_data['learningLanguage'],
+                    'error_detected': has_errors,
+                    'correction_applied': correction_strategy.get('should_correct', False)
                 }
             
         except Exception as e:
@@ -245,7 +282,6 @@ class ChatService:
                     self.parallel_orchestrator.cleanup()
                 except:
                     pass
-
     def get_conversation_history(self, user_id):
         """Get conversation history using persistent storage"""
         return self.conversation_service.get_conversation_history(user_id)
