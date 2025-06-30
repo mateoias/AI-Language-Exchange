@@ -1319,18 +1319,16 @@ body {
   cursor: not-allowed;
 }
 
-/* Teacher persona (rephrase/help) */
+/* Teacher persona messages */
 .message.bot.teacher .message-bubble {
-  background-color: #fff3cd;  
-  border-left: 4px solid #ff9800;
-  color: #333;
+  background-color: #fef3c7; /* Light yellow for teacher */
+  border: 1px solid #f59e0b;
 }
 
-/* Partner persona (conversation) */
+/* Partner persona messages */
 .message.bot.partner .message-bubble {
-  background-color: #e8f5e9;  /* Light green - better contrast */
-  border-left: 4px solid #4caf50;
-  color: #333;
+  background-color: #e0f2fe; /* Light blue for partner */
+  border: 1px solid #0284c7;
 }
 
 /* Persona labels */
@@ -1350,4 +1348,76 @@ body {
   font-weight: 600;
   display: block;
   margin-bottom: 2px;
+}
+
+/* Specific message types */
+.message.bot.correction .message-bubble,
+.message.bot.clarification .message-bubble {
+  background-color: #fef3c7;
+  border: 1px solid #f59e0b;
+}
+
+.message.bot.correction .message-bubble::before {
+  content: "✏️ ";
+}
+
+.message.bot.clarification .message-bubble::before {
+  content: "❓ ";
+}
+/* Add to your Chat.css or App.css */
+
+.chat-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.session-controls {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.start-new-btn,
+.finish-save-btn,
+.new-session-btn {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.start-new-btn {
+  background-color: #6b7280;
+  color: white;
+}
+
+.start-new-btn:hover:not(:disabled) {
+  background-color: #4b5563;
+}
+
+.finish-save-btn {
+  background-color: #3b82f6;
+  color: white;
+}
+
+.finish-save-btn:hover:not(:disabled) {
+  background-color: #2563eb;
+}
+
+.new-session-btn {
+  background-color: #3b82f6;
+  color: white;
+}
+
+.new-session-btn:hover:not(:disabled) {
+  background-color: #2563eb;
+}
+
+.start-new-btn:disabled,
+.finish-save-btn:disabled,
+.new-session-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }

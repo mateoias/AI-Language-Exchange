@@ -551,7 +551,7 @@ const handleAudioRecording = async (audioBlob) => {
     }
   }
 
-  const sendMessage = async (e) => {
+const sendMessage = async (e) => {
     e.preventDefault()
     if (!input.trim() || loading) return
 
@@ -580,14 +580,14 @@ const handleAudioRecording = async (audioBlob) => {
         
         const segments = response.segments
         
-        const rephraseSegment = segments.find(s => s.type === 'rephrase')
-        const helpSegment = segments.find(s => s.type === 'help')
-        const responseSegment = segments.find(s => s.type === 'response')
-        
-        console.log('[DEBUG] Found segments:', {
-          rephrase: !!rephraseSegment,
-          help: !!helpSegment,
-          response: !!responseSegment
+        // Log all segments for debugging
+        segments.forEach((seg, idx) => {
+          console.log(`[DEBUG] Segment ${idx}:`, {
+            type: seg.type,
+            text: seg.text,
+            hasAudio: !!seg.audio_data,
+            persona: seg.persona
+          })
         })
         
         if (response.user_audio_data) {
@@ -600,47 +600,26 @@ const handleAudioRecording = async (audioBlob) => {
         
         const botMessages = []
         
-        if (rephraseSegment && rephraseSegment.text) {
-          console.log('[DEBUG] Adding rephrase segment with audio:', !!rephraseSegment.audio_data)
-          botMessages.push({
-            id: `rephrase-${Date.now()}`,
-            content: rephraseSegment.text,
-            sender: 'bot',
-            timestamp: new Date().toISOString(),
-            message_type: 'rephrase',
-            audio_data: rephraseSegment.audio_data,
-            audio_language: response.audio_language,
-            persona: 'teacher' 
-          })
-        }
-        
-        if (helpSegment && helpSegment.text) {
-          console.log('[DEBUG] Adding help segment with audio:', !!helpSegment.audio_data)
-          botMessages.push({
-            id: `help-${Date.now() + 1}`,
-            content: helpSegment.text,
-            sender: 'bot',
-            timestamp: new Date().toISOString(),
-            message_type: 'help',
-            audio_data: helpSegment.audio_data,
-            audio_language: user.nativeLanguage,
-            persona: 'teacher'
-          })
-        }
-        
-        if (responseSegment && responseSegment.text) {
-          console.log('[DEBUG] Adding response segment with audio:', !!responseSegment.audio_data)
-          botMessages.push({
-            id: `response-${Date.now() + 2}`,
-            content: responseSegment.text,
-            sender: 'bot',
-            timestamp: new Date().toISOString(),
-            message_type: 'response',
-            audio_data: responseSegment.audio_data,
-            audio_language: response.audio_language,
-            persona: 'partner' 
-          })
-        }
+        // Process ALL segment types in order
+        segments.forEach((segment, index) => {
+          if (segment && segment.text) {
+            console.log(`[DEBUG] Adding ${segment.type} segment with persona ${segment.persona}`)
+            
+            const messageId = `${segment.type}-${Date.now()}-${index}`
+            const message = {
+              id: messageId,
+              content: segment.text,
+              sender: 'bot',
+              timestamp: new Date().toISOString(),
+              message_type: segment.type,
+              audio_data: segment.audio_data,
+              audio_language: segment.persona === 'teacher' ? user.nativeLanguage : response.audio_language,
+              persona: segment.persona || 'partner'
+            }
+            
+            botMessages.push(message)
+          }
+        })
         
         console.log('[DEBUG] Total bot messages to add:', botMessages.length)
         
@@ -650,8 +629,10 @@ const handleAudioRecording = async (audioBlob) => {
           return newMessages
         })
         
+        // Play audio for segments that have it
         const audioSegments = segments.filter(s => s.audio_data)
         console.log('[DEBUG] Audio segments found:', audioSegments.length)
+        
         audioSegments.forEach((seg, idx) => {
           console.log(`[DEBUG] Audio segment ${idx}:`, {
             type: seg.type,
@@ -748,16 +729,39 @@ const handleAudioRecording = async (audioBlob) => {
               <option value={1.2}>120%</option>
             </select>
           </div>
-          <button 
-            className="new-session-btn"
-            onClick={messages.length > 0 ? handleFinishAndSave : startNewSession}
-            disabled={loading}
-          >
-            {messages.length > 0 ? 'Finish & Save' : 'New Conversation'}
-          </button>
+          <div className="session-controls">
+            {messages.length > 0 ? (
+              <>
+                <button 
+                  className="start-new-btn"
+                  onClick={startNewSession}
+                  disabled={loading}
+                  title="Start new conversation without saving"
+                >
+                  Start New
+                </button>
+                <button 
+                  className="finish-save-btn"
+                  onClick={handleFinishAndSave}
+                  disabled={loading}
+                  title="Save conversation and start new"
+                >
+                  Finish & Save
+                </button>
+              </>
+            ) : (
+              <button 
+                className="new-session-btn"
+                onClick={startNewSession}
+                disabled={loading}
+              >
+                New Conversation
+              </button>
+            )}
+          </div>
         </div>
       </div>
-      
+
       {error && (
         <div className="chat-error">
           {error}

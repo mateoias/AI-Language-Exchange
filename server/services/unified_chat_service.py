@@ -7,7 +7,6 @@ from typing import Dict, List, Optional, Tuple
 import json
 import logging
 import time
-import random
 from .llm_manager import llm_manager
 from .audio_queue_service import AudioQueueService
 from .prompt_builder import PromptBuilder
@@ -68,8 +67,6 @@ class UnifiedChatService:
                 log_request=True
             )
             llm_time = (time.time() - start_time) * 1000
-            
-            logger.info(f"LLM Response: {response}")
             
             # Parse structured response
             try:
@@ -137,7 +134,7 @@ class UnifiedChatService:
         
         # Build the unified prompt
         prompt = f"""You are a language learning system with two personas:
-1. TEACHER: Helps with corrections and explanations (in {native_lang})
+1. TEACHER: Helps with corrections and explanations (in {native_lang} or {language})
 2. PARTNER: Continues natural conversation (in {language})
 
 USER PROFILE:
@@ -153,41 +150,30 @@ RECENT CONVERSATION:
 CURRENT MESSAGE: [User says] "{message}"
 
 ANALYZE AND RESPOND:
-1. First, check if the message is in the target language ({language}). Common phrases like "Quiero hablar de..." are valid {language}.
-2. Check if help is explicitly requested (contains "what does", "que significa", "help", etc.)
-3. For {level} level, check if correction is needed:
-   - Beginner: Expand very short responses (1-2 words only), but accept complete sentences as-is
-   - Intermediate: Only correct clear grammar errors
-   - Advanced: Rarely correct, only major communication errors
-4. Generate natural conversation response
+1. Detect if the message needs help (wrong language, asking for translation/explanation)
+2. Generate appropriate response segments
 
 RESPONSE FORMAT (JSON):
 {{
   "intent": "chat|help_needed",
   "language_used": "target|native|other",
   "needs_clarification": true/false,
-  "clarification_reason": "wrong_language|gibberish|truly_unclear",
+  "clarification_reason": "wrong_language|off_topic|unclear",
   "segments": [
     {{"type": "clarification", "text": "clarification question", "persona": "teacher"}},
-    {{"type": "correction", "text": "corrected/expanded version", "persona": "teacher"}},
+    {{"type": "correction", "text": "corrected version", "persona": "teacher"}},
     {{"type": "help", "text": "explanation/translation", "persona": "teacher"}},
     {{"type": "response", "text": "conversation continuation", "persona": "partner"}}
   ]
 }}
 
-CRITICAL RULES:
-- ONLY ask for clarification if the message is truly incomprehensible or in the wrong language
-- "Quiero hablar de mi mamá" is a PERFECT {language} sentence - respond naturally about their mother
-- NEVER have the Partner ask "¿Puedes repetir eso?" - only Teacher clarifies when truly needed
-- Partner should ALWAYS continue the conversation naturally based on what the user said
-- Include correction segment ONLY for actual errors or very short (1-2 word) responses from beginners
-- Teacher speaks in {native_lang}, Partner ONLY in {language}
-- Always include a meaningful response segment that moves the conversation forward
-
-EXAMPLES of good responses:
-User: "Quiero hablar de mi mamá" → Partner: "¡Qué lindo! ¿Cómo se llama tu mamá?" (NO clarification needed)
-User: "si" → Teacher: "Sí, te gusta" + Partner: "¿Qué es lo que más te gusta?"
-User: "I want to talk about sports" → Teacher: "You're speaking English. Try in {language}!" + Partner continues
+RULES:
+- Include ONLY segments that are needed
+- Teacher speaks in {native_lang}, Partner in {language}
+- Keep responses concise and natural
+- Always include a response segment to continue conversation
+- If message is in wrong language, add clarification segment
+- If message is off-topic/unclear, add clarification segment
 """
         
         return prompt
@@ -221,65 +207,25 @@ User: "I want to talk about sports" → Teacher: "You're speaking English. Try i
         """Convert LLM result to segments"""
         segments = []
         
-        # Log the raw result for debugging
-        logger.info(f"Building segments from result: {json.dumps(result, indent=2)}")
-        
         # Process each segment from the result
         for i, segment in enumerate(result.get('segments', [])):
-            # Only add segments that have text content
-            if segment.get('text') and segment['text'].strip():
-                segments.append({
-                    'type': segment['type'],
-                    'text': segment['text'],
-                    'persona': segment.get('persona', 'partner'),
-                    'timing': i * 800  # Simple timing
-                })
-            else:
-                logger.warning(f"Skipping empty segment: {segment}")
+            segments.append({
+                'type': segment['type'],
+                'text': segment['text'],
+                'persona': segment.get('persona', 'partner'),
+                'timing': i * 800  # Simple timing
+            })
         
         # Ensure we always have a response
         if not any(s['type'] == 'response' for s in segments):
-            # Generate a contextual response based on the user's message
-            fallback_response = {
+            segments.append({
                 'type': 'response',
-                'text': self._get_contextual_fallback(user_data['learningLanguage']),
+                'text': self._get_fallback_text(user_data['learningLanguage']),
                 'persona': 'partner',
                 'timing': len(segments) * 800
-            }
-            segments.append(fallback_response)
-            logger.warning("No response segment found, added contextual fallback")
+            })
         
-        logger.info(f"Final segments count: {len(segments)}")
         return segments
-    
-    def _get_contextual_fallback(self, language: str) -> str:
-        """Get a more contextual fallback response"""
-        contextual_fallbacks = {
-            'Spanish': [
-                '¡Qué interesante! Cuéntame más sobre eso.',
-                'Me encantaría saber más detalles.',
-                '¿Y qué más puedes decirme?'
-            ],
-            'French': [
-                "C'est très intéressant! Raconte-moi plus.",
-                "J'aimerais en savoir plus.",
-                "Et que peux-tu me dire d'autre?"
-            ],
-            'German': [
-                'Das ist sehr interessant! Erzähl mir mehr darüber.',
-                'Ich würde gerne mehr erfahren.',
-                'Was kannst du mir noch erzählen?'
-            ],
-            'English': [
-                "That's very interesting! Tell me more about that.",
-                "I'd love to know more details.",
-                "What else can you tell me?"
-            ]
-        }
-        
-        import random
-        options = contextual_fallbacks.get(language, contextual_fallbacks['English'])
-        return random.choice(options)
     
     def _get_fallback_response(self, message: str, user_data: Dict) -> Dict:
         """Fallback if LLM fails to return valid JSON"""
@@ -295,12 +241,12 @@ User: "I want to talk about sports" → Teacher: "You're speaking English. Try i
     def _get_fallback_text(self, language: str) -> str:
         """Get fallback text in target language"""
         fallbacks = {
-            'Spanish': '¡Qué interesante! ¿Me cuentas más?',
-            'French': "C'est intéressant! Dis-m'en plus?",
-            'German': 'Das ist interessant! Erzähl mir mehr?',
-            'English': "That's interesting! Tell me more?"
+            'Spanish': '¿Puedes repetir eso?',
+            'French': 'Pouvez-vous répéter?',
+            'German': 'Können Sie das wiederholen?',
+            'English': 'Could you repeat that?'
         }
-        return fallbacks.get(language, "That's interesting! Tell me more?")
+        return fallbacks.get(language, 'Could you repeat that?')
     
     def _get_error_response(self, user_data: Optional[Dict], error: str) -> Dict:
         """Generate error response"""
@@ -318,3 +264,4 @@ User: "I want to talk about sports" → Teacher: "You're speaking English. Try i
             'audio_language': language,
             'error': error
         }
+    
