@@ -2,6 +2,23 @@
   "user_id": "1a99b5f0-3775-4313-b755-f09208242364",
   "conversations": [
     {
+      "id": "88e31c98-87a0-4cfd-91cb-3b650f24e596",
+      "user_id": "1a99b5f0-3775-4313-b755-f09208242364",
+      "created_at": "2025-07-01T00:17:58.390502",
+      "messages": [
+        {
+          "content": "¿Puedes repetir eso?",
+          "sender": "bot",
+          "timestamp": "2025-07-01T00:18:09.361939",
+          "intent": "help_needed",
+          "audio_language": "Spanish",
+          "id": "bot-0-1751329089"
+        }
+      ],
+      "summary": "",
+      "chunk_summaries": []
+    },
+    {
       "id": "70e2e44f-8fd0-4f04-bcf3-1e7a426c673d",
       "user_id": "1a99b5f0-3775-4313-b755-f09208242364",
       "created_at": "2025-06-30T05:44:16.022383",
@@ -74,253 +91,7 @@
       "created_at": "2025-06-29T22:01:07.580207",
       "messages": [],
       "summary": ""
-    },
-    {
-      "id": "4b390ad8-5408-405c-96b8-6f23e649b99a",
-      "user_id": "1a99b5f0-3775-4313-b755-f09208242364",
-      "created_at": "2025-06-28T02:23:44.322263",
-      "messages": [
-        {
-          "content": "de mi madre",
-          "sender": "user",
-          "timestamp": "2025-06-28T02:29:00.599073",
-          "intent": "normal_chat",
-          "audio_language": "Spanish",
-          "id": "user-0-1751077740"
-        },
-        {
-          "content": "¿Cómo estás hoy?",
-          "sender": "bot",
-          "timestamp": "2025-06-28T02:29:01.918052",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "bot-1-1751077741"
-        },
-        {
-          "content": "what does \"De mi madre es la receta de la paella.\" mean?",
-          "sender": "user",
-          "timestamp": "2025-06-28T02:29:31.841685",
-          "intent": "help_needed",
-          "audio_language": "Spanish",
-          "id": "user-2-1751077771"
-        },
-        {
-          "content": "muy bien",
-          "sender": "user",
-          "timestamp": "2025-06-28T02:29:46.842650",
-          "intent": "normal_chat",
-          "audio_language": "Spanish",
-          "id": "user-3-1751077786"
-        },
-        {
-          "content": "¡Me alegra escuchar eso! ¿Qué has estado haciendo para practicar tu español últimamente?",
-          "sender": "bot",
-          "timestamp": "2025-06-28T02:29:48.618421",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "bot-4-1751077788"
-        },
-        {
-          "content": "nada",
-          "sender": "user",
-          "timestamp": "2025-06-28T02:30:01.146862",
-          "intent": "normal_chat",
-          "audio_language": "Spanish",
-          "id": "user-5-1751077801"
-        },
-        {
-          "content": "¿Qué te gustaría hacer para practicar tu español hoy?",
-          "sender": "bot",
-          "timestamp": "2025-06-28T02:30:02.417626",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "bot-6-1751077802"
-        },
-        {
-          "content": "What does \"Estás nadando.\" mean?",
-          "sender": "user",
-          "timestamp": "2025-06-28T02:30:15.445458",
-          "intent": "help_needed",
-          "audio_language": "Spanish",
-          "id": "user-7-1751077815"
-        },
-        {
-          "content": "charlar",
-          "sender": "user",
-          "timestamp": "2025-06-28T02:30:34.108284",
-          "intent": "normal_chat",
-          "audio_language": "Spanish",
-          "id": "user-8-1751077834"
-        },
-        {
-          "content": "¿Te gustaría charlar sobre algún tema en particular en español hoy?",
-          "sender": "bot",
-          "timestamp": "2025-06-28T02:30:35.438506",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "bot-9-1751077835"
-        },
-        {
-          "content": "charlamos de el futbol",
-          "sender": "user",
-          "timestamp": "2025-06-28T19:30:31.496049",
-          "intent": "normal_chat",
-          "audio_language": "Spanish",
-          "id": "user-10-1751139031"
-        },
-        {
-          "content": "Tráemelos..de �l flipas",
-          "sender": "user",
-          "timestamp": "2025-06-28T19:34:28.189419",
-          "intent": "normal_chat",
-          "audio_language": "Spanish",
-          "id": "user-11-1751139268"
-        },
-        {
-          "content": "Charlamos de el fútbol.",
-          "sender": "user",
-          "timestamp": "2025-06-28T19:40:51.643423",
-          "intent": "normal_chat",
-          "audio_language": "Spanish",
-          "id": "user-12-1751139651"
-        },
-        {
-          "content": "¡Qué interesante! ¿Qué equipo de fútbol te gusta?",
-          "sender": "bot",
-          "timestamp": "2025-06-28T19:40:54.567795",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "bot-13-1751139654"
-        },
-        {
-          "content": "A mí me gusta Liverpool.",
-          "sender": "user",
-          "timestamp": "2025-06-28T19:41:49.663749",
-          "intent": "normal_chat",
-          "audio_language": "Spanish",
-          "id": "user-14-1751139709"
-        },
-        {
-          "content": "¡Qué bien! ¿Qué es lo que más te gusta del Liverpool?",
-          "sender": "bot",
-          "timestamp": "2025-06-28T19:41:50.727728",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "bot-15-1751139710"
-        },
-        {
-          "content": "Es porque mi amigo te gusta del libro.",
-          "sender": "user",
-          "timestamp": "2025-06-28T19:42:08.490473",
-          "intent": "normal_chat",
-          "audio_language": "Spanish",
-          "id": "user-16-1751139728"
-        },
-        {
-          "content": "¿Por qué le gusta tanto ese libro a tu amigo?",
-          "sender": "bot",
-          "timestamp": "2025-06-28T19:42:09.238609",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "bot-17-1751139729"
-        },
-        {
-          "content": "no es libre, es el equipo liverpool",
-          "sender": "user",
-          "timestamp": "2025-06-28T19:42:57.158346",
-          "intent": "normal_chat",
-          "audio_language": "Spanish",
-          "id": "user-18-1751139777"
-        },
-        {
-          "content": "¡Entiendo! ¿Qué es lo que más te gusta del equipo Liverpool?",
-          "sender": "bot",
-          "timestamp": "2025-06-28T19:42:58.510008",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "bot-19-1751139778"
-        },
-        {
-          "content": "salah",
-          "sender": "user",
-          "timestamp": "2025-06-28T19:43:10.131912",
-          "intent": "normal_chat",
-          "audio_language": "Spanish",
-          "id": "user-20-1751139790"
-        },
-        {
-          "content": "¡Mohamed Salah es un jugador increíble! ¿Qué es lo que más te gusta de Salah en el Liverpool?",
-          "sender": "bot",
-          "timestamp": "2025-06-28T19:43:11.297900",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "bot-21-1751139791"
-        },
-        {
-          "content": "¿Puedes repetir eso?",
-          "sender": "bot",
-          "timestamp": "2025-06-29T21:47:06.692037",
-          "intent": "help_needed",
-          "audio_language": "Spanish",
-          "id": "bot-22-1751233626"
-        },
-        {
-          "content": "¿Puedes repetir eso?",
-          "sender": "bot",
-          "timestamp": "2025-06-29T21:47:36.711669",
-          "intent": "help_needed",
-          "audio_language": "Spanish",
-          "id": "bot-23-1751233656"
-        },
-        {
-          "content": "¡Es verdad! Salah es un jugador increíble en el Liverpool.",
-          "sender": "bot",
-          "timestamp": "2025-06-29T21:48:51.481157",
-          "intent": "help_needed",
-          "audio_language": "Spanish",
-          "id": "bot-24-1751233731"
-        },
-        {
-          "content": "¿Puedes repetir eso?",
-          "sender": "bot",
-          "timestamp": "2025-06-29T21:48:59.422891",
-          "intent": "help_needed",
-          "audio_language": "Spanish",
-          "id": "bot-25-1751233739"
-        },
-        {
-          "content": "¿Qué es lo que más te gusta de Salah en el Liverpool?",
-          "sender": "bot",
-          "timestamp": "2025-06-29T21:49:19.935863",
-          "intent": "help_needed",
-          "audio_language": "Spanish",
-          "id": "bot-26-1751233759"
-        },
-        {
-          "content": "Sí, Salah es muy rápido en el campo.",
-          "sender": "bot",
-          "timestamp": "2025-06-29T21:50:26.455770",
-          "intent": "help_needed",
-          "audio_language": "Spanish",
-          "id": "bot-27-1751233826"
-        }
-      ],
-      "summary": "",
-      "chunk_summaries": [
-        {
-          "chunk_number": 1,
-          "summary": "The conversation started with a user mentioning \"de mi madre\" and asking about the meaning of a Spanish sentence. The user shared they have been practicing Spanish and the bot asked about their recent practice activities. The user expressed interest in chatting and asked about the meaning of \"Estás nadando.\" The conversation is heading towards discussing specific topics to chat about in Spanish, with a friendly and engaging tone. Unanswered questions include what the user has been doing to practice Spanish and what they would like to do to practice today.",
-          "message_range": "1-10",
-          "created_at": "2025-06-28T02:30:36.539000"
-        },
-        {
-          "chunk_number": 2,
-          "summary": "The conversation started with discussing football and the user expressing their preference for Liverpool. The bot inquired about the user's favorite aspects of the team, leading to a misunderstanding about a book. The tone is light-hearted and informative, with the conversation flowing towards exploring the user's specific reasons for liking Liverpool. To continue, you could elaborate on what aspects of Liverpool's team appeal to you or clarify the confusion about the book mentioned earlier.",
-          "message_range": "11-20",
-          "created_at": "2025-06-28T19:42:59.342437"
-        }
-      ]
     }
   ],
-  "current_conversation_id": "70e2e44f-8fd0-4f04-bcf3-1e7a426c673d"
+  "current_conversation_id": "88e31c98-87a0-4cfd-91cb-3b650f24e596"
 }

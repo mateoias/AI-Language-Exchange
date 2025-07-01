@@ -32,7 +32,7 @@ class LLMManager:
     def generate_chat_response(
         self, 
         messages: List[Dict[str, str]], 
-        model: str = "gpt-3.5-turbo",
+        model: str = "gpt-4o",
         temperature: float = 0.3,
         max_tokens: int = 80,
         log_request: bool = False  # New parameter for logging
