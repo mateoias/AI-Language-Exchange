@@ -44,12 +44,15 @@ class AudioQueueService:
                     audio_language = native_language or language
                 else:
                     audio_language = language
+                
+                persona = segment.get('persona', 'partner')
                     
                 future = self.executor.submit(
                     self.audio_service.generate_audio,
                     segment['text'],
                     audio_language,  # Use determined language
-                    speed
+                    speed,
+                    persona
                 )
                 futures.append((segment, future))
             else:

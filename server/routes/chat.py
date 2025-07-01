@@ -3,24 +3,24 @@ import logging
 import time
 from flask import Blueprint, request, jsonify, current_app
 from ..utils.auth_utils import token_required
-from ..services.unified_chat_service import UnifiedChatService
+from ..services.chat_service import ChatService
 from ..services.audio_service import AudioService
 from ..services.conversation_service import ConversationService
 
 chat_bp = Blueprint('chat', __name__)
 
 # Service instances
-_unified_chat_service = None
+_chat_service = None
 _audio_service = None
 
-def get_unified_chat_service():
-    """Get or create unified chat service instance"""
-    global _unified_chat_service
-    if _unified_chat_service is None:
+def get_chat_service():
+    """Get or create chat service instance"""
+    global _chat_service
+    if _chat_service is None:
         speech_key = current_app.config.get('AZURE_SPEECH_KEY')
         speech_region = current_app.config.get('AZURE_SPEECH_REGION')
-        _unified_chat_service = UnifiedChatService(speech_key, speech_region)
-    return _unified_chat_service
+        _chat_service = ChatService(speech_key, speech_region)
+    return _chat_service
 
 def get_audio_service():
     """Get or create audio service instance"""
@@ -53,7 +53,7 @@ def send_message(user_id):
         
         # Use unified service for everything
         start_time = time.time()
-        result = get_unified_chat_service().generate_response(
+        result = get_chat_service().generate_response(
             user_id, 
             message_content, 
             audio_speed

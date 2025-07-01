@@ -26,8 +26,12 @@ class AudioService:
         return self._speech_config
 
     
-    def _get_voice_name(self, language, voice_type='male'):
-        """Map language to Azure voice name"""
+    def _get_voice_name(self, language, voice_type='male', persona=None):
+        """Map language to Azure voice name based on persona"""
+        # If persona specified, use it to determine voice type
+        if persona:
+            voice_type = 'female' if persona == 'teacher' else 'male'
+        
         return get_voice_name(language, voice_type)
     
     def _add_speech_marks(self, text, speed_rate=1.0, voice_name="en-US-AriaNeural"):
@@ -56,14 +60,14 @@ class AudioService:
         
         return ssml
     
-    def generate_audio(self, text, language, speed_rate=0.8):
+    def generate_audio(self, text, language, speed_rate=0.8, persona=None):
         """Generate audio using Azure TTS"""
         try:
             cache_key = f"{text}_{language}_{speed_rate}"
             if cache_key in self._audio_cache:
                 return self._audio_cache[cache_key]
             
-            voice_name = self._get_voice_name(language)
+            voice_name = self._get_voice_name(language, persona=persona)
             self.speech_config.speech_synthesis_voice_name = voice_name
             
             synthesizer = speechsdk.SpeechSynthesizer(
