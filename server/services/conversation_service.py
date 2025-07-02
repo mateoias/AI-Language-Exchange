@@ -1,11 +1,13 @@
 # services/conversation_service.py
+import uuid
 from .llm_manager import llm_manager
 from datetime import datetime
 from ..utils.conversation_utils import (
     load_user_conversations, save_user_conversations, add_message_to_conversation,
     get_recent_messages, should_summarize_conversation, get_current_conversation,
-    start_new_conversation
+    start_new_conversation, clear_conversation_memory  # Add this import
 )
+
 import logging
 logger = logging.getLogger(__name__)
 
@@ -131,20 +133,26 @@ class ConversationService:
         # Get current conversation
         current_conv = get_current_conversation(conversations_data)
         if current_conv:
-            message_count = len(current_conv['messages'])
-            
             # Initialize chunk_summaries if not present
             if 'chunk_summaries' not in current_conv:
                 current_conv['chunk_summaries'] = []
             
-            # Check if we need a chunk summary (every 10 messages, after bot response)
-            if message_count % 10 == 0 and sender == 'bot':
-                chunk_number = message_count // 10
+            # Count message pairs (user + bot = 1 exchange)
+            user_messages = [msg for msg in current_conv['messages'] if msg['sender'] == 'user']
+            bot_messages = [msg for msg in current_conv['messages'] if msg['sender'] == 'bot']
+            
+            # Generate chunk summary every 5 exchanges (10 messages)
+            # Only after bot responds to maintain conversation flow
+            if sender == 'bot' and len(user_messages) > 0 and len(user_messages) % 5 == 0:
+                # Calculate which messages to summarize
+                chunk_number = len(user_messages) // 5
                 start_idx = (chunk_number - 1) * 10
-                end_idx = chunk_number * 10
+                end_idx = min(chunk_number * 10, len(current_conv['messages']))
                 
                 chunk_messages = current_conv['messages'][start_idx:end_idx]
-                print(f"Generating chunk summary for messages {start_idx+1}-{end_idx}")
+                
+                print(f"[CHUNK SUMMARY] Generating chunk {chunk_number} for messages {start_idx+1}-{end_idx}")
+                print(f"[CHUNK SUMMARY] User messages: {len(user_messages)}, Bot messages: {len(bot_messages)}")
                 
                 chunk_summary = self.generate_chunk_summary(chunk_messages, chunk_number)
                 current_conv['chunk_summaries'].append({
@@ -153,10 +161,12 @@ class ConversationService:
                     'message_range': f"{start_idx+1}-{end_idx}",
                     'created_at': datetime.utcnow().isoformat()
                 })
+                
+                print(f"[CHUNK SUMMARY] Generated: {chunk_summary[:100]}...")
         
-    # Save conversations
+        # Save conversations
         save_user_conversations(user_id, conversations_data)
-    
+        
         return conversations_data
     
     def get_conversation_context(self, user_id):
@@ -212,20 +222,31 @@ class ConversationService:
         current_conv = get_current_conversation(conversations_data)
         
         if not current_conv or len(current_conv['messages']) == 0:
+            print(f"[FINALIZE] No active conversation to finalize for user {user_id}")
             return None
+        
+        print(f"[FINALIZE] Finalizing conversation {current_conv['id']} with {len(current_conv['messages'])} messages")
         
         # Get user data for analysis
         user_data = find_user_by_id(user_id)
         
-        # Generate final comprehensive summary if not exists
-        if not current_conv.get('summary'):
-            print(f"Generating final summary for conversation {current_conv['id']}")
-            current_conv['summary'] = self.generate_conversation_summary(current_conv['messages'])
+        # Always generate final comprehensive summary
+        print(f"[FINALIZE] Generating final summary...")
+        current_conv['summary'] = self.generate_conversation_summary(current_conv['messages'])
+        print(f"[FINALIZE] Summary generated: {current_conv['summary'][:100]}...")
         
         # Generate detailed analysis for database
+        print(f"[FINALIZE] Generating conversation analysis...")
         analysis = self.generate_conversation_analysis(current_conv['messages'], user_data)
         
-        # Prepare data for database
+        # Mark conversation as finalized
+        current_conv['finalized'] = True
+        current_conv['finalized_at'] = datetime.utcnow().isoformat()
+        
+        # Save the updated conversation
+        save_user_conversations(user_id, conversations_data)
+        
+        # Prepare data for database (when ready)
         db_ready_data = {
             'conversation_id': current_conv['id'],
             'user_id': user_id,
@@ -235,10 +256,50 @@ class ConversationService:
             'chunk_summaries': current_conv.get('chunk_summaries', []),
             'final_summary': current_conv['summary'],
             'analysis': analysis,
-            'finalized_at': datetime.utcnow().isoformat()
+            'finalized_at': current_conv['finalized_at']
         }
         
-        # Send to Neo4j database
+        print(f"[FINALIZE] Conversation finalized successfully")
+        
+        # need to Send to Neo4j database when implemented
         # neo4j_service.store_conversation(db_ready_data)
         
         return db_ready_data
+    
+    def start_new_session(self, user_id, save_current=False):
+        """Start a new conversation session"""
+        if save_current:
+            # Save current conversation before starting new
+            self.finalize_conversation(user_id)
+        
+        # Clear memory and start fresh
+        return start_new_conversation(user_id, save_to_file=True)
+
+    def clear_session_without_save(self, user_id):
+        """Clear current session without saving (for UI refresh)"""
+        # Import here to avoid circular import
+        from ..utils.conversation_utils import save_user_conversations
+        
+        # Create a fresh conversation state
+        cleared_data = {
+            'user_id': user_id,
+            'conversations': [],
+            'current_conversation_id': None
+        }
+        
+        # Create a new empty conversation
+        new_conv = {
+            'id': str(uuid.uuid4()),
+            'user_id': user_id,
+            'created_at': datetime.utcnow().isoformat(),
+            'messages': [],
+            'summary': '',
+            'chunk_summaries': []
+        }
+        
+        cleared_data['conversations'] = [new_conv]
+        cleared_data['current_conversation_id'] = new_conv['id']
+        
+        # Save the empty state
+        save_user_conversations(user_id, cleared_data)
+        return cleared_data

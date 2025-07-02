@@ -114,19 +114,34 @@ def new_session(user_id):
     try:
         conv_service = ConversationService()
         
-        # Start new session without finalizing previous one
-        conv_service.start_new_session(user_id)
+        # Get request data - handle both cases (with or without body)
+        try:
+            data = request.get_json() or {}
+        except:
+            data = {}
+        
+        save_current = data.get('save_current', False)
+        
+        if save_current:
+            # Finalize and save current conversation
+            conv_service.finalize_conversation(user_id)
+        else:
+            # Just clear without saving
+            conv_service.clear_session_without_save(user_id)
         
         # Clear audio cache
         get_audio_service().clear_cache()
         
         return jsonify({
             "message": "New session started",
-            "success": True
+            "success": True,
+            "saved_previous": save_current
         }), 200
         
     except Exception as e:
         logging.error(f"New session error: {e}")
+        import traceback
+        traceback.print_exc()
         return jsonify({'error': f'Server error: {str(e)}'}), 500
 
 @chat_bp.route('/regenerate-audio', methods=['POST'])

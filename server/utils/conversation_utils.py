@@ -151,7 +151,15 @@ def start_new_conversation(user_id):
     # Cleanup old conversations
     conversations_data = cleanup_old_conversations(conversations_data)
     
-    # don't save to file
-    #save_user_conversations(user_id, conversations_data)
+    # if save_to_file:
+    #     save_user_conversations(user_id, conversations_data)
     
     return conversations_data
+
+def clear_conversation_memory(user_id):
+    """Clear conversation from memory without saving"""
+    return {
+        'user_id': user_id,
+        'conversations': [],
+        'current_conversation_id': None
+    }

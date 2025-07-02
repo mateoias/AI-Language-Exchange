@@ -2,187 +2,32 @@
   "user_id": "6a89912e-ea4c-46f9-b0d4-2f064f09d3d7",
   "conversations": [
     {
-      "id": "00eda479-aaa2-4da1-95de-624c2f8707d2",
+      "id": "7a197404-98f1-47e2-aa8c-0dacdc13eb1a",
       "user_id": "6a89912e-ea4c-46f9-b0d4-2f064f09d3d7",
-      "created_at": "2025-07-02T00:20:28.617660",
+      "created_at": "2025-07-02T01:46:22.342241",
       "messages": [
         {
-          "content": "de mi mama",
+          "content": "la musica",
           "sender": "user",
-          "timestamp": "2025-07-02T00:20:28.617598",
+          "timestamp": "2025-07-02T01:46:31.634091",
           "intent": "chat",
           "audio_language": "Spanish",
-          "id": "user-0-1751415628"
+          "id": "user-0-1751420791"
         },
         {
-          "content": "¿Qué planes tienes para el fin de semana?",
+          "content": "¿Qué tipo de música te gusta tocar o escuchar?",
           "sender": "bot",
-          "timestamp": "2025-07-02T00:20:29.734688",
+          "timestamp": "2025-07-02T01:46:32.757563",
           "intent": "chat",
           "audio_language": "Spanish",
-          "id": "bot-1-1751415629"
-        },
-        {
-          "content": "ver una pelicula",
-          "sender": "user",
-          "timestamp": "2025-07-02T00:21:16.950306",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "user-2-1751415676"
-        },
-        {
-          "content": "¡Qué bien! ¿Qué tipo de películas te gustan?",
-          "sender": "bot",
-          "timestamp": "2025-07-02T00:21:18.107217",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "bot-3-1751415678"
-        },
-        {
-          "content": "comedy",
-          "sender": "user",
-          "timestamp": "2025-07-02T00:21:32.319184",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "user-4-1751415692"
-        },
-        {
-          "content": "¡Genial! Las comedias son divertidas. ¿Tienes alguna película de comedia favorita?",
-          "sender": "bot",
-          "timestamp": "2025-07-02T00:21:34.844759",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "bot-5-1751415694"
-        },
-        {
-          "content": "many",
-          "sender": "user",
-          "timestamp": "2025-07-02T00:22:01.143341",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "user-6-1751415721"
-        },
-        {
-          "content": "¿Tienes muchas películas de comedia en mente para ver?",
-          "sender": "bot",
-          "timestamp": "2025-07-02T00:22:02.294408",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "bot-7-1751415722"
-        },
-        {
-          "content": "what does mente mean",
-          "sender": "user",
-          "timestamp": "2025-07-02T00:22:13.794879",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "user-8-1751415733"
-        },
-        {
-          "content": "Claro, ¿cómo te sentiste con la explicación sobre los verbos irregulares? ¡Es un tema interesante pero desafiante!",
-          "sender": "bot",
-          "timestamp": "2025-07-02T00:22:17.471807",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "bot-9-1751415737"
-        },
-        {
-          "content": "claro, pero hablabamos de las peliculas",
-          "sender": "user",
-          "timestamp": "2025-07-02T00:23:36.678490",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "user-10-1751415816"
-        },
-        {
-          "content": "¡Tienes razón! Disculpa por la confusión. \"Mente\" significa \"mind\" en inglés. Entonces, ¿tienes alguna comedia en mente que te gustaría ver este fin de semana?",
-          "sender": "bot",
-          "timestamp": "2025-07-02T00:23:38.808703",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "bot-11-1751415818"
-        },
-        {
-          "content": "Father of the Bride",
-          "sender": "user",
-          "timestamp": "2025-07-02T00:24:07.605502",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "user-12-1751415847"
-        },
-        {
-          "content": "¡\"Father of the Bride\" es una película muy divertida! ¿Te gusta más la versión original o el remake con Steve Martin?",
-          "sender": "bot",
-          "timestamp": "2025-07-02T00:24:09.389605",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "bot-13-1751415849"
-        },
-        {
-          "content": "la mente",
-          "sender": "user",
-          "timestamp": "2025-07-02T00:25:47.171138",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "user-14-1751415947"
-        },
-        {
-          "content": "La mente es una parte fascinante del ser humano. ¿Hay alguna película que explores el tema de la mente que te guste?",
-          "sender": "bot",
-          "timestamp": "2025-07-02T00:25:48.878379",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "bot-15-1751415948"
-        },
-        {
-          "content": "no",
-          "sender": "user",
-          "timestamp": "2025-07-02T00:26:16.605006",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "user-16-1751415976"
-        },
-        {
-          "content": "Está bien. ¿Qué tal si hablamos de música? Como músico, ¿hay alguna canción en español que te guste tocar o escuchar?",
-          "sender": "bot",
-          "timestamp": "2025-07-02T00:26:18.466585",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "bot-17-1751415978"
-        },
-        {
-          "content": "las canciones de Gotan Project",
-          "sender": "user",
-          "timestamp": "2025-07-02T00:27:38.809730",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "user-18-1751416058"
-        },
-        {
-          "content": "¡Gotan Project tiene un estilo único que combina tango y música electrónica! ¿Tienes una canción favorita de ellos?",
-          "sender": "bot",
-          "timestamp": "2025-07-02T00:27:40.922305",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "bot-19-1751416060"
+          "id": "bot-1-1751420792"
         }
       ],
-      "summary": "",
-      "chunk_summaries": [
-        {
-          "chunk_number": 1,
-          "summary": "The conversation began with weekend plans, specifically watching a movie. The user expressed a preference for comedies, and the bot inquired about favorite comedy films. The user mentioned having many favorites, leading the bot to ask if they had specific comedies in mind. The user then asked for the meaning of \"mente,\" but the bot shifted the topic to irregular verbs, leaving the user's question unanswered. The mood is light and casual, with a focus on movies and language learning. To continue naturally, address the user's question about \"mente\" and explore their movie preferences further.",
-          "message_range": "1-10",
-          "created_at": "2025-07-02T00:22:19.781869"
-        },
-        {
-          "chunk_number": 2,
-          "summary": "The conversation initially focused on movies, specifically comedies, with the user mentioning \"Father of the Bride.\" The bot inquired about the user's preference between the original and the remake, but the user shifted the topic to \"la mente\" (the mind). The bot then suggested discussing music, leading to the user mentioning Gotan Project. The conversation is now centered on music, with the bot asking if the user has a favorite Gotan Project song. The mood is casual and engaging, with open-ended questions encouraging further discussion on music preferences.",
-          "message_range": "11-20",
-          "created_at": "2025-07-02T00:27:43.075752"
-        }
-      ]
+      "summary": "- **Topics Discussed**: Music preferences\n- **Key Personal Information**: User is interested in music\n- **Language Learning Progress/Challenges**: User is practicing Spanish by engaging in conversation about personal interests",
+      "chunk_summaries": [],
+      "finalized": true,
+      "finalized_at": "2025-07-02T01:47:05.916202"
     }
   ],
-  "current_conversation_id": "00eda479-aaa2-4da1-95de-624c2f8707d2"
+  "current_conversation_id": "7a197404-98f1-47e2-aa8c-0dacdc13eb1a"
 }
