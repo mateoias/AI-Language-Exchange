@@ -2,232 +2,187 @@
   "user_id": "6a89912e-ea4c-46f9-b0d4-2f064f09d3d7",
   "conversations": [
     {
-      "id": "306fbf5c-57db-4cfe-b504-e771875edcfb",
+      "id": "00eda479-aaa2-4da1-95de-624c2f8707d2",
       "user_id": "6a89912e-ea4c-46f9-b0d4-2f064f09d3d7",
-      "created_at": "2025-07-01T00:32:24.852806",
+      "created_at": "2025-07-02T00:20:28.617660",
       "messages": [
         {
-          "content": "Me encanta hablar de fútbol. ¿Tienes algún equipo favorito?",
-          "sender": "bot",
-          "timestamp": "2025-07-01T00:32:24.852774",
-          "intent": "help_needed",
-          "audio_language": "Spanish",
-          "id": "bot-0-1751329944"
-        },
-        {
-          "content": "¿Puedes repetir eso?",
-          "sender": "bot",
-          "timestamp": "2025-07-01T00:32:50.470037",
-          "intent": "help_needed",
-          "audio_language": "Spanish",
-          "id": "bot-1-1751329970"
-        },
-        {
-          "content": "¿Puedes repetir eso?",
-          "sender": "bot",
-          "timestamp": "2025-07-01T00:33:11.531324",
-          "intent": "help_needed",
-          "audio_language": "Spanish",
-          "id": "bot-2-1751329991"
-        }
-      ],
-      "summary": "",
-      "chunk_summaries": []
-    },
-    {
-      "id": "8936f2fe-3943-4ea4-a9c9-b5414effe039",
-      "user_id": "6a89912e-ea4c-46f9-b0d4-2f064f09d3d7",
-      "created_at": "2025-07-01T00:39:23.192328",
-      "messages": [
-        {
-          "content": "¿Puedes repetir eso?",
-          "sender": "bot",
-          "timestamp": "2025-07-01T00:39:39.488025",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "bot-0-1751330379"
-        },
-        {
-          "content": "¿Puedes repetir eso?",
-          "sender": "bot",
-          "timestamp": "2025-07-01T00:48:59.671737",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "bot-1-1751330939"
-        }
-      ],
-      "summary": "",
-      "chunk_summaries": []
-    },
-    {
-      "id": "102e55a0-8cb2-435c-87bb-c6499238ac84",
-      "user_id": "6a89912e-ea4c-46f9-b0d4-2f064f09d3d7",
-      "created_at": "2025-07-01T01:47:47.690126",
-      "messages": [
-        {
-          "content": "Quiero hablar del futbol.",
+          "content": "de mi mama",
           "sender": "user",
-          "timestamp": "2025-07-01T01:48:16.228736",
+          "timestamp": "2025-07-02T00:20:28.617598",
           "intent": "chat",
           "audio_language": "Spanish",
-          "id": "user-0-1751334496"
+          "id": "user-0-1751415628"
         },
         {
-          "content": "¡Perfecto! ¿Tienes un equipo favorito en particular o solo disfrutas ver los partidos?",
+          "content": "¿Qué planes tienes para el fin de semana?",
           "sender": "bot",
-          "timestamp": "2025-07-01T01:48:18.204671",
+          "timestamp": "2025-07-02T00:20:29.734688",
           "intent": "chat",
           "audio_language": "Spanish",
-          "id": "bot-1-1751334498"
+          "id": "bot-1-1751415629"
         },
         {
-          "content": "Mi favorito es Liverpool.",
+          "content": "ver una pelicula",
           "sender": "user",
-          "timestamp": "2025-07-01T01:48:47.651417",
+          "timestamp": "2025-07-02T00:21:16.950306",
           "intent": "chat",
           "audio_language": "Spanish",
-          "id": "user-2-1751334527"
+          "id": "user-2-1751415676"
         },
         {
-          "content": "¡Qué bien! Liverpool tiene un equipo muy fuerte. ¿Has visto algún partido en vivo?",
+          "content": "¡Qué bien! ¿Qué tipo de películas te gustan?",
           "sender": "bot",
-          "timestamp": "2025-07-01T01:48:49.040268",
+          "timestamp": "2025-07-02T00:21:18.107217",
           "intent": "chat",
           "audio_language": "Spanish",
-          "id": "bot-3-1751334529"
+          "id": "bot-3-1751415678"
+        },
+        {
+          "content": "comedy",
+          "sender": "user",
+          "timestamp": "2025-07-02T00:21:32.319184",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "user-4-1751415692"
+        },
+        {
+          "content": "¡Genial! Las comedias son divertidas. ¿Tienes alguna película de comedia favorita?",
+          "sender": "bot",
+          "timestamp": "2025-07-02T00:21:34.844759",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-5-1751415694"
+        },
+        {
+          "content": "many",
+          "sender": "user",
+          "timestamp": "2025-07-02T00:22:01.143341",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "user-6-1751415721"
+        },
+        {
+          "content": "¿Tienes muchas películas de comedia en mente para ver?",
+          "sender": "bot",
+          "timestamp": "2025-07-02T00:22:02.294408",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-7-1751415722"
+        },
+        {
+          "content": "what does mente mean",
+          "sender": "user",
+          "timestamp": "2025-07-02T00:22:13.794879",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "user-8-1751415733"
+        },
+        {
+          "content": "Claro, ¿cómo te sentiste con la explicación sobre los verbos irregulares? ¡Es un tema interesante pero desafiante!",
+          "sender": "bot",
+          "timestamp": "2025-07-02T00:22:17.471807",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-9-1751415737"
+        },
+        {
+          "content": "claro, pero hablabamos de las peliculas",
+          "sender": "user",
+          "timestamp": "2025-07-02T00:23:36.678490",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "user-10-1751415816"
+        },
+        {
+          "content": "¡Tienes razón! Disculpa por la confusión. \"Mente\" significa \"mind\" en inglés. Entonces, ¿tienes alguna comedia en mente que te gustaría ver este fin de semana?",
+          "sender": "bot",
+          "timestamp": "2025-07-02T00:23:38.808703",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-11-1751415818"
+        },
+        {
+          "content": "Father of the Bride",
+          "sender": "user",
+          "timestamp": "2025-07-02T00:24:07.605502",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "user-12-1751415847"
+        },
+        {
+          "content": "¡\"Father of the Bride\" es una película muy divertida! ¿Te gusta más la versión original o el remake con Steve Martin?",
+          "sender": "bot",
+          "timestamp": "2025-07-02T00:24:09.389605",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-13-1751415849"
+        },
+        {
+          "content": "la mente",
+          "sender": "user",
+          "timestamp": "2025-07-02T00:25:47.171138",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "user-14-1751415947"
+        },
+        {
+          "content": "La mente es una parte fascinante del ser humano. ¿Hay alguna película que explores el tema de la mente que te guste?",
+          "sender": "bot",
+          "timestamp": "2025-07-02T00:25:48.878379",
+          "intent": "chat",
+          "audio_language": "Spanish",
+          "id": "bot-15-1751415948"
         },
         {
           "content": "no",
           "sender": "user",
-          "timestamp": "2025-07-01T01:49:04.520710",
+          "timestamp": "2025-07-02T00:26:16.605006",
           "intent": "chat",
           "audio_language": "Spanish",
-          "id": "user-4-1751334544"
+          "id": "user-16-1751415976"
         },
         {
-          "content": "¡No te preocupes! Ver un partido en vivo es una gran experiencia. ¿Tienes algún jugador favorito de Liverpool?",
+          "content": "Está bien. ¿Qué tal si hablamos de música? Como músico, ¿hay alguna canción en español que te guste tocar o escuchar?",
           "sender": "bot",
-          "timestamp": "2025-07-01T01:49:05.898152",
+          "timestamp": "2025-07-02T00:26:18.466585",
           "intent": "chat",
           "audio_language": "Spanish",
-          "id": "bot-5-1751334545"
+          "id": "bot-17-1751415978"
         },
         {
-          "content": "What does preocupes mean?",
+          "content": "las canciones de Gotan Project",
           "sender": "user",
-          "timestamp": "2025-07-01T01:49:42.453768",
+          "timestamp": "2025-07-02T00:27:38.809730",
           "intent": "chat",
           "audio_language": "Spanish",
-          "id": "user-6-1751334582"
+          "id": "user-18-1751416058"
         },
         {
-          "content": "Claro, ¿qué te pareció la explicación? ¿Hay algo que te gustaría practicar más o alguna duda que tengas?",
+          "content": "¡Gotan Project tiene un estilo único que combina tango y música electrónica! ¿Tienes una canción favorita de ellos?",
           "sender": "bot",
-          "timestamp": "2025-07-01T01:49:45.724294",
+          "timestamp": "2025-07-02T00:27:40.922305",
           "intent": "chat",
           "audio_language": "Spanish",
-          "id": "bot-7-1751334585"
-        },
-        {
-          "content": "No, mi jugador favorito es Salah.",
-          "sender": "user",
-          "timestamp": "2025-07-01T01:50:37.697302",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "user-8-1751334637"
-        },
-        {
-          "content": "¡Salah es increíble, muy talentoso! ¿Te gusta ver los partidos en casa o prefieres ir a un bar o con amigos para verlos juntos?",
-          "sender": "bot",
-          "timestamp": "2025-07-01T01:50:39.704138",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "bot-9-1751334639"
-        },
-        {
-          "content": "Prefiero con amigos juntos, pero en los Estados Unidos no tengo. Hay fútbol de amigos.",
-          "sender": "user",
-          "timestamp": "2025-07-01T01:51:16.727994",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "user-10-1751334676"
-        },
-        {
-          "content": "Entiendo, a veces puede ser difícil encontrar gente con los mismos intereses. ¿Has pensado en unirte a algún grupo o club de fútbol local en Oregon? Podría ser una buena manera de conocer gente nueva y compartir tu pasión por el fútbol.",
-          "sender": "bot",
-          "timestamp": "2025-07-01T01:51:20.154836",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "bot-11-1751334680"
+          "id": "bot-19-1751416060"
         }
       ],
       "summary": "",
       "chunk_summaries": [
         {
           "chunk_number": 1,
-          "summary": "The conversation revolves around the user's interest in football, specifically their support for Liverpool and favorite player, Salah. The user asked for a translation of \"preocupes,\" which was not directly answered. The conversation is heading towards discussing how the user prefers to watch football matches, either at home or socially. The tone is friendly and enthusiastic, focusing on the user's football preferences and experiences.",
+          "summary": "The conversation began with weekend plans, specifically watching a movie. The user expressed a preference for comedies, and the bot inquired about favorite comedy films. The user mentioned having many favorites, leading the bot to ask if they had specific comedies in mind. The user then asked for the meaning of \"mente,\" but the bot shifted the topic to irregular verbs, leaving the user's question unanswered. The mood is light and casual, with a focus on movies and language learning. To continue naturally, address the user's question about \"mente\" and explore their movie preferences further.",
           "message_range": "1-10",
-          "created_at": "2025-07-01T01:50:41.899503"
+          "created_at": "2025-07-02T00:22:19.781869"
+        },
+        {
+          "chunk_number": 2,
+          "summary": "The conversation initially focused on movies, specifically comedies, with the user mentioning \"Father of the Bride.\" The bot inquired about the user's preference between the original and the remake, but the user shifted the topic to \"la mente\" (the mind). The bot then suggested discussing music, leading to the user mentioning Gotan Project. The conversation is now centered on music, with the bot asking if the user has a favorite Gotan Project song. The mood is casual and engaging, with open-ended questions encouraging further discussion on music preferences.",
+          "message_range": "11-20",
+          "created_at": "2025-07-02T00:27:43.075752"
         }
       ]
-    },
-    {
-      "id": "f66cd795-fb20-401e-8bfb-6ecddab2c288",
-      "user_id": "6a89912e-ea4c-46f9-b0d4-2f064f09d3d7",
-      "created_at": "2025-07-01T01:52:08.661624",
-      "messages": [
-        {
-          "content": "el fútbol.",
-          "sender": "user",
-          "timestamp": "2025-07-01T02:00:49.276505",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "user-0-1751335249"
-        },
-        {
-          "content": "¿Te gusta el fútbol? ¿Tienes un equipo favorito?",
-          "sender": "bot",
-          "timestamp": "2025-07-01T02:00:50.642625",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "bot-1-1751335250"
-        },
-        {
-          "content": "liverpool",
-          "sender": "user",
-          "timestamp": "2025-07-01T02:01:17.592037",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "user-2-1751335277"
-        },
-        {
-          "content": "¡Liverpool es un gran equipo! ¿Has visto algún partido últimamente?",
-          "sender": "bot",
-          "timestamp": "2025-07-01T02:01:19.024713",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "bot-3-1751335279"
-        },
-        {
-          "content": "No es verano. No hay partidos.",
-          "sender": "user",
-          "timestamp": "2025-07-01T02:02:15.359501",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "user-4-1751335335"
-        },
-        {
-          "content": "Entiendo, es una pena cuando no hay partidos. Mientras tanto, ¿qué otras actividades disfrutas hacer en tu tiempo libre?",
-          "sender": "bot",
-          "timestamp": "2025-07-01T02:02:17.207900",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "bot-5-1751335337"
-        }
-      ],
-      "summary": "",
-      "chunk_summaries": []
     }
   ],
-  "current_conversation_id": "f66cd795-fb20-401e-8bfb-6ecddab2c288"
+  "current_conversation_id": "00eda479-aaa2-4da1-95de-624c2f8707d2"
 }

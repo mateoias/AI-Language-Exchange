@@ -36,6 +36,8 @@ function Chat() {
   const [isProcessingQueue, setIsProcessingQueue] = useState(false)
   const audioQueueRef = useRef([])
 
+  const [isStartingNewSession, setIsStartingNewSession] = useState(false)
+  const [isSavingConversation, setIsSavingConversation] = useState(false)
   // Load chat history when component mounts
   useEffect(() => {
     loadChatHistory()
@@ -51,6 +53,13 @@ function Chat() {
       return () => clearTimeout(timer)
     }
   }, [user, historyLoaded, messages.length, loading])
+useEffect(() => {
+  // Focus input after any message changes
+  const input = document.querySelector('.chat-input input');
+  if (input && !isRecording && !loading) {
+    input.focus();
+  }
+}, [messages, isRecording, loading]);
 
   // Auto-scroll to bottom when messages change
   useEffect(() => {
@@ -206,23 +215,66 @@ function Chat() {
     }
   }
 
-  const handleFinishAndSave = async () => {
-    try {
-      // Call the finalize endpoint
-      const response = await api.finalizeConversation();
+
+const handleFinishAndSave = async () => {
+  if (isSavingConversation) return; // Prevent double-clicks
+  
+  setIsSavingConversation(true);
+  setError('Saving conversation, please wait...');
+  
+  try {
+    const response = await api.finalizeConversation();
+    
+    if (response.success) {
+      // Clear messages and reset state
+      setMessages([]);
+      setHistoryLoaded(false);
       
-      if (response.success) {
-        // Start new conversation after saving
-        await startNewSession();
-        
-        console.log('Conversation saved successfully!');
-      }
-    } catch (error) {
-      console.error('Error saving conversation:', error);
-      setError('Failed to save conversation');
+      // Show success message with summary info
+      const messageCount = response.message_count || 0;
+      setError(`Conversation saved successfully! ${messageCount} messages saved.`);
+      setTimeout(() => setError(''), 4000);
+    } else {
+      setError(response.message || 'No active conversation to save');
       setTimeout(() => setError(''), 3000);
     }
-  };
+  } catch (error) {
+    console.error('Error saving conversation:', error);
+    setError('Failed to save conversation. Please try again.');
+    setTimeout(() => setError(''), 3000);
+  } finally {
+    setIsSavingConversation(false);
+  }
+};
+
+    const handleLogout = async () => {
+      try {
+        setError('Logging out...');
+        
+        // Stop any playing audio
+        stopAudio();
+        
+        // Clear local state
+        setMessages([]);
+        audioRefs.current = {};
+        
+        // Call logout API (this would also clear the conversation on server)
+        await api.logout();
+        
+        // Clear local storage
+        localStorage.removeItem('token');
+        
+        // Redirect to login or trigger app state change
+        window.location.reload(); // Simple approach, or use your app's navigation
+        
+      } catch (error) {
+        console.error('Logout error:', error);
+        // Even if API fails, still clear local data
+        localStorage.removeItem('token');
+        window.location.reload();
+      }
+    };
+
 
   const playAudio = (messageId, audioData) => {
     // Stop any currently playing audio
@@ -681,25 +733,45 @@ const sendMessage = async (e) => {
   }
 
   const startNewSession = async () => {
-    try {
-      stopAudio()
-      
-      audioRefs.current = {}
-      
-      await api.startNewChatSession()
-      setMessages([])
-      setError('')
-      setHistoryLoaded(false)
-      
-      setTimeout(() => {
-        if (user) {
-          sendInitialGreeting()
-        }
-      }, 100)
-    } catch (err) {
-      console.error('Failed to start new session:', err)
-    }
+  if (isStartingNewSession) return; // Prevent double-clicks
+  
+  setIsStartingNewSession(true);
+  setError('Clearing conversation, please wait...');
+  
+  try {
+    stopAudio();
+    
+    // Clear audio refs
+    audioRefs.current = {};
+    
+    // Call API to start new session
+    await api.startNewChatSession();
+    
+    // Clear local state
+    setMessages([]);
+    setError('');
+    setHistoryLoaded(false);
+    
+    // Show brief success message
+    setError('New conversation started');
+    setTimeout(() => setError(''), 2000);
+    
+    // Load new greeting after a short delay
+    setTimeout(() => {
+      if (user) {
+        sendInitialGreeting();
+      }
+    }, 500);
+    
+  } catch (err) {
+    console.error('Failed to start new session:', err);
+    setError('Failed to start new conversation. Please try again.');
+    setTimeout(() => setError(''), 3000);
+  } finally {
+    setIsStartingNewSession(false);
   }
+};
+
 
   if (!user) {
     return <div className="page-content">Loading...</div>
@@ -735,31 +807,31 @@ const sendMessage = async (e) => {
                 <button 
                   className="start-new-btn"
                   onClick={startNewSession}
-                  disabled={loading}
+                  disabled={loading || isStartingNewSession || isSavingConversation}
                   title="Start new conversation without saving"
                 >
-                  Start New
+                  {isStartingNewSession ? 'Clearing...' : 'Start New'}
                 </button>
                 <button 
                   className="finish-save-btn"
                   onClick={handleFinishAndSave}
-                  disabled={loading}
+                  disabled={loading || isStartingNewSession || isSavingConversation}
                   title="Save conversation and start new"
                 >
-                  Finish & Save
+                  {isSavingConversation ? 'Saving...' : 'Finish & Save'}
                 </button>
               </>
             ) : (
               <button 
                 className="new-session-btn"
                 onClick={startNewSession}
-                disabled={loading}
+                disabled={loading || isStartingNewSession}
               >
-                New Conversation
+                {isStartingNewSession ? 'Starting...' : 'New Conversation'}
               </button>
             )}
           </div>
-        </div>
+         </div>
       </div>
 
       {error && (

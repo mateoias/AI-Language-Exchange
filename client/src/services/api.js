@@ -29,6 +29,12 @@ export const api = {
       body: JSON.stringify({ email, password, nativeLanguage, learningLanguage, proficiencyLevel })
     }),
 
+
+    logout: () =>
+      request('/auth/logout', {
+        method: 'POST'
+      }),
+
   signup: (username, email, password, nativeLanguage, learningLanguage, proficiencyLevel) =>
     request('/auth/signup', {
       method: 'POST',

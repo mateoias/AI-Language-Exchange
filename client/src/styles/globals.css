@@ -1319,52 +1319,168 @@ body {
   cursor: not-allowed;
 }
 
+/* Persona-based styling - Updated for better visibility */
+
+/* Remove the absolute positioned labels */
+.message.bot.teacher .message-bubble::before,
+.message.bot.partner .message-bubble::before {
+  display: none;
+}
+
+/* Base message styling for different personas */
+.message.bot {
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+
 /* Teacher persona messages */
 .message.bot.teacher .message-bubble {
-  background-color: #fef3c7; /* Light yellow for teacher */
-  border: 1px solid #f59e0b;
+  background-color: #1e293b; /* Dark slate background */
+  border: 1px solid #475569;
+  color: #f1f5f9; /* Light text for contrast */
+  position: relative;
+  padding-top: 2rem; /* Extra padding for label */
 }
 
 /* Partner persona messages */
 .message.bot.partner .message-bubble {
-  background-color: #e0f2fe; /* Light blue for partner */
-  border: 1px solid #0284c7;
+  background-color: #1e3a5f; /* Dark blue background */
+  border: 1px solid #3b5998;
+  color: #e0f2fe; /* Light blue text */
+  position: relative;
+  padding-top: 2rem; /* Extra padding for label */
 }
 
-/* Persona labels */
-.message.bot.teacher .message-bubble::before {
+/* Inline persona labels with better contrast */
+.message.bot.teacher .message-bubble::after {
+  content: "TEACHER";
+  position: absolute;
+  top: 0.5rem;
+  left: 1rem;
+  font-size: 0.7rem;
+  color: #fbbf24; /* Amber color for teacher */
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background-color: rgba(251, 191, 36, 0.1);
+  padding: 0.125rem 0.5rem;
+  border-radius: 0.25rem;
+  border: 1px solid rgba(251, 191, 36, 0.3);
+}
+
+.message.bot.partner .message-bubble::after {
+  content: "PARTNER";
+  position: absolute;
+  top: 0.5rem;
+  left: 1rem;
+  font-size: 0.7rem;
+  color: #60a5fa; /* Light blue for partner */
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background-color: rgba(96, 165, 250, 0.1);
+  padding: 0.125rem 0.5rem;
+  border-radius: 0.25rem;
+  border: 1px solid rgba(96, 165, 250, 0.3);
+}
+
+/* Alternative approach: Use distinct background patterns */
+.message.bot.teacher .message-bubble {
+  background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+}
+
+.message.bot.partner .message-bubble {
+  background: linear-gradient(135deg, #1e3a5f 0%, #2563eb 100%);
+}
+
+/* Help messages (from teacher) */
+.message.bot.help .message-bubble {
+  background-color: #422006; /* Dark amber */
+  border: 1px solid #92400e;
+  color: #fef3c7;
+  padding-top: 2rem;
+}
+
+.message.bot.help .message-bubble::after {
   content: "Teacher";
+  position: absolute;
+  top: 0.5rem;
+  left: 1rem;
   font-size: 0.7rem;
-  color: #ff9800;
-  font-weight: 600;
-  display: block;
-  margin-bottom: 2px;
+  color: #fbbf24;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background-color: rgba(251, 191, 36, 0.2);
+  padding: 0.125rem 0.5rem;
+  border-radius: 0.25rem;
+  border: 1px solid rgba(251, 191, 36, 0.4);
 }
 
-.message.bot.partner .message-bubble::before {
-  content: "Partner";
+/* Rephrase messages */
+.message.bot.rephrase .message-bubble {
+  font-style: italic;
+  opacity: 0.95;
+}
+
+/* Correction messages */
+.message.bot.correction .message-bubble {
+  background-color: #450a0a; /* Dark red */
+  border: 1px solid #dc2626;
+  color: #fecaca;
+  padding-top: 2rem;
+}
+
+.message.bot.correction .message-bubble::after {
+  content: "CORRECTION";
+  position: absolute;
+  top: 0.5rem;
+  left: 1rem;
   font-size: 0.7rem;
-  color: #4caf50;
-  font-weight: 600;
-  display: block;
-  margin-bottom: 2px;
+  color: #f87171;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background-color: rgba(248, 113, 113, 0.1);
+  padding: 0.125rem 0.5rem;
+  border-radius: 0.25rem;
+  border: 1px solid rgba(248, 113, 113, 0.3);
 }
 
-/* Specific message types */
-.message.bot.correction .message-bubble,
-.message.bot.clarification .message-bubble {
-  background-color: #fef3c7;
-  border: 1px solid #f59e0b;
+/* Message type indicators - now more subtle */
+.message-type-indicator {
+  font-size: 0.9em;
+  margin-right: 0.5rem;
+  opacity: 0.8;
 }
 
-.message.bot.correction .message-bubble::before {
-  content: "✏️ ";
+/* Ensure audio buttons are visible on dark backgrounds */
+.message.bot.teacher .audio-btn,
+.message.bot.partner .audio-btn,
+.message.bot.help .audio-btn,
+.message.bot.correction .audio-btn {
+  color: inherit;
+  opacity: 0.8;
 }
 
-.message.bot.clarification .message-bubble::before {
-  content: "❓ ";
+.message.bot.teacher .audio-btn:hover,
+.message.bot.partner .audio-btn:hover,
+.message.bot.help .audio-btn:hover,
+.message.bot.correction .audio-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  opacity: 1;
 }
-/* Add to your Chat.css or App.css */
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .message.bot.teacher .message-bubble::after,
+  .message.bot.partner .message-bubble::after,
+  .message.bot.help .message-bubble::after,
+  .message.bot.correction .message-bubble::after {
+    font-size: 0.6rem;
+    padding: 0.1rem 0.4rem;
+  }
+}
 
 .chat-controls {
   display: flex;

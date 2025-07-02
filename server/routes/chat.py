@@ -1,4 +1,4 @@
-# server/routes/chat.py (simplified version)
+# server/routes/chat.py (fixed version)
 import logging
 import time
 from flask import Blueprint, request, jsonify, current_app
@@ -113,10 +113,8 @@ def new_session(user_id):
     """Start a new conversation session"""
     try:
         conv_service = ConversationService()
-        # Finalize current conversation
-        finalized_data = conv_service.finalize_conversation(user_id)
         
-        # Start new session
+        # Start new session without finalizing previous one
         conv_service.start_new_session(user_id)
         
         # Clear audio cache
@@ -124,10 +122,11 @@ def new_session(user_id):
         
         return jsonify({
             "message": "New session started",
-            "previous_conversation_finalized": bool(finalized_data)
+            "success": True
         }), 200
         
     except Exception as e:
+        logging.error(f"New session error: {e}")
         return jsonify({'error': f'Server error: {str(e)}'}), 500
 
 @chat_bp.route('/regenerate-audio', methods=['POST'])
@@ -212,7 +211,8 @@ def finalize_conversation(user_id):
             return jsonify({
                 'success': True,
                 'conversation_id': finalized_data['conversation_id'],
-                'message_count': finalized_data['message_count']
+                'message_count': finalized_data['message_count'],
+                'summary': finalized_data.get('final_summary', '')
             }), 200
         else:
             return jsonify({

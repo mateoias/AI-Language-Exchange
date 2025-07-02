@@ -6,29 +6,35 @@ from ..utils.conversation_utils import (
     get_recent_messages, should_summarize_conversation, get_current_conversation,
     start_new_conversation
 )
+import logging
+logger = logging.getLogger(__name__)
 
 class ConversationService:
     def __init__(self):
-        pass  # No more OpenAI client needed
+        pass 
     
     def generate_conversation_summary(self, messages):
         """Generate a summary of conversation messages using GPT-4"""
         try:
-            # Prepare messages for summarization
+            if not messages or len(messages) == 0:
+                return "Empty conversation - no messages to summarize"
+            
             conversation_text = "\n".join([
                 f"{msg['sender']}: {msg['content']}" for msg in messages
             ])
             
-            # Use centralized LLM manager for summary generation
             summary = llm_manager.generate_summary(conversation_text)
             return summary
-            
+        
         except Exception as e:
             print(f"Error generating summary: {e}")
             return "Summary unavailable"
+        
     def generate_chunk_summary(self, messages, chunk_number):
         """Generate a summary focused on conversation flow for continuing the chat"""
         try:
+            if not messages or len(messages) == 0:
+                return "Empty chunk"
             # Prepare messages for conversation flow summary
             conversation_text = "\n".join([
                 f"{msg['sender']}: {msg['content']}" for msg in messages

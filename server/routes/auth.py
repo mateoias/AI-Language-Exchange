@@ -116,6 +116,23 @@ def get_profile(user_id):
 @auth_bp.route('/logout', methods=['POST'])
 @token_required
 def logout(user_id):
-    # Since we're using stateless JWT, logout is handled client-side
-    # by removing the token from localStorage
-    return jsonify({'message': 'Logout successful'}), 200
+    """Logout user and clear conversation without saving"""
+    try:
+        # Clear current conversation without saving
+        from ..services.conversation_service import ConversationService
+        conv_service = ConversationService()
+        conv_service.start_new_session(user_id)  # This clears without saving
+
+        
+        return jsonify({
+            'success': True,
+            'message': 'Logged out successfully'
+        }), 200
+        
+    except Exception as e:
+        # Even if there's an error, allow logout
+        return jsonify({
+            'success': True,
+            'message': 'Logged out with errors',
+            'error': str(e)
+        }), 200

@@ -108,10 +108,9 @@ class LLMManager:
     def generate_summary(self, conversation_text: str, max_tokens: int = 200) -> str:
         """Generate a conversation summary"""
         summary_prompt = f"""Please create a concise bullet-point summary of this conversation between a language learner and AI tutor. Focus on:
-- Key personal information shared by the user
 - Topics discussed  
+- Key personal information shared by the user
 - Language learning progress or challenges
-- Important facts to remember for future conversations
 
 Conversation:
 {conversation_text}
@@ -122,7 +121,7 @@ Provide the summary as bullet points:"""
             {"role": "system", "content": "You are a helpful assistant that creates concise conversation summaries."},
             {"role": "user", "content": summary_prompt}
         ]
-        
+        print(messages)
         return self.generate_chat_response(
             messages=messages,
             temperature=0.3,

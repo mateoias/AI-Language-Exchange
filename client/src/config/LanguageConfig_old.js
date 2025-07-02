@@ -1,8 +1,3 @@
-// languageConfig.js
-
-// Global teacher multilingual female voice
-export const TEACHER_MULTILINGUAL_VOICE = 'en-US-AriaMultilingualNeural'
-
 // Language configuration for the frontend
 export const languageConfig = {
   Spanish: {
@@ -104,7 +99,6 @@ export const languageConfig = {
 }
 
 // Helper functions
-
 export const getGreeting = (language, username) => {
   const config = languageConfig[language] || languageConfig.English
   return config.greeting(username)
@@ -120,15 +114,22 @@ export const getVoices = (language) => {
   return config.voices
 }
 
-// Returns the correct voice name based on persona
-export const getVoiceForPersona = (language, persona) => {
-  if (persona === 'teacher') {
-    return TEACHER_MULTILINGUAL_VOICE
-  } else {
-    const voices = getVoices(language)
-    return persona === 'partner' ? voices.male : voices.female
-  }
+// Error messages in each language
+export const errorMessages = {
+  Spanish: "Lo siento, estoy teniendo problemas en este momento. Por favor, inténtalo de nuevo.",
+  English: "I'm sorry, I'm having trouble right now. Please try again in a moment.",
+  French: "Désolé, j'ai des difficultés en ce moment. Veuillez réessayer.",
+  German: "Entschuldigung, ich habe gerade Probleme. Bitte versuchen Sie es noch einmal.",
+  Italian: "Mi dispiace, sto avendo problemi in questo momento. Per favore riprova.",
+  Portuguese: "Desculpe, estou tendo problemas no momento. Por favor, tente novamente.",
+  Russian: "Извините, у меня сейчас проблемы. Пожалуйста, попробуйте еще раз.",
+  Chinese: "对不起，我现在遇到了问题。请稍后再试。",
+  Japanese: "申し訳ありません、現在問題が発生しています。もう一度お試しください。",
+  Korean: "죄송합니다, 지금 문제가 있습니다. 다시 시도해 주세요.",
+  Arabic: "آسف، أواجه مشكلة الآن. يرجى المحاولة مرة أخرى.",
+  Hindi: "क्षमा करें, मुझे अभी समस्या हो रही है। कृपया फिर से प्रयास करें।"
 }
+
 export const getErrorMessage = (language) => {
   return errorMessages[language] || errorMessages.English
 }
