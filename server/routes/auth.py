@@ -2,7 +2,7 @@ from flask import Blueprint, request, jsonify
 from ..models.user import User
 from ..utils.auth_utils import hash_password, verify_password, generate_token, token_required
 from ..utils.file_utils import load_users, save_users, find_user_by_email, find_user_by_id
-
+import logging
 auth_bp = Blueprint('auth', __name__)
 
 @auth_bp.route('/signup', methods=['POST'])
@@ -69,7 +69,7 @@ def login():
         if not verify_password(data['password'], user_data['password_hash']):
             return jsonify({'message': 'Invalid credentials'}), 401
         
-        # Update language preferences and proficiency level if provided
+        # Update language preferences if provided
         if data.get('nativeLanguage') and data.get('learningLanguage'):
             user_data['nativeLanguage'] = data['nativeLanguage']
             user_data['learningLanguage'] = data['learningLanguage']
@@ -83,7 +83,9 @@ def login():
             users_data = load_users()
             users_data[user_id] = user_data
             save_users(users_data)
-        
+        from ..services.conversation_service import ConversationService
+        conv_service = ConversationService()
+        conv_service.start_new_session(user_id)
         # Generate token
         token = generate_token(user_id)
         
@@ -116,20 +118,25 @@ def get_profile(user_id):
 @auth_bp.route('/logout', methods=['POST'])
 @token_required
 def logout(user_id):
-    """Logout user and clear conversation without saving"""
+    """Logout user and finalize current conversation"""
     try:
-        # Clear current conversation without saving
+        # Import here to avoid circular imports
         from ..services.conversation_service import ConversationService
         conv_service = ConversationService()
-        conv_service.start_new_session(user_id)  # This clears without saving
-
         
+        # Finalize and save current conversation before logout
+        finalized_data = conv_service.finalize_conversation(user_id)
+        conv_service.clear_session_without_save(user_id)
+
         return jsonify({
             'success': True,
-            'message': 'Logged out successfully'
+            'message': 'Logged out successfully',
+            'conversation_saved': bool(finalized_data),
+            'message_count': finalized_data.get('message_count', 0) if finalized_data else 0
         }), 200
         
     except Exception as e:
+        logging.error(f"Logout error: {e}")
         # Even if there's an error, allow logout
         return jsonify({
             'success': True,

@@ -2,62 +2,13 @@
   "user_id": "1a99b5f0-3775-4313-b755-f09208242364",
   "conversations": [
     {
-      "id": "76e539cd-9cfc-47aa-9093-76783a9322a9",
+      "id": "5aefb61a-0dca-4dab-bcce-bd4929adf192",
       "user_id": "1a99b5f0-3775-4313-b755-f09208242364",
-      "created_at": "2025-07-02T01:44:58.276855",
-      "messages": [
-        {
-          "content": "de el futbol",
-          "sender": "user",
-          "timestamp": "2025-07-02T01:45:11.069463",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "user-0-1751420711"
-        },
-        {
-          "content": "¿Te gusta jugar al fútbol o prefieres verlo?",
-          "sender": "bot",
-          "timestamp": "2025-07-02T01:45:12.505082",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "bot-1-1751420712"
-        },
-        {
-          "content": "verlo",
-          "sender": "user",
-          "timestamp": "2025-07-02T01:45:20.704720",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "user-2-1751420720"
-        },
-        {
-          "content": "¡Genial! ¿Tienes un equipo favorito que te guste ver?",
-          "sender": "bot",
-          "timestamp": "2025-07-02T01:45:22.246261",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "bot-3-1751420722"
-        },
-        {
-          "content": "liverpool",
-          "sender": "user",
-          "timestamp": "2025-07-02T01:45:30.735016",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "user-4-1751420730"
-        },
-        {
-          "content": "¡Ah, Liverpool! Es un gran equipo. ¿Tienes un jugador favorito en Liverpool?",
-          "sender": "bot",
-          "timestamp": "2025-07-02T01:45:32.435982",
-          "intent": "chat",
-          "audio_language": "Spanish",
-          "id": "bot-5-1751420732"
-        }
-      ],
+      "created_at": "2025-07-02T23:11:30.922334",
+      "messages": [],
       "summary": "",
       "chunk_summaries": []
     }
   ],
-  "current_conversation_id": "76e539cd-9cfc-47aa-9093-76783a9322a9"
+  "current_conversation_id": "5aefb61a-0dca-4dab-bcce-bd4929adf192"
 }

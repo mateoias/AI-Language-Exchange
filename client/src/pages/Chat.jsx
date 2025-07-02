@@ -163,9 +163,11 @@ useEffect(() => {
   const loadChatHistory = async () => {
     try {
       const history = await api.getChatHistory()
-      if (history.messages && history.messages.length > 0) {
-        setMessages(history.messages)
-      }
+       if (history.messages && history.messages.length > 0 && !history.finalized) {
+      setMessages(history.messages)
+    } else {
+      setMessages([])
+    }
       setHistoryLoaded(true)
     } catch (err) {
       console.error('Failed to load chat history:', err)

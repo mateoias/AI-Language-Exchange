@@ -16,6 +16,9 @@ class ResponseService:
     
     def __init__(self):
         self.prompt_builder = PromptBuilder()
+            # Import here to avoid circular imports
+        from .conversation_service import ConversationService
+        self.conversation_service = ConversationService()
     
     def generate_response(
         self,

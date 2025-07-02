@@ -1,8 +1,5 @@
 # server/services/teaching_service.py
-"""
-Service for all teaching interactions (rephrasing and explanations)
-Replaces and extends RephraseService
-"""
+
 from .llm_manager import llm_manager
 from typing import Dict, Optional
 import logging
@@ -22,7 +19,7 @@ class TeachingService:
         level: str
     ) -> Optional[str]:
         """
-        Rephrase user's short/incorrect response into proper sentence
+        Rephrase user's short/incorrect response into a full correct sentence
         Teacher persona, speaking target language
         """
         last_bot_message = conversation_context.get('last_bot_message', '')
@@ -81,9 +78,8 @@ Explain things clearly in {native_lang} (the student's native language).
 Rules:
 1. Answer in {native_lang}
 2. Be clear and concise
-3. Give practical examples
-4. Maximum 2-3 sentences
-5. Focus on what helps them continue the conversation"""
+3. Maximum 2-3 sentences
+4. Focus on what helps them continue the conversation"""
 
         user_prompt = f"""Student learning {learning_lang} asks: "{teaching_request}"
 
@@ -148,3 +144,49 @@ Guide them gently in {learning_lang}."""
         except Exception as e:
             logger.error(f"Repair generation failed: {e}")
             return "¿Puedes repetir eso?"  # Fallback
+        
+    def generate_follow_up_after_teaching(
+        self,
+        user_data: Dict,
+        conversation_context: Dict,
+        teaching_topic: str = None
+    ) -> str:
+        """
+        Generate a follow-up after teaching explanation
+        """
+        learning_lang = user_data['learningLanguage']
+        
+        # Get the last conversation topic from context
+        recent_messages = conversation_context.get('recent_messages', [])
+        last_topic = ""
+        
+        # Find the last substantive exchange
+        for msg in reversed(recent_messages):
+            if msg['sender'] == 'bot' and msg.get('content'):
+                last_topic = msg['content']
+                break
+        
+        system_prompt = f"""You are a conversation partner (male persona) helping someone learn {learning_lang}.
+    The teacher just explained something about: {teaching_topic or 'a language concept'}.
+    The last conversation topic was: {last_topic}
+
+    Now continue the conversation naturally in {learning_lang}.
+
+    Rules:
+    1. Speak only in {learning_lang}
+    2. Reference what was just discussed if relevant
+    3. Connect back to the conversation topic naturally
+    4. Ask an engaging question to continue
+    5. Be encouraging
+    6. Maximum 2 sentences"""
+
+        response = llm_manager.generate_chat_response(
+            messages=[
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": "Continue the conversation after the explanation"}
+            ],
+            temperature=0.7,
+            max_tokens=80
+        )
+        
+        return response.strip()

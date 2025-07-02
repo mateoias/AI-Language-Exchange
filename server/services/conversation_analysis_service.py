@@ -28,7 +28,7 @@ class ConversationAnalysisService:
         {
             'flow_type': 'conversation' | 'teaching' | 'repair',
             'needs_rephrase': bool,
-            'repair_type': Optional[str],  # 'wrong_language', 'unclear', 'error'
+            'repair_type': Optional[str],  # 'wrong_language', 'unclear', 'error', 'off-topic'
             'teaching_request': Optional[str],  # what they're asking about
             'confidence': float
         }
@@ -115,14 +115,14 @@ User: {message}
 Determine:
 1. Is this a teaching request (asking for help/explanation)?
 2. Is this normal conversation that should continue?
-3. Does this need repair (wrong language, unclear, major errors)?
+3. Does this need repair (wrong language, unclear, unclear, off-topic)?
 4. Should we rephrase their response (too short, grammatically incorrect)?
 
 Respond with JSON:
 {{
     "flow_type": "conversation|teaching|repair",
     "needs_rephrase": true/false,
-    "repair_type": null or "wrong_language|unclear|error",
+    "repair_type": null or "wrong_language|unclear|error|off-topic",
     "teaching_request": null or "what they're asking about",
     "reasoning": "brief explanation"
 }}"""

@@ -35,16 +35,27 @@ class LLMManager:
         model: str = "gpt-4o",
         temperature: float = 0.3,
         max_tokens: int = 80,
-        log_request: bool = False  # New parameter for logging
+        log_request: bool = False,
+        caller_info: str = None
     ) -> str:
         """
         Generate a chat response using the OpenAI API with optional detailed logging
         """
         
-        if log_request:
+        if current_app.config.get('DEBUG') or log_request:
+            import inspect
+            
+            # Get caller information if not provided
+            if not caller_info:
+                try: 
+                    frame = inspect.currentframe().f_back
+                    caller_info = f"{frame.f_code.co_filename}:{frame.f_lineno} in {frame.f_code.co_name}"
+                except:
+                    caller_info = "Unknown caller"
             # Log the full prompt with nice formatting
             print("\n" + "="*80)
             print(f"🤖 LLM REQUEST - Model: {model}, Temp: {temperature}, Max Tokens: {max_tokens}")
+            print(f"📍 Called from: {caller_info}")
             print("="*80)
             
             for i, message in enumerate(messages):

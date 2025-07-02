@@ -273,7 +273,7 @@ class ConversationService:
             self.finalize_conversation(user_id)
         
         # Clear memory and start fresh
-        return start_new_conversation(user_id, save_to_file=True)
+        return start_new_conversation(user_id)
 
     def clear_session_without_save(self, user_id):
         """Clear current session without saving (for UI refresh)"""

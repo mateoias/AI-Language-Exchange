@@ -115,9 +115,10 @@ class ChatService:
         })
         
         # Continue conversation with a follow-up
-        follow_up = self.response_service.generate_follow_up_after_teaching(
+        follow_up = self.teaching_service.generate_follow_up_after_teaching(
             user_data,
-            conversation_context
+            conversation_context,
+            teaching_topic=analysis['teaching_request']  # Pass the teaching topic
         )
         
         segments.append({
@@ -145,7 +146,7 @@ class ChatService:
             'intent': 'teaching',
             'audio_language': user_data['learningLanguage']
         }
-    
+        
     def _handle_repair_flow(
         self, message_content, analysis, user_data, conversation_context, audio_speed
     ):

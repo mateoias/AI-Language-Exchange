@@ -150,9 +150,7 @@ def start_new_conversation(user_id):
     
     # Cleanup old conversations
     conversations_data = cleanup_old_conversations(conversations_data)
-    
-    # if save_to_file:
-    #     save_user_conversations(user_id, conversations_data)
+
     
     return conversations_data
 
